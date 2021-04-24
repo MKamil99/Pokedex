@@ -6,10 +6,9 @@ import { allPokemons, pokemonByNameOrNumber } from './Data';
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataToDisplay, setDataToDisplay] = useState("");
-  useEffect(() => {
-    pokemonByNameOrNumber(4, setDataToDisplay, setIsLoading, false); 
-    console.log("Used Effect!")}, 
-  []);
+  useEffect(() => { 
+    pokemonByNameOrNumber(4).then(
+      pokemon => { setDataToDisplay(pokemon); setIsLoading(false); }) }, []);
 
   return (
     isLoading 

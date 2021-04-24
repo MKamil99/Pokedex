@@ -1,19 +1,19 @@
 // This file contains all methods responsible for communicating with PokeApi
 
 // List of all pokemons:
-export const allPokemons = (dataSetter, stateSetter, newState) => {
-    fetch('https://pokeapi.co/api/v2/pokemon/?limit=1118')
+export const allPokemons = () => {
+    return fetch('https://pokeapi.co/api/v2/pokemon/?limit=1118')
     .then(response => response.json())
-    .then(json => { dataSetter(json.results); stateSetter(newState); })
+    .then(json => json.results)
     .catch(error => console.log(error));
 }
 
 
 // Pokemon details (for now, the input should be an integer):
-export const pokemonByNameOrNumber = (input, dataSetter, stateSetter, newState) => {
+export const pokemonByNameOrNumber = (input) => {
     if (isNaN(input) || input.length == 0) return; 
     
-    Promise.all([
+    return Promise.all([
         // name, number, height, weight, types, stats, sprites and moves:
         fetch('https://pokeapi.co/api/v2/pokemon/' + input)
         .then(response => response.json()),
@@ -26,10 +26,7 @@ export const pokemonByNameOrNumber = (input, dataSetter, stateSetter, newState) 
         fetch('https://pokeapi.co/api/v2/evolution-chain/' + input)
         .then(response => response.json())])
 
-    .then(jsons => { 
-        dataSetter(preparePokemonObject(jsons)); 
-        stateSetter(false); })
-
+    .then(jsons => preparePokemonObject(jsons))
     .catch(error => console.error(error));
 }
 
