@@ -1,12 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import { allPokemons, pokemonByNameOrNumber } from './Data';
+
 
 export default function App() {
+  const [isLoading, setIsLoading] = useState(true);
+  const [dataToDisplay, setDataToDisplay] = useState("");
+  useEffect(() => { 
+    pokemonByNameOrNumber(4).then(
+      pokemon => { setDataToDisplay(pokemon); setIsLoading(false); }) }, []);
+
   return (
+    isLoading 
+    ? 
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text>Loading...</Text>
+    </View> 
+    :
+    <View style={styles.container}>
+      <Text>{dataToDisplay.number}. {dataToDisplay.name}</Text>
+      <Text>{dataToDisplay.weight} {dataToDisplay.height}</Text>
+      <Text>{dataToDisplay.types.map(i => " " + i + " ")}</Text>
+      <Text>{dataToDisplay.color}</Text>
+      <Image style={styles.logo} source={{uri: dataToDisplay.sprite}}/>
     </View>
   );
 }
@@ -18,4 +34,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  logo: {
+    width: 200,
+    height: 200,
+  }
 });
