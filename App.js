@@ -1,41 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
-import { allPokemons, pokemonByNameOrNumber } from './Data';
+import React from 'react';
+import { Provider as PaperProvider } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
+import ApiTesting from './src/screens/ApiTesting';
+import { CustomTheme } from './src/theme';
+const Stack = createStackNavigator();
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [dataToDisplay, setDataToDisplay] = useState("");
-  useEffect(() => { 
-    pokemonByNameOrNumber(4).then(
-      pokemon => { setDataToDisplay(pokemon); setIsLoading(false); }) }, []);
-
   return (
-    isLoading 
-    ? 
-    <View style={styles.container}>
-      <Text>Loading...</Text>
-    </View> 
-    :
-    <View style={styles.container}>
-      <Text>{dataToDisplay.number}. {dataToDisplay.name}</Text>
-      <Text>{dataToDisplay.weight} {dataToDisplay.height}</Text>
-      <Text>{dataToDisplay.types.map(i => " " + i + " ")}</Text>
-      <Text>{dataToDisplay.color}</Text>
-      <Image style={styles.logo} source={{uri: dataToDisplay.sprite}}/>
-    </View>
+    <PaperProvider theme={CustomTheme}>
+      <NavigationContainer>
+        <Stack.Navigator headerMode='none'>
+          <Stack.Screen name='ApiTesting' component={ApiTesting} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 200,
-    height: 200,
-  }
-});
