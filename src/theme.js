@@ -8,6 +8,18 @@ export const CustomTheme = {
     primaryDark: '#004588',
     white: '#ffffff',
     pokemon: {
+      background: {
+        black: '#1B1B1B',
+        blue: '#0070B8',
+        brown: '#6F4E37',
+        gray: '#808080',
+        green: '#5E8C31',
+        pink: '#D98695',
+        purple: '#8E4585',
+        red: '#CC474B',
+        white: '#EAEAEA',
+        yellow: '#F5E050',
+      },
       types: {
         attack: '#FFC800',
         bug: '#568203',

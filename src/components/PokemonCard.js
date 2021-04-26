@@ -1,12 +1,15 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { Text, Surface } from 'react-native-paper';
+import { Text, Surface, useTheme } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import PokemonType from './PokemonType';
 
-export default function PokemonCard({ id, name, height, weight, sprite, types, color }) {
+export default function PokemonCard({ id, color, name, sprite, types }) {
+  const colors = useTheme().colors;
+  const cardColor = colors.pokemon.background[color];
+
   return (
-    <Surface style={styles.container}>
+    <Surface style={[styles.container, { backgroundColor: cardColor }]}>
       <Text style={[styles.id, { color: 'black' }]}>{'#' + id}</Text>
       <MaterialCommunityIcons
         style={styles.favourite}
@@ -14,12 +17,14 @@ export default function PokemonCard({ id, name, height, weight, sprite, types, c
         size={24}
         color='black'
       />
-      <Image style={styles.image} source={{ uri: sprite }} />
-      <Text style={[styles.name, { color: 'black' }]}>{name}</Text>
-      <View style={styles.typesContainer}>
-        {types.map((type) => (
-          <PokemonType type={type} passedStyle={{ marginHorizontal: 5 }} />
-        ))}
+      <View style={styles.innerContainer}>
+        <Image style={styles.image} source={{ uri: sprite }} />
+        <Text style={[styles.name, { color: 'black' }]}>{name}</Text>
+        <View style={styles.typesContainer}>
+          {types.map((type, i) => (
+            <PokemonType key={i} type={type} passedStyle={{ marginHorizontal: 5 }} />
+          ))}
+        </View>
       </View>
     </Surface>
   );
@@ -34,6 +39,11 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 12,
   },
+  innerContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
+  },
   id: {
     position: 'absolute',
     left: 10,
@@ -46,11 +56,12 @@ const styles = StyleSheet.create({
     top: 10,
   },
   image: {
-    width: 80,
-    height: 80,
+    width: 85,
+    height: 85,
   },
   name: {
     fontSize: 16,
+    marginBottom: 5,
   },
   typesContainer: {
     flexDirection: 'row',
