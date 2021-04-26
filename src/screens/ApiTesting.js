@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { pokemonByNameOrNumber } from '../Data';
+import { morePokemons, pokemonByNameOrNumber } from '../Data';
 
 export default function ApiTesting() {
   const [isLoading, setIsLoading] = useState(true);
   const [dataToDisplay, setDataToDisplay] = useState('');
   useEffect(() => {
+    morePokemons(1, 5).then((pokemons) => console.log(pokemons));
     pokemonByNameOrNumber(4).then((pokemon) => {
       setDataToDisplay(pokemon);
       setIsLoading(false);
