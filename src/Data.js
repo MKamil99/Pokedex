@@ -37,8 +37,8 @@ export const pokemonByNameOrNumber = (input) => {
 // Filtering specific pokemon's JSON response and creating custom object:
 const preparePokemonObject = (jsons) => {
   return {
+    id: jsons[0].id,
     name: jsons[0].name.charAt(0).toUpperCase() + jsons[0].name.slice(1),
-    number: jsons[0].id,
     height: Number(jsons[0].height) / 10 + ' m',
     weight: Number(jsons[0].weight) / 10 + ' kg',
     sprite: jsons[0].sprites.other['official-artwork'].front_default,

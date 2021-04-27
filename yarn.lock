@@ -1758,6 +1758,11 @@
     query-string "^6.13.6"
     react-is "^16.13.0"
 
+"@react-navigation/material-bottom-tabs@^6.0.0-next.2":
+  version "6.0.0-next.2"
+  resolved "https://registry.yarnpkg.com/@react-navigation/material-bottom-tabs/-/material-bottom-tabs-6.0.0-next.2.tgz#310bc98251564fcb1d56c1ce79c9444c26bbdf88"
+  integrity sha512-NYdXIPKSjwCKWSxkxpfx78aqOdGGDnNl/tAShVn4KOS/es/RpOZ6zIU4Tdsb0eoPC5SiqD0M+GmAiU3khOT9Sw==
+
 "@react-navigation/native@^5.9.4":
   version "5.9.4"
   resolved "https://registry.yarnpkg.com/@react-navigation/native/-/native-5.9.4.tgz#414c044423c58aa1cdde1b6494309e0b51da08b8"
