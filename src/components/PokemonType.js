@@ -7,17 +7,19 @@ export default function PokemonType({ passedStyle, type }) {
   const typeColor = colors.pokemon.types[type];
   return (
     <View style={[styles.container, { backgroundColor: typeColor }, passedStyle]}>
-      <Text style={{ fontSize: 12, color: colors.white }}>{type.toUpperCase()}</Text>
+      <Text style={[styles.content, { color: colors.white }]}>{type.toUpperCase()}</Text>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    alignContent: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 5,
     paddingVertical: 2,
+    width: 60,
     borderRadius: 10,
+  },
+  content: {
+    fontSize: 12,
+    textAlign: 'center',
   },
 });

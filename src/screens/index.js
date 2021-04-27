@@ -1,4 +1,3 @@
 import ApiTesting from './ApiTesting';
-import Home from './Home';
-
-export { ApiTesting, Home };
+import HomeTabs from './HomeTabs';
+export { ApiTesting, HomeTabs };

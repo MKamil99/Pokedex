@@ -9,7 +9,7 @@ export const allPokemons = () => {
 };
 
 // Pokemon details (for now, the input should be an integer):
-export const pokemonByNameOrNumber = async (input) => {
+export const pokemonByNameOrNumber = (input) => {
   if (isNaN(input) || input.length == 0) return;
 
   return Promise.all([

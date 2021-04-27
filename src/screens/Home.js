@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import { MainAppBar, PokemonCard } from '../components';
 import { pokemonByNameOrNumber } from '../Data';
 

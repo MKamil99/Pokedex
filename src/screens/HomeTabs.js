@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BottomNavigation, useTheme } from 'react-native-paper';
-import { Home } from '../screens';
+import Home from './Home';
 
 const HomeRoute = () => <Home />;
 const FavouriteRoute = () => <Home />;

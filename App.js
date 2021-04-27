@@ -3,9 +3,8 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { ApiTesting } from './src/screens';
+import { ApiTesting, HomeTabs } from './src/screens';
 import { CustomTheme } from './src/theme';
-import { HomeTabs } from './src/components';
 
 const Stack = createStackNavigator();
 
