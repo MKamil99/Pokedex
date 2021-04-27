@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
 import { MainAppBar, PokemonCard } from '../components';
-import { pokemonByNameOrNumber } from '../Data';
+import { morePokemons } from '../Data';
 
 export default function Home() {
   const [data, setData] = useState([]);
@@ -10,14 +10,7 @@ export default function Home() {
   const keyExtractor = useCallback((item) => item.id.toString());
 
   useEffect(() => {
-    const fetchData = async () => {
-      for (i = 1; i < 30; i++) {
-        pokemonByNameOrNumber(i).then((pokemon) => {
-          setData((prev) => [...prev, pokemon]);
-        });
-      }
-    };
-    fetchData();
+    morePokemons(1, 100).then((pokemons) => setData(pokemons));
   }, []);
 
   return (
@@ -38,5 +31,6 @@ export default function Home() {
 const styles = StyleSheet.create({
   ListContainer: {
     flex: 1,
+    alignItems: 'center',
   },
 });

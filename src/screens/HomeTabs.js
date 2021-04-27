@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { BottomNavigation, useTheme } from 'react-native-paper';
+import Favourites from './Favourites';
 import Home from './Home';
 
 const HomeRoute = () => <Home />;
-const FavouriteRoute = () => <Home />;
+const FavouriteRoute = () => <Favourites />;
 
 export default function HomeTabs() {
   const colors = useTheme().colors;
