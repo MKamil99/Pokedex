@@ -7,6 +7,7 @@ export const CustomTheme = {
     primary: '#0070B8',
     primaryDark: '#004588',
     white: '#ffffff',
+    card: '#ffffff',
     pokemon: {
       background: {
         black: '#1B1B1B',
