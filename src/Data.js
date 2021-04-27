@@ -8,6 +8,13 @@ export const allPokemons = () => {
     .catch((error) => console.log(error));
 };
 
+// List of some pokemon objects (with their details):
+export const morePokemons = (start, end) => {
+  const promises = [];
+  for (let i = start; i <= end; i++) promises.push(pokemonByNameOrNumber(i));
+  return Promise.all(promises);
+};
+
 // Pokemon details (for now, the input should be an integer):
 export const pokemonByNameOrNumber = (input) => {
   if (isNaN(input) || input.length == 0) return;
