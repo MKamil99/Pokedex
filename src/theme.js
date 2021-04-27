@@ -7,6 +7,7 @@ export const CustomTheme = {
     primary: '#0070B8',
     primaryDark: '#004588',
     white: '#ffffff',
+    card: '#ffffff',
     pokemon: {
       background: {
         black: '#1B1B1B',
@@ -39,6 +40,14 @@ export const CustomTheme = {
         rock: '#967117',
         steal: '#5F8A8B',
         water: '#1974D2',
+      },
+      stats: {
+        hp: '#FD3A4A',
+        attack: '#FFC800',
+        defense: '#4CBB17',
+        specialAttack: '#FF7800',
+        specialDefence: '#0067A5',
+        speed: '#59260B',
       },
     },
   },
