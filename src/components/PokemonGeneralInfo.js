@@ -1,49 +1,39 @@
-import React from 'react'
-import {StyleSheet, View} from 'react-native'
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import PokemonType from './PokemonType';
 
-export default function PokemonGeneralInfo({name, id, weight, height, type1, type2=null}) {
+export default function PokemonGeneralInfo({ name, id, weight, height, types }) {
   const colors = useTheme().colors;
 
-  return ( 
-    <View style={[styles.container, {backgroundColor: colors.card}]}>
+  return (
+    <View style={[styles.container, { backgroundColor: colors.card }]}>
+      <Text style={styles.name}>{name}</Text>
 
-      <Text style={styles.name}>
-        {name}
-      </Text>
-
-      <Text style={styles.id}>
-        {"#" + id.padStart(3, "0")}
-      </Text>
+      <Text style={styles.id}>{'#' + id.padStart(3, '0')}</Text>
 
       <View style={styles.typesContainer}>
-        <PokemonType type={type1} passedStyle={styles.type}/>
-        {type2 && <PokemonType type={type2} passedStyle={styles.type}/>}
+        {types.map((type, index) => (
+          <PokemonType
+            key={index}
+            type={type}
+            containerStyle={styles.typeContainer}
+            textStyle={styles.typeText}
+          />
+        ))}
       </View>
 
       <View style={styles.infoContainer}>
-
         <View style={styles.info}>
-          <Text style={styles.infoText}>
-            Weight
-          </Text>
-          <Text style={styles.infoData}>
-            {weight + " KG"}
-          </Text>
+          <Text style={styles.infoText}>Weight</Text>
+          <Text style={styles.infoData}>{weight + ' KG'}</Text>
         </View>
 
         <View style={styles.info}>
-          <Text style={styles.infoText}>
-            Height
-          </Text>
-          <Text style={styles.infoData}>
-            {height + " M"}
-          </Text>
+          <Text style={styles.infoText}>Height</Text>
+          <Text style={styles.infoData}>{height + ' M'}</Text>
         </View>
-
       </View>
-
     </View>
   );
 }
@@ -69,27 +59,29 @@ const styles = StyleSheet.create({
   typesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingTop: 8
+    paddingTop: 8,
   },
-  type: {
+  typeContainer: {
     width: 130,
     height: 30,
     borderRadius: 15,
-    fontSize: 20
+  },
+  typeText: {
+    fontSize: 20,
   },
   infoContainer: {
     flexDirection: 'row',
-    paddingTop: 8
+    paddingTop: 8,
   },
   info: {
     width: '50%',
   },
   infoText: {
     textAlign: 'center',
-    fontSize: 15
+    fontSize: 15,
   },
   infoData: {
     textAlign: 'center',
-    fontSize: 20
-  }
-})
+    fontSize: 20,
+  },
+});
