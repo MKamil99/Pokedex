@@ -2,12 +2,12 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 
-export default function PokemonType({ passedStyle, type }) {
+export default function PokemonType({ containerStyle, textStyle, type }) {
   const colors = useTheme().colors;
   const typeColor = colors.pokemon.types[type];
   return (
-    <View style={[styles.container, { backgroundColor: typeColor }, passedStyle]}>
-      <Text style={[styles.content, { color: colors.white }]}>{type.toUpperCase()}</Text>
+    <View style={[styles.container, { backgroundColor: typeColor }, containerStyle]}>
+      <Text style={[styles.content, { color: colors.white }, textStyle]}>{type.toUpperCase()}</Text>
     </View>
   );
 }
