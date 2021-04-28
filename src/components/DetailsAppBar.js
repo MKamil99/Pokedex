@@ -14,7 +14,7 @@ export default function DetailsAppBar({ color, sprite }) {
       <View style={styles.leftCorner}>
         <Button
           icon='arrow-left'
-          color='#F2F2F2'
+          color={colors.arrowAndTitle}
           labelStyle={styles.buttonContent}
           onPress={() => {}}
         >
