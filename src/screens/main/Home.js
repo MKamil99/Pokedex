@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
-import { MainAppBar, PokemonCard } from '../components';
-import { morePokemons } from '../Data';
+import { MainAppBar, PokemonCard } from '../../components';
+import { morePokemons } from '../../Data';
 
 export default function Home() {
   const [data, setData] = useState([]);
