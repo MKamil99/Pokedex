@@ -1,20 +1,25 @@
 import React, { useContext } from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator } from 'react-native-paper';
 
 import { DetailsAppBar } from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
 export default function General() {
-  const {
-    currentPokemon: { color, sprite },
-  } = useContext(PokemonDataContext);
+  const { currentPokemon } = useContext(PokemonDataContext);
 
   return (
     <>
-      <DetailsAppBar color={color} sprite={sprite} />
-      <SafeAreaView style={styles.ListContainer}>
-        <Text>[General]</Text>
-      </SafeAreaView>
+      {currentPokemon ? (
+        <>
+          <DetailsAppBar color={currentPokemon.color} sprite={currentPokemon.sprite} />
+          <SafeAreaView style={styles.ListContainer}>
+            <Text>[General]</Text>
+          </SafeAreaView>
+        </>
+      ) : (
+        <ActivityIndicator animating={true} />
+      )}
     </>
   );
 }

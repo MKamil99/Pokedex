@@ -2,6 +2,7 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Text, Surface, useTheme, TouchableRipple } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import PokemonType from './PokemonType';
 
 export default function PokemonCard({ onPress, id, color, name, sprite, types }) {

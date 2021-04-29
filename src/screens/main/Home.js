@@ -1,12 +1,12 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useContext } from 'react';
 import { FlatList, SafeAreaView, StyleSheet } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { MainAppBar, PokemonCard } from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
 export default function Home() {
-  const { pokemons, updateCurrentPokemon } = useContext(PokemonDataContext);
+  const { pokemons, updateCurrentPokemonId } = useContext(PokemonDataContext);
   const navigation = useNavigation();
 
   const renderPokemonCard = useCallback(
@@ -14,7 +14,7 @@ export default function Home() {
       <PokemonCard
         onPress={() => {
           navigation.navigate('Details');
-          updateCurrentPokemon(id);
+          updateCurrentPokemonId(id);
         }}
         id={id}
         name={name}

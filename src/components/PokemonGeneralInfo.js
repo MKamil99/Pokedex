@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
+
 import PokemonType from './PokemonType';
 
 export default function PokemonGeneralInfo({ name, id, weight, height, types }) {
