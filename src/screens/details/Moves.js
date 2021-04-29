@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
 import { DetailsAppBar } from '../../components';
+import { PokemonDataContext } from '../../contexts';
 
 export default function Moves() {
-  // Just for testing:
-  const example = {
-    sprite:
-      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
-    color: 'green',
-  };
+  const {
+    currentPokemon: { color, sprite },
+  } = useContext(PokemonDataContext);
 
   return (
     <>
-      <DetailsAppBar {...example} />
+      <DetailsAppBar color={color} sprite={sprite} />
       <SafeAreaView style={styles.ListContainer}>
-        <Text>[Moves]</Text>
+        <Text>[Evolution]</Text>
       </SafeAreaView>
     </>
   );

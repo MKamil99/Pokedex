@@ -1,40 +1,26 @@
-import React, { useState } from 'react';
-import { BottomNavigation, useTheme } from 'react-native-paper';
+import React from 'react';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { useTheme } from 'react-native-paper';
+
 import Evolution from './Evolution';
 import General from './General';
 import Moves from './Moves';
 
-const GeneralRoute = () => <General />;
-const MovesRoute = () => <Moves />;
-const EvolutionRoute = () => <Evolution />;
+const Tab = createMaterialBottomTabNavigator();
 
 export default function DetailsTabs() {
   const colors = useTheme().colors;
 
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: 'general', title: 'General', icon: 'information' },
-    { key: 'moves', title: 'Moves', icon: 'paw' },
-    { key: 'evolution', title: 'Evolution', icon: 'atom' },
-    // alternatives for evolution: atom, lan, source-branch,
-    // tournament, vector-polyline, chart-timeline-variant
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    general: GeneralRoute,
-    moves: MovesRoute,
-    evolution: EvolutionRoute,
-  });
-
   return (
-    <BottomNavigation
+    <Tab.Navigator
       activeColor={colors.primary}
       barStyle={{ backgroundColor: colors.white }}
       inactiveColor='#808080'
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
       shifting={true}
-    />
+    >
+      <Tab.Screen name='General' component={General} options={{ tabBarIcon: 'information' }} />
+      <Tab.Screen name='Moves' component={Moves} options={{ tabBarIcon: 'paw' }} />
+      <Tab.Screen name='Evolution' component={Evolution} options={{ tabBarIcon: 'atom' }} />
+    </Tab.Navigator>
   );
 }

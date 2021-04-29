@@ -1,34 +1,24 @@
 import React, { useState } from 'react';
-import { BottomNavigation, useTheme } from 'react-native-paper';
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { useTheme } from 'react-native-paper';
+
 import Favourites from './Favourites';
 import Home from './Home';
 
-const HomeRoute = () => <Home />;
-const FavouriteRoute = () => <Favourites />;
+const Tab = createMaterialBottomTabNavigator();
 
 export default function HomeTabs() {
   const colors = useTheme().colors;
 
-  const [index, setIndex] = useState(0);
-  const [routes] = useState([
-    { key: 'home', title: 'Home', icon: 'home' },
-    { key: 'favourites', title: 'Favourites', icon: 'heart' },
-  ]);
-
-  const renderScene = BottomNavigation.SceneMap({
-    home: HomeRoute,
-    favourites: FavouriteRoute,
-  });
-
   return (
-    <BottomNavigation
+    <Tab.Navigator
       activeColor={colors.primary}
       barStyle={{ backgroundColor: colors.white }}
       inactiveColor='#808080'
-      navigationState={{ index, routes }}
-      onIndexChange={setIndex}
-      renderScene={renderScene}
       shifting={true}
-    />
+    >
+      <Tab.Screen name='Home' component={Home} options={{ tabBarIcon: 'home' }} />
+      <Tab.Screen name='heart' component={Favourites} options={{ tabBarIcon: 'information' }} />
+    </Tab.Navigator>
   );
 }
