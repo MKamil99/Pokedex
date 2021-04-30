@@ -1,6 +1,7 @@
-import { useTheme } from 'react-native-paper';
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
+import { useTheme } from 'react-native-paper';
+
 import StatBar from '../components/StatBar';
 
 export default function PokemonStats({ hp, atk, def, satk, sdef, spd }) {

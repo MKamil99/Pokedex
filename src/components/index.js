@@ -1,4 +1,3 @@
-import MainAppBar from './MainAppBar';
-import DetailsAppBar from './DetailsAppBar';
-import PokemonCard from './PokemonCard';
-export { MainAppBar, DetailsAppBar, PokemonCard };
+export { default as MainAppBar } from './MainAppBar';
+export { default as DetailsAppBar } from './DetailsAppBar';
+export { default as PokemonCard } from './PokemonCard';

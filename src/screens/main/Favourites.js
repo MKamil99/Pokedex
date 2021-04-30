@@ -1,6 +1,7 @@
 import React from 'react';
-import { MainAppBar } from '../../components';
 import { Text, StyleSheet, SafeAreaView } from 'react-native';
+
+import { MainAppBar } from '../../components';
 
 export default function Favourites() {
   return (

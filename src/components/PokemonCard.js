@@ -1,34 +1,41 @@
 import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { Text, Surface, useTheme } from 'react-native-paper';
+import { Text, Surface, useTheme, TouchableRipple } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+
 import PokemonType from './PokemonType';
 
-export default function PokemonCard({ id, color, name, sprite, types }) {
+export default function PokemonCard({ onPress, id, color, name, sprite, types }) {
   const colors = useTheme().colors;
   const cardColor = colors.pokemon.background[color];
 
   return (
     <Surface style={[styles.container, { backgroundColor: cardColor }]}>
-      <Text style={[styles.id, { color: 'black' }]}>{'#' + id}</Text>
-      <MaterialCommunityIcons
-        style={styles.favourite}
-        name='heart-outline'
-        size={24}
-        color='black'
-      />
-      <View style={styles.innerContainer}>
-        <Image style={styles.image} source={{ uri: sprite }} />
-        <Text style={[styles.name, { color: 'black' }]}>{name}</Text>
-        <View style={styles.typesContainer}>
-          {types.map((type, i) => (
-            <PokemonType key={i} type={type} passedStyle={{ marginHorizontal: 5 }} />
-          ))}
-        </View>
-      </View>
+      <TouchableRipple borderless={true} style={styles.touch} onPress={() => onPress()}>
+        <>
+          <Text style={[styles.id, { color: 'black' }]}>{'#' + id}</Text>
+          <MaterialCommunityIcons
+            style={styles.favourite}
+            name='heart-outline'
+            size={24}
+            color='black'
+          />
+          <View style={styles.innerContainer}>
+            <Image style={styles.image} source={{ uri: sprite }} />
+            <Text style={[styles.name, { color: 'black' }]}>{name}</Text>
+            <View style={styles.typesContainer}>
+              {types.map((type, i) => (
+                <PokemonType key={i} type={type} passedStyle={{ marginHorizontal: 5 }} />
+              ))}
+            </View>
+          </View>
+        </>
+      </TouchableRipple>
     </Surface>
   );
 }
+
+const CARD_BORDER_RADIUS = 12;
 
 const styles = StyleSheet.create({
   container: {
@@ -37,7 +44,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     margin: 10,
-    borderRadius: 12,
+    borderRadius: CARD_BORDER_RADIUS,
+  },
+  touch: {
+    width: '100%',
+    height: '100%',
+    borderRadius: CARD_BORDER_RADIUS,
   },
   innerContainer: {
     alignItems: 'center',
