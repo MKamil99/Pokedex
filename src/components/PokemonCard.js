@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 10,
     top: 10,
-    fontSize: 15,
+    fontSize: 18,
   },
   favourite: {
     position: 'absolute',
