@@ -13,7 +13,9 @@ export default function PokemonCard({ onPress, id, color, name, sprite, types })
     <Surface style={[styles.container, { backgroundColor: cardColor }]}>
       <TouchableRipple borderless={true} style={styles.touch} onPress={() => onPress()}>
         <>
-          <Text style={[styles.id, { color: 'black' }]}>{'#' + id}</Text>
+          <Text style={[styles.id, { color: 'black' }]}>
+            {'#' + id.toString().padStart(3, '0')}
+          </Text>
           <MaterialCommunityIcons
             style={styles.favourite}
             name='heart-outline'
@@ -79,5 +81,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignContent: 'center',
+    width: '80%',
   },
 });

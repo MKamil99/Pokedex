@@ -1,25 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import { PokemonDataContext } from '../contexts';
 
 import StatBar from '../components/StatBar';
 
-export default function PokemonStats({ hp, atk, def, satk, sdef, spd }) {
+export default function PokemonStats() {
+  const { currentPokemon } = useContext(PokemonDataContext);
+  //const statsNames = currentPokemon.stats.map(i => i[0]);
+  const statsValues = currentPokemon.stats.map((i) => i[1]);
   const colors = useTheme().colors;
   const stats = colors.pokemon.stats;
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card }]}>
-      <Text style={styles.header}>Base stats</Text>
-      <StatBar name='HP' value={hp} color={stats.hp} />
-      <StatBar name='ATK' value={atk} color={stats.attack} />
-      <StatBar name='DEF' value={def} color={stats.defense} />
-      <StatBar name='SP ATK' value={satk} color={stats.specialAttack} />
-      <StatBar name='SP DEF' value={sdef} color={stats.specialDefence} />
-      <StatBar name='SPD' value={spd} color={stats.speed} />
+    <>
+      {currentPokemon ? (
+        <View style={[styles.container, { backgroundColor: colors.card }]}>
+          <Text style={styles.header}>Base stats</Text>
+          <StatBar name='HP' value={statsValues[0]} color={stats.hp} />
+          <StatBar name='ATK' value={statsValues[1]} color={stats.attack} />
+          <StatBar name='DEF' value={statsValues[2]} color={stats.defense} />
+          <StatBar name='SP ATK' value={statsValues[3]} color={stats.specialAttack} />
+          <StatBar name='SP DEF' value={statsValues[4]} color={stats.specialDefence} />
+          <StatBar name='SPD' value={statsValues[5]} color={stats.speed} />
 
-      <Text style={styles.total}>{`TOTAL ${hp + atk + def + satk + sdef + spd}`}</Text>
-    </View>
+          <Text style={styles.total}>{`TOTAL ${statsValues.reduce(
+            (result, number) => result + number
+          )}`}</Text>
+        </View>
+      ) : (
+        <ActivityIndicator animating={true} />
+      )}
+    </>
   );
 }
 

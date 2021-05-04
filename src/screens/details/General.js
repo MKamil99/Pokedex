@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
 import { ActivityIndicator } from 'react-native-paper';
 
-import { DetailsAppBar } from '../../components';
+import { DetailsAppBar, PokemonGeneralInfo, PokemonStats } from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
 export default function General() {
@@ -13,8 +13,11 @@ export default function General() {
       {currentPokemon ? (
         <>
           <DetailsAppBar color={currentPokemon.color} sprite={currentPokemon.sprite} />
-          <SafeAreaView style={styles.ListContainer}>
-            <Text>[General]</Text>
+          <SafeAreaView style={styles.container}>
+            <ScrollView>
+              <PokemonGeneralInfo style={styles.singleComponent} />
+              <PokemonStats style={styles.singleComponent} />
+            </ScrollView>
           </SafeAreaView>
         </>
       ) : (
@@ -25,9 +28,10 @@ export default function General() {
 }
 
 const styles = StyleSheet.create({
-  ListContainer: {
+  container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    marginVertical: 10,
   },
 });

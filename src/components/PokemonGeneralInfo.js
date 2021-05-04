@@ -1,41 +1,49 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
+import { PokemonDataContext } from '../contexts';
 
 import PokemonType from './PokemonType';
 
-export default function PokemonGeneralInfo({ name, id, weight, height, types }) {
+export default function PokemonGeneralInfo() {
+  const { currentPokemon } = useContext(PokemonDataContext);
   const colors = useTheme().colors;
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.card }]}>
-      <Text style={styles.name}>{name}</Text>
+    <>
+      {currentPokemon ? (
+        <View style={[styles.container, { backgroundColor: colors.card }]}>
+          <Text style={styles.name}>{currentPokemon.name}</Text>
 
-      <Text style={styles.id}>{'#' + id.padStart(3, '0')}</Text>
+          <Text style={styles.id}>{'#' + currentPokemon.id.toString().padStart(3, '0')}</Text>
 
-      <View style={styles.typesContainer}>
-        {types.map((type, index) => (
-          <PokemonType
-            key={index}
-            type={type}
-            containerStyle={styles.typeContainer}
-            textStyle={styles.typeText}
-          />
-        ))}
-      </View>
+          <View style={styles.typesContainer}>
+            {currentPokemon.types.map((type, index) => (
+              <PokemonType
+                key={index}
+                type={type}
+                containerStyle={styles.typeContainer}
+                textStyle={styles.typeText}
+              />
+            ))}
+          </View>
 
-      <View style={styles.infoContainer}>
-        <View style={styles.info}>
-          <Text style={styles.infoText}>Weight</Text>
-          <Text style={styles.infoData}>{weight + ' KG'}</Text>
+          <View style={styles.infoContainer}>
+            <View style={styles.info}>
+              <Text style={styles.infoText}>Weight</Text>
+              <Text style={styles.infoData}>{currentPokemon.weight + ' KG'}</Text>
+            </View>
+
+            <View style={styles.info}>
+              <Text style={styles.infoText}>Height</Text>
+              <Text style={styles.infoData}>{currentPokemon.height + ' M'}</Text>
+            </View>
+          </View>
         </View>
-
-        <View style={styles.info}>
-          <Text style={styles.infoText}>Height</Text>
-          <Text style={styles.infoData}>{height + ' M'}</Text>
-        </View>
-      </View>
-    </View>
+      ) : (
+        <ActivityIndicator animating={true} />
+      )}
+    </>
   );
 }
 
