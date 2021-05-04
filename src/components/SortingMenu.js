@@ -1,40 +1,77 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Divider, Menu, RadioButton, Text } from 'react-native-paper';
+import React, { useContext, useState } from 'react';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import { Divider, Menu, RadioButton, Text, useTheme } from 'react-native-paper';
 
-const SortingItem = ({ content }) => (
-  <View style={styles.itemContainer}>
-    <Text>{content}</Text>
-    <RadioButton value={content} status={true} />
-  </View>
-);
+import { PokemonDataContext } from '../contexts';
 
-export default function SortingMenu({ anchor }) {
-  const [isVisible, setIsVisible] = useState(true);
+const sortingValues = ['ascending', 'descending'];
+
+const SortingParam = ({ name, value }) => {
+  const colors = useTheme().colors;
   return (
-    <Menu anchor={anchor} style={styles.menu} visible={true}>
+    <View>
+      <Text style={styles.paramTitle}>{name}</Text>
+      {sortingValues.map((item, index) => (
+        <RadioButton.Item
+          key={index}
+          color={colors.primary}
+          labelStyle={styles.radioButtonValue}
+          style={styles.radioButtonContainer}
+          label={item}
+          value={`${item}-${value}`}
+        />
+      ))}
+    </View>
+  );
+};
+
+const sortingParams = [
+  { value: 'id', name: 'id' },
+  { value: 'alphabet', name: 'alphabet (A-Z)' },
+];
+
+export default function SortingMenu({ anchor, visible, onDismiss }) {
+  const [radioValue, setRadioValue] = useState();
+  const { sortPokemons } = useContext(PokemonDataContext);
+  const { width } = Dimensions.get('window');
+  const menuWidth = 200;
+
+  return (
+    <Menu
+      anchor={anchor}
+      style={[styles.menu, { width: menuWidth, left: width - menuWidth - 8 }]}
+      onDismiss={() => onDismiss()}
+      visible={visible}
+    >
       <View style={styles.container}>
-        <Text>Sort by</Text>
-        <Text>Alphabet (A-Z)</Text>
-        <SortingItem content='Ascending' />
-        <SortingItem content='Descending' />
-        <Divider />
-        <Text>Id</Text>
-        <SortingItem content='Ascending' />
-        <SortingItem content='Descending' />
+        <Text style={styles.mainTitle}>sort by</Text>
+        <RadioButton.Group
+          onValueChange={(value) => {
+            setRadioValue(value);
+            sortPokemons(value);
+            onDismiss();
+          }}
+          value={radioValue}
+        >
+          {sortingParams.map((item, index) => (
+            <React.Fragment key={index}>
+              <SortingParam name={item.name} value={item.value} />
+              {index != sortingParams.length - 1 && <Divider style={styles.divider} />}
+            </React.Fragment>
+          ))}
+        </RadioButton.Group>
       </View>
     </Menu>
   );
 }
 
-const APPBAR_HEIGHT = 90;
+const APPBAR_HEIGHT = 86;
+
 const styles = StyleSheet.create({
   menu: {
     position: 'absolute',
-    top: APPBAR_HEIGHT,
-    right: 8,
+    top: APPBAR_HEIGHT + 8,
     backgroundColor: 'white',
-    flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
     borderRadius: 12,
@@ -44,11 +81,32 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderColor: 'red',
-    borderWidth: 1,
+  },
+  mainTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+    textAlign: 'center',
+    paddingVertical: 4,
+    textTransform: 'capitalize',
+  },
+  paramTitle: {
+    fontSize: 16,
+    fontWeight: '700',
+    textTransform: 'capitalize',
+    marginVertical: 8,
+  },
+  radioButtonContainer: {
+    paddingHorizontal: 0,
+  },
+  radioButtonValue: {
+    fontSize: 16,
+    textTransform: 'capitalize',
+  },
+  divider: {
+    marginVertical: 12,
   },
   container: {
     flex: 1,
-    padding: 8,
+    paddingHorizontal: 18,
   },
 });

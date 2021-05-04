@@ -6,7 +6,7 @@ import { MainAppBar, PokemonCard } from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
 export default function Home() {
-  const { pokemons, updateCurrentPokemonId } = useContext(PokemonDataContext);
+  const { pokemons, refresh, updateCurrentPokemonId } = useContext(PokemonDataContext);
   const navigation = useNavigation();
 
   const renderPokemonCard = useCallback(
@@ -29,7 +29,6 @@ export default function Home() {
   );
 
   const keyExtractor = useCallback((item) => item.id.toString());
-
   return (
     <>
       <MainAppBar />
@@ -38,6 +37,7 @@ export default function Home() {
           data={pokemons}
           renderItem={renderPokemonCard}
           keyExtractor={keyExtractor}
+          extraData={refresh}
           numColumns={2}
         />
       </SafeAreaView>

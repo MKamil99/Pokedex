@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     width: 170,
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 10,
+    margin: 8,
     borderRadius: CARD_BORDER_RADIUS,
   },
   touch: {
