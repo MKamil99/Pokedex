@@ -40,6 +40,7 @@ export default function SortingMenu({ anchor, visible, onDismiss }) {
     <Menu
       anchor={anchor}
       style={[styles.menu, { width: menuWidth, left: width - menuWidth - 8 }]}
+      contentStyle={styles.menuContent}
       onDismiss={() => onDismiss()}
       visible={visible}
     >
@@ -66,6 +67,7 @@ export default function SortingMenu({ anchor, visible, onDismiss }) {
 }
 
 const APPBAR_HEIGHT = 86;
+const MENU_BORDER_RADIUS = 12;
 
 const styles = StyleSheet.create({
   menu: {
@@ -74,7 +76,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     alignItems: 'stretch',
     justifyContent: 'center',
-    borderRadius: 12,
+    borderRadius: MENU_BORDER_RADIUS,
+  },
+  menuContent: {
+    borderRadius: MENU_BORDER_RADIUS,
   },
   itemContainer: {
     flex: 1,
