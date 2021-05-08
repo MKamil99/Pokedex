@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { Appbar, useTheme } from 'react-native-paper';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
+import { useNavigation } from '@react-navigation/core';
 
 import SortingMenu from './SortingMenu';
 
 export default function MainAppBar() {
   const colors = useTheme().colors;
+  const navigation = useNavigation();
+
   const [isSortingVisible, setIsSortingVisible] = useState(false);
 
   setStatusBarBackgroundColor(colors.primaryDark);
@@ -13,7 +16,7 @@ export default function MainAppBar() {
   return (
     <Appbar.Header>
       <Appbar.Content title='Pokedex' />
-      <Appbar.Action icon='filter-menu' />
+      <Appbar.Action icon='filter-menu' onPress={() => navigation.navigate('Filter')} />
       <SortingMenu
         anchor={
           <Appbar.Action

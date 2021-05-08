@@ -3,7 +3,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { DetailsTabs, HomeTabs } from './src/screens';
+import { DetailsTabs, Filter, HomeTabs } from './src/screens';
 import { CustomTheme } from './src/theme';
 import { PokemonDataProvider } from './src/contexts';
 
@@ -17,6 +17,7 @@ export default function App() {
           <Stack.Navigator headerMode='none' initialRouteName='Home'>
             <Stack.Screen name='Home' component={HomeTabs} />
             <Stack.Screen name='Details' component={DetailsTabs} />
+            <Stack.Screen name='Filter' component={Filter} />
           </Stack.Navigator>
         </NavigationContainer>
       </PaperProvider>

@@ -36,7 +36,6 @@ export const pokemonByNameOrNumber = (input) => {
       response.status == '404' ? 'Not found' : response.json()
     ),
   ])
-
     .then((jsons) => preparePokemonObject(jsons))
     .catch((error) => console.error(error));
 };
@@ -57,7 +56,7 @@ const preparePokemonObject = (jsons) => {
     stats: jsons[0].stats.map((i) => [i.stat.name, i.base_stat]),
     //moves: jsons[0].moves, // This one needs a lot of reshaping, maybe it should be in another function?
     color: jsons[1].color.name,
-    generation: jsons[1].generation.name,
+    generation: jsons[1].generation.name.split('-')[1].toUpperCase(),
     evolution_chain: jsons[1].evolution_chain.url,
   };
 };
