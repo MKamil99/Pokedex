@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useRef, useState } from 'react';
 
 import { morePokemons } from '../Data';
 
@@ -11,6 +11,8 @@ export const PokemonDataProvider = ({ children }) => {
   const [currentPokemon, setCurrentPokemon] = useState();
   const [refresh, setRefresh] = useState(false);
   const [filters, setFilters] = useState(null);
+
+  const isInit = useRef(true);
 
   useEffect(() => {
     morePokemons(1, 100).then((pokemons) => {
@@ -26,8 +28,12 @@ export const PokemonDataProvider = ({ children }) => {
   }, [currentPokemonId]);
 
   useEffect(() => {
-    filterPokemons();
-    setRefresh((item) => !item);
+    if (isInit.current) {
+      isInit.current = false;
+    } else {
+      filterPokemons();
+      setRefresh((item) => !item);
+    }
   }, [filters]);
 
   const resetCurrentPokemon = () => setCurrentPokemon(null);
