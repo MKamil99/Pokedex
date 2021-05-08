@@ -36,7 +36,6 @@ export const pokemonByNameOrNumber = (input) => {
       response.status == '404' ? 'Not found' : response.json()
     ),
   ])
-    .then()
     .then((jsons) => preparePokemonObject(jsons))
     .catch((error) => console.error(error));
 };

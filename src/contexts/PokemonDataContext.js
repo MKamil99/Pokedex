@@ -26,11 +26,7 @@ export const PokemonDataProvider = ({ children }) => {
   }, [currentPokemonId]);
 
   useEffect(() => {
-    if (filters) {
-      filterPokemons();
-    } else {
-      setPokemons(allPokemons);
-    }
+    filterPokemons();
     setRefresh((item) => !item);
   }, [filters]);
 
@@ -54,7 +50,7 @@ export const PokemonDataProvider = ({ children }) => {
         break;
     }
 
-    if (filters) {
+    if (filters.generations.length > 0 || filters.types.length > 0) {
       filterPokemons();
     } else {
       setPokemons(allPokemons);
@@ -63,11 +59,7 @@ export const PokemonDataProvider = ({ children }) => {
   };
 
   const updatePokemonFilters = (generations, types) => {
-    if (generations.length === 0 && types.length === 0) {
-      setFilters(null);
-    } else {
-      setFilters({ generations, types });
-    }
+    setFilters({ generations, types });
   };
 
   const filterPokemons = () => {
