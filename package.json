@@ -10,6 +10,7 @@
     "format-staged": "pretty-quick --staged"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.0",
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/material-bottom-tabs": "^6.0.0-next.2",
     "@react-navigation/native": "^5.9.4",

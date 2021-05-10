@@ -6,11 +6,11 @@ import PokemonCard from './PokemonCard';
 import { PokemonDataContext } from '../contexts/PokemonDataContext';
 
 export default function PokemonsList({ pokemons, refresh }) {
-  const { updateCurrentPokemonId } = useContext(PokemonDataContext);
+  const { toggleFavourite, updateCurrentPokemonId } = useContext(PokemonDataContext);
   const navigation = useNavigation();
 
   const renderPokemonCard = useCallback(
-    ({ item: { id, name, height, weight, sprite, types, color } }) => (
+    ({ item: { id, isFavourite, name, height, weight, sprite, types, color } }) => (
       <PokemonCard
         onPress={() => {
           navigation.navigate('Details');
@@ -23,6 +23,8 @@ export default function PokemonsList({ pokemons, refresh }) {
         sprite={sprite}
         types={types}
         color={color}
+        isFavourite={isFavourite}
+        onPressFavourite={() => toggleFavourite(id)}
       />
     ),
     []

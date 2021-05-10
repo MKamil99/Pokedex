@@ -31,8 +31,8 @@ const sortingParams = [
 ];
 
 export default function SortingMenu({ anchor, visible, onDismiss }) {
-  const [radioValue, setRadioValue] = useState();
-  const { sortPokemons } = useContext(PokemonDataContext);
+  const { sortingValue, updateSortingValue } = useContext(PokemonDataContext);
+
   const { width } = Dimensions.get('window');
   const menuWidth = 200;
 
@@ -48,11 +48,10 @@ export default function SortingMenu({ anchor, visible, onDismiss }) {
         <Text style={styles.mainTitle}>sort by</Text>
         <RadioButton.Group
           onValueChange={(value) => {
-            setRadioValue(value);
-            sortPokemons(value);
+            updateSortingValue(value);
             onDismiss();
           }}
-          value={radioValue}
+          value={sortingValue}
         >
           {sortingParams.map((item, index) => (
             <React.Fragment key={index}>

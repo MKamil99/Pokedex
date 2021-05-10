@@ -5,7 +5,16 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import PokemonType from './PokemonType';
 
-export default function PokemonCard({ onPress, id, color, name, sprite, types }) {
+export default function PokemonCard({
+  onPress,
+  onPressFavourite,
+  isFavourite,
+  id,
+  color,
+  name,
+  sprite,
+  types,
+}) {
   const colors = useTheme().colors;
   const cardColor = colors.pokemon.background[color];
 
@@ -18,9 +27,10 @@ export default function PokemonCard({ onPress, id, color, name, sprite, types })
           </Text>
           <MaterialCommunityIcons
             style={styles.favourite}
-            name='heart-outline'
+            name={isFavourite ? 'heart' : 'heart-outline'}
             size={24}
             color='black'
+            onPress={() => onPressFavourite()}
           />
           <View style={styles.innerContainer}>
             <Image style={styles.image} source={{ uri: sprite }} />
