@@ -44,23 +44,21 @@ export default function SortingMenu({ anchor, visible, onDismiss }) {
       onDismiss={() => onDismiss()}
       visible={visible}
     >
-      <View style={styles.container}>
-        <Text style={styles.mainTitle}>sort by</Text>
-        <RadioButton.Group
-          onValueChange={(value) => {
-            updateSortingValue(value);
-            onDismiss();
-          }}
-          value={sortingValue}
-        >
-          {sortingParams.map((item, index) => (
-            <React.Fragment key={index}>
-              <SortingParam name={item.name} value={item.value} />
-              {index != sortingParams.length - 1 && <Divider style={styles.divider} />}
-            </React.Fragment>
-          ))}
-        </RadioButton.Group>
-      </View>
+      <Text style={styles.mainTitle}>sort by</Text>
+      <RadioButton.Group
+        onValueChange={(value) => {
+          updateSortingValue(value);
+          onDismiss();
+        }}
+        value={sortingValue}
+      >
+        {sortingParams.map((item, index) => (
+          <React.Fragment key={index}>
+            <SortingParam name={item.name} value={item.value} />
+            {index != sortingParams.length - 1 && <Divider style={styles.divider} />}
+          </React.Fragment>
+        ))}
+      </RadioButton.Group>
     </Menu>
   );
 }
@@ -72,13 +70,14 @@ const styles = StyleSheet.create({
   menu: {
     position: 'absolute',
     top: APPBAR_HEIGHT + 8,
-    backgroundColor: 'white',
     alignItems: 'stretch',
     justifyContent: 'center',
     borderRadius: MENU_BORDER_RADIUS,
   },
   menuContent: {
     borderRadius: MENU_BORDER_RADIUS,
+    flex: 1,
+    paddingHorizontal: 18,
   },
   itemContainer: {
     flex: 1,
@@ -108,9 +107,5 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 12,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 18,
   },
 });
