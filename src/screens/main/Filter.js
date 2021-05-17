@@ -64,6 +64,7 @@ export default function Filter() {
         .map((item) => item.value);
 
       const typeValues = types.filter((item) => item.isSelected).map((item) => item.value);
+
       updatePokemonFilters(generationValues, typeValues);
     });
   }, []);

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Divider, Menu, RadioButton, Text, useTheme } from 'react-native-paper';
 
@@ -31,8 +31,8 @@ const sortingParams = [
 ];
 
 export default function SortingMenu({ anchor, visible, onDismiss }) {
-  const [radioValue, setRadioValue] = useState();
-  const { sortPokemons } = useContext(PokemonDataContext);
+  const { sortingValue, updateSortingValue } = useContext(PokemonDataContext);
+
   const { width } = Dimensions.get('window');
   const menuWidth = 200;
 
@@ -44,24 +44,21 @@ export default function SortingMenu({ anchor, visible, onDismiss }) {
       onDismiss={() => onDismiss()}
       visible={visible}
     >
-      <View style={styles.container}>
-        <Text style={styles.mainTitle}>sort by</Text>
-        <RadioButton.Group
-          onValueChange={(value) => {
-            setRadioValue(value);
-            sortPokemons(value);
-            onDismiss();
-          }}
-          value={radioValue}
-        >
-          {sortingParams.map((item, index) => (
-            <React.Fragment key={index}>
-              <SortingParam name={item.name} value={item.value} />
-              {index != sortingParams.length - 1 && <Divider style={styles.divider} />}
-            </React.Fragment>
-          ))}
-        </RadioButton.Group>
-      </View>
+      <Text style={styles.mainTitle}>sort by</Text>
+      <RadioButton.Group
+        onValueChange={(value) => {
+          updateSortingValue(value);
+          onDismiss();
+        }}
+        value={sortingValue}
+      >
+        {sortingParams.map((item, index) => (
+          <React.Fragment key={index}>
+            <SortingParam name={item.name} value={item.value} />
+            {index != sortingParams.length - 1 && <Divider style={styles.divider} />}
+          </React.Fragment>
+        ))}
+      </RadioButton.Group>
     </Menu>
   );
 }
@@ -73,13 +70,14 @@ const styles = StyleSheet.create({
   menu: {
     position: 'absolute',
     top: APPBAR_HEIGHT + 8,
-    backgroundColor: 'white',
     alignItems: 'stretch',
     justifyContent: 'center',
     borderRadius: MENU_BORDER_RADIUS,
   },
   menuContent: {
     borderRadius: MENU_BORDER_RADIUS,
+    flex: 1,
+    paddingHorizontal: 18,
   },
   itemContainer: {
     flex: 1,
@@ -109,9 +107,5 @@ const styles = StyleSheet.create({
   },
   divider: {
     marginVertical: 12,
-  },
-  container: {
-    flex: 1,
-    paddingHorizontal: 18,
   },
 });

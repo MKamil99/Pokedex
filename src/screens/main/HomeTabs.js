@@ -2,8 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { useTheme } from 'react-native-paper';
 
-import Favourites from './Favourites';
-import Home from './Home';
+import { Favourites, Home } from './Main';
 import { PokemonDataContext } from '../../contexts';
 
 const Tab = createMaterialBottomTabNavigator();
