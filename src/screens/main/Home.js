@@ -13,7 +13,7 @@ export default function Home() {
     ({ item: { id, name, height, weight, sprite, types, color, loaded } }) => (
       <PokemonCard
         onPress={() => {
-          if (loaded == true) {
+          if (loaded) {
             navigation.navigate('Details');
             updateCurrentPokemonId(id);
           }

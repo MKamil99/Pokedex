@@ -1,19 +1,12 @@
-import React, { useEffect, useContext } from 'react';
+import React from 'react';
 import { Image, StyleSheet, View } from 'react-native';
 import { Text, Surface, useTheme, TouchableRipple } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 import PokemonType from './PokemonType';
-import { pokemonByNameOrNumber } from '../contexts/PokeApiData';
-import { PokemonDataContext } from '../contexts/PokemonDataContext';
 
 export default function PokemonCard({ onPress, id, color, name, sprite, types }) {
   const colors = useTheme().colors;
-
-  const { updatePokemonObject } = useContext(PokemonDataContext);
-  useEffect(() => {
-    pokemonByNameOrNumber(id).then((pokemon) => updatePokemonObject(pokemon));
-  }, []);
 
   return (
     <Surface style={[styles.container, { backgroundColor: colors.pokemon.background[color] }]}>

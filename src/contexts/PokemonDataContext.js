@@ -1,16 +1,17 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 
-import { allPokemonsFromAPI } from './PokeApiData';
+import { allPokemonsFromAPI, morePokemons } from './PokeApiData';
 
 export const PokemonDataContext = createContext();
 
 export const PokemonDataProvider = ({ children }) => {
-  const [allPokemons, setAllPokemons] = useState();
-  const [pokemons, setPokemons] = useState();
-  const [currentPokemonId, setCurrentPokemonId] = useState();
-  const [currentPokemon, setCurrentPokemon] = useState();
+  const [allPokemons, setAllPokemons] = useState([]);
+  const [pokemons, setPokemons] = useState([]);
+  const [currentPokemonId, setCurrentPokemonId] = useState(null);
+  const [currentPokemon, setCurrentPokemon] = useState(null);
   const [refresh, setRefresh] = useState(false);
   const [filters, setFilters] = useState({ generations: [], types: [] });
+  const [renderedPokemonId, setRenderedPokemonId] = useState(0);
 
   const isInit = useRef(true);
 
@@ -18,8 +19,22 @@ export const PokemonDataProvider = ({ children }) => {
     allPokemonsFromAPI().then((pokemons) => {
       setPokemons(pokemons);
       setAllPokemons(pokemons);
+      setRenderedPokemonId(1);
     });
   }, []);
+
+  const step = 50;
+  useEffect(() => {
+    if (
+      allPokemons.length > 0 &&
+      renderedPokemonId > 0 &&
+      renderedPokemonId <= allPokemons[allPokemons.length - 1].id
+    ) {
+      morePokemons(renderedPokemonId, renderedPokemonId + step - 1)
+        .then((pokemons) => pokemons.map((pokemon) => updatePokemonObject(pokemon)))
+        .then(() => setRenderedPokemonId(renderedPokemonId + step));
+    }
+  }, [renderedPokemonId]);
 
   useEffect(() => {
     if (pokemons) {
@@ -39,9 +54,12 @@ export const PokemonDataProvider = ({ children }) => {
   const resetCurrentPokemon = () => setCurrentPokemonId(null);
 
   const updatePokemonObject = (newPokemonObject) => {
-    let index = pokemons.indexOf(pokemons.find((pokemon) => pokemon.id == newPokemonObject.id));
-    pokemons[index] = newPokemonObject;
-    // TO DO: refresh item
+    let index = pokemons.findIndex((pokemon) => pokemon.id == newPokemonObject.id);
+    if (index >= 0) {
+      let newPokemons = pokemons;
+      newPokemons[index] = newPokemonObject;
+      setPokemons(newPokemons);
+    }
   };
 
   const updateCurrentPokemonId = (id) => setCurrentPokemonId(id);
