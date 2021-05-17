@@ -48,6 +48,7 @@ const preparePokemonObject = (jsons) => {
   // Pokemon has been found:
   return {
     id: jsons[0].id,
+    isFavourite: false,
     name: jsons[0].name.charAt(0).toUpperCase() + jsons[0].name.slice(1),
     height: Number(jsons[0].height) / 10,
     weight: Number(jsons[0].weight) / 10,
