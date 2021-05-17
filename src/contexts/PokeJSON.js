@@ -6,6 +6,7 @@ export const preparePokemonObject = (jsons) => {
   // Pokemon has been found:
   return {
     id: jsons[0].id,
+    isFavourite: false,
     name: jsons[0].name.charAt(0).toUpperCase() + jsons[0].name.slice(1),
     height: Number(jsons[0].height) / 10,
     weight: Number(jsons[0].weight) / 10,
@@ -24,6 +25,7 @@ export const preparePokemonObject = (jsons) => {
 export const prepareBasicPokemonObject = (pokemon, pokemonURL) => {
   return {
     id: Number(pokemon.url.replace(pokemonURL, '').replace('/', '')),
+    isFavourite: false,
     name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
     sprite: require('../../assets/placeholder.png'), // pokeball
     types: [],

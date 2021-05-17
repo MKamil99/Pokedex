@@ -8,6 +8,7 @@ export const PokemonDataContext = createContext();
 export const PokemonDataProvider = ({ children }) => {
   const [allPokemons, setAllPokemons] = useState([]);
   const [pokemons, setPokemons] = useState([]);
+  const [favouritePokemons, setFavouritePokemons] = useState([]);
 
   const [currentPokemonId, setCurrentPokemonId] = useState(null);
   const [currentPokemon, setCurrentPokemon] = useState(null);
@@ -24,10 +25,10 @@ export const PokemonDataProvider = ({ children }) => {
   useEffect(() => {
     allPokemonsFromAPI().then((pokemons) => {
       loadPokemons(pokemons);
-      setRenderedPokemonId(1);
     });
   }, []);
 
+  // re-render pokemons batch by batch
   const step = 50;
   useEffect(() => {
     if (
@@ -37,6 +38,7 @@ export const PokemonDataProvider = ({ children }) => {
     ) {
       morePokemons(renderedPokemonId, renderedPokemonId + step - 1)
         .then((pokemons) => pokemons.map((pokemon) => updatePokemonObject(pokemon)))
+        .then(() => updateFavouritePokemons(allPokemons))
         .then(() => setRenderedPokemonId(renderedPokemonId + step));
     }
   }, [renderedPokemonId]);
@@ -73,14 +75,18 @@ export const PokemonDataProvider = ({ children }) => {
   const updateFavouritePokemons = (pokemons) =>
     setFavouritePokemons(pokemons.filter((item) => item.isFavourite));
 
+  // update pokemon's basic JSON with full JSON
   const updatePokemonObject = (newPokemonObject) => {
-    let index = pokemons.findIndex((pokemon) => pokemon.id == newPokemonObject.id);
+    let index = allPokemons.findIndex((pokemon) => pokemon.id == newPokemonObject.id);
     if (index >= 0) {
-      let newPokemons = pokemons;
+      let newPokemons = allPokemons;
+      let isFavourite = newPokemons[index].isFavourite;
       newPokemons[index] = newPokemonObject;
+      newPokemons[index].isFavourite = isFavourite;
       setPokemons(newPokemons);
     }
   };
+
   const updateSortingValue = (value) => setSortingValue(value);
 
   const updateCurrentPokemonId = (id) => setCurrentPokemonId(id);
@@ -125,6 +131,7 @@ export const PokemonDataProvider = ({ children }) => {
     setPokemons(pokemonsToLoad);
     setAllPokemons(pokemonsToLoad);
     updateFavouritePokemons(pokemons);
+    setRenderedPokemonId(1);
   };
 
   // AsyncStorage functionality to load favourite pokemons from local storage
@@ -198,7 +205,7 @@ export const PokemonDataProvider = ({ children }) => {
           } else if (filters.types.length > 0) {
             return item.types.some((type) => filters.types.includes(type));
           } else {
-            throw 'Arrays cannot be empty';
+            return sortedPokemons;
           }
         })
       );
@@ -218,7 +225,7 @@ export const PokemonDataProvider = ({ children }) => {
             } else if (filters.types.length > 0) {
               return item.types.some((type) => filters.types.includes(type));
             } else {
-              throw 'Arrays cannot be empty';
+              return sortedPokemons;
             }
           })
       );
