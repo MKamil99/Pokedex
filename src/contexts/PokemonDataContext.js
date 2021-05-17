@@ -8,24 +8,26 @@ export const PokemonDataContext = createContext();
 export const PokemonDataProvider = ({ children }) => {
   const [allPokemons, setAllPokemons] = useState();
   const [pokemons, setPokemons] = useState();
-  const [favouritesPokemons, setFavouritesPokemons] = useState();
+  const [favouritePokemons, setFavouritePokemons] = useState();
 
   const [currentPokemonId, setCurrentPokemonId] = useState();
   const [currentPokemon, setCurrentPokemon] = useState();
   const [refresh, setRefresh] = useState(false);
 
   const [filters, setFilters] = useState(null);
-  const [sortingValue, setSortingValue] = useState();
+  const [sortingValue, setSortingValue] = useState('ascending-id');
 
   const isPokemonsInit = useRef(true);
   const isSortingInit = useRef(true);
 
+  // load pokemons on init app
   useEffect(() => {
     morePokemons(1, 100).then((pokemons) => {
       loadPokemons(pokemons);
     });
   }, []);
 
+  // sort pokemons whenever sortingValue changes
   useEffect(() => {
     if (isSortingInit.current) {
       isSortingInit.current = false;
@@ -34,12 +36,14 @@ export const PokemonDataProvider = ({ children }) => {
     }
   }, [sortingValue]);
 
+  // set current pokemon for detail view whenever currentPokemonId changes
   useEffect(() => {
     if (pokemons) {
       setCurrentPokemon(pokemons.find((element) => element.id == currentPokemonId));
     }
   }, [currentPokemonId]);
 
+  // filter pokemons whenever filter or allPokemons array change
   useEffect(() => {
     if (isPokemonsInit.current) {
       isPokemonsInit.current = false;
@@ -49,16 +53,18 @@ export const PokemonDataProvider = ({ children }) => {
     }
   }, [filters, allPokemons]);
 
-  const resetCurrentPokemon = () => setCurrentPokemon(null);
+  // reset currentPokemon to prevent in detail view loading previously chosen pokemon
+  const resetCurrentPokemon = () => setCurrentPokemonId(null);
 
   const updateFavouritePokemons = (pokemons) =>
-    setFavouritesPokemons(pokemons.filter((item) => item.isFavourite));
+    setFavouritePokemons(pokemons.filter((item) => item.isFavourite));
 
   const updateSortingValue = (value) => setSortingValue(value);
 
   const updateCurrentPokemonId = (id) => setCurrentPokemonId(id);
 
   const updatePokemonFilters = (generations, types) => {
+    // if we pass empty arrays we want to set filters to null
     if (generations.length === 0 && types.length === 0) {
       setFilters(null);
     } else {
@@ -66,6 +72,7 @@ export const PokemonDataProvider = ({ children }) => {
     }
   };
 
+  // change pokemon with given id to favourite one and also update favourites array on local storage
   const toggleFavourite = (id) => {
     setAllPokemons((pokemons) => {
       const editedPokemons = pokemons.map((pokemon) => {
@@ -79,6 +86,7 @@ export const PokemonDataProvider = ({ children }) => {
     });
   };
 
+  // load favourite pokemons from local storage and init them (used in useEffect)
   const loadPokemons = async (pokemons) => {
     const ids = await loadFavouritesIds(pokemons);
     let pokemonsToLoad = null;
@@ -97,6 +105,7 @@ export const PokemonDataProvider = ({ children }) => {
     updateFavouritePokemons(pokemons);
   };
 
+  // AsyncStorage functionality to load favourite pokemons from local storage
   const loadFavouritesIds = async () => {
     try {
       const json = await AsyncStorage.getItem('favouritesIds');
@@ -111,6 +120,7 @@ export const PokemonDataProvider = ({ children }) => {
     }
   };
 
+  // AsyncStorage functionality to save favourite pokemons from local storage
   const saveFavouritesIds = async (pokemons) => {
     try {
       const json = JSON.stringify(
@@ -122,6 +132,7 @@ export const PokemonDataProvider = ({ children }) => {
     }
   };
 
+  // sorting pokemons (used in useEffect)
   const sortPokemons = () => {
     let sortedPokemons = allPokemons;
     switch (sortingValue) {
@@ -140,15 +151,19 @@ export const PokemonDataProvider = ({ children }) => {
     }
 
     setAllPokemons(sortedPokemons);
-    filterPokemons(sortedPokemons);
-    setRefresh((item) => !item);
+    filterPokemons(sortedPokemons); // we need to filter pokemons again when we sort pokemons
+    setRefresh((item) => !item); // after everything is set we refresh data to indicate change to flatList
   };
 
   const filterPokemons = (sortedPokemons) => {
     if (!filters) {
+      // if there are no filters we just want to set pokemons
       setPokemons(sortedPokemons);
       updateFavouritePokemons(sortedPokemons);
     } else {
+      // if there are filters we are filtering based on given filters
+
+      // first we filter pokemons on home view
       setPokemons(
         sortedPokemons.filter((item) => {
           if (filters.generations.length > 0 && filters.types.length > 0) {
@@ -165,7 +180,9 @@ export const PokemonDataProvider = ({ children }) => {
           }
         })
       );
-      setFavouritesPokemons(
+
+      // we also filter pokemon on favourites view
+      setFavouritePokemons(
         sortedPokemons
           .filter((item) => item.isFavourite)
           .filter((item) => {
@@ -190,7 +207,7 @@ export const PokemonDataProvider = ({ children }) => {
     <PokemonDataContext.Provider
       value={{
         currentPokemon,
-        favouritesPokemons,
+        favouritePokemons,
         pokemons,
         refresh,
         sortingValue,

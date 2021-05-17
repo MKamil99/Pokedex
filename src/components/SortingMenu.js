@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { Divider, Menu, RadioButton, Text, useTheme } from 'react-native-paper';
 

@@ -27,6 +27,6 @@ export const Home = () => {
   return <Template pokemons={pokemons} refresh={refresh} />;
 };
 export const Favourites = () => {
-  const { favouritesPokemons, refresh } = useContext(PokemonDataContext);
-  return <Template pokemons={favouritesPokemons} refresh={refresh} />;
+  const { favouritePokemons, refresh } = useContext(PokemonDataContext);
+  return <Template pokemons={favouritePokemons} refresh={refresh} />;
 };
