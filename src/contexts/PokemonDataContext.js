@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 
-import { morePokemons } from '../Data';
+import { morePokemons } from './PokeApiData';
 
 export const PokemonDataContext = createContext();
 
