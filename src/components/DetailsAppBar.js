@@ -23,7 +23,7 @@ export default function DetailsAppBar({ color, sprite }) {
           Pokedex
         </Button>
       </View>
-      <Image style={styles.image} source={{ uri: sprite }} />
+      <Image style={styles.image} source={sprite} />
     </Surface>
   );
 }

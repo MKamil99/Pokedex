@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 
-import { morePokemons } from './PokeApiData';
+import { allPokemonsFromAPI } from './PokeApiData';
 
 export const PokemonDataContext = createContext();
 
@@ -10,12 +10,12 @@ export const PokemonDataProvider = ({ children }) => {
   const [currentPokemonId, setCurrentPokemonId] = useState();
   const [currentPokemon, setCurrentPokemon] = useState();
   const [refresh, setRefresh] = useState(false);
-  const [filters, setFilters] = useState(null);
+  const [filters, setFilters] = useState({ generations: [], types: [] });
 
   const isInit = useRef(true);
 
   useEffect(() => {
-    morePokemons(1, 100).then((pokemons) => {
+    allPokemonsFromAPI().then((pokemons) => {
       setPokemons(pokemons);
       setAllPokemons(pokemons);
     });
@@ -36,7 +36,13 @@ export const PokemonDataProvider = ({ children }) => {
     }
   }, [filters]);
 
-  const resetCurrentPokemon = () => setCurrentPokemon(null);
+  const resetCurrentPokemon = () => setCurrentPokemonId(null);
+
+  const updatePokemonObject = (newPokemonObject) => {
+    let index = pokemons.indexOf(pokemons.find((pokemon) => pokemon.id == newPokemonObject.id));
+    pokemons[index] = newPokemonObject;
+    // TO DO: refresh item
+  };
 
   const updateCurrentPokemonId = (id) => setCurrentPokemonId(id);
 
@@ -97,6 +103,7 @@ export const PokemonDataProvider = ({ children }) => {
         resetCurrentPokemon,
         sortPokemons,
         updateCurrentPokemonId,
+        updatePokemonObject,
       }}
     >
       {children}

@@ -10,11 +10,13 @@ export default function Home() {
   const navigation = useNavigation();
 
   const renderPokemonCard = useCallback(
-    ({ item: { id, name, height, weight, sprite, types, color } }) => (
+    ({ item: { id, name, height, weight, sprite, types, color, loaded } }) => (
       <PokemonCard
         onPress={() => {
-          navigation.navigate('Details');
-          updateCurrentPokemonId(id);
+          if (loaded == true) {
+            navigation.navigate('Details');
+            updateCurrentPokemonId(id);
+          }
         }}
         id={id}
         name={name}

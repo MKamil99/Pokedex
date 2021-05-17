@@ -1,6 +1,6 @@
 // This file contains all methods responsible for communicating with PokeApi.
 
-import { preparePokemonObject } from './PokeJSON';
+import { prepareBasicPokemonObject, preparePokemonObject } from './PokeJSON';
 
 const mainURL = 'https://pokeapi.co/api/v2/';
 const pokemonURL = mainURL + 'pokemon/';
@@ -11,12 +11,8 @@ const allPokemonsURL = pokemonURL + '?limit=1118';
 export const allPokemonsFromAPI = () => {
   return fetch(allPokemonsURL)
     .then((response) => response.json())
-    .then((json) =>
-      json.results.map((pokemon) => ({
-        id: Number(pokemon.url.replace(pokemonURL, '').replace('/', '')),
-        name: pokemon.name,
-      }))
-    )
+    .then((json) => json.results.map((pokemon) => prepareBasicPokemonObject(pokemon, pokemonURL)))
+    .then((pokemons) => pokemons.filter((value) => value.id < 10000)) // removing mega-evolutions
     .catch((error) => console.log(error));
 };
 
