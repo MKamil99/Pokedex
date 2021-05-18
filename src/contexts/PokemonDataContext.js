@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { allPokemonsFromAPI, morePokemons } from './PokeApiData';
+import { loadFavouritesIds, saveFavouritesIds } from './StorageActions';
 
 export const PokemonDataContext = createContext();
 
@@ -36,9 +36,15 @@ export const PokemonDataProvider = ({ children }) => {
       renderedPokemonId > 0 &&
       renderedPokemonId <= allPokemons[allPokemons.length - 1].id
     ) {
+      // download pokemons from API:
       morePokemons(renderedPokemonId, renderedPokemonId + step - 1)
+        // re-render main list:
         .then((pokemons) => pokemons.map((pokemon) => updatePokemonObject(pokemon)))
+        // re-render favourite list:
         .then(() => updateFavouritePokemons(allPokemons))
+        // add new tiles (if is filtered):
+        .then(() => filterPokemons(allPokemons))
+        // go to next batch:
         .then(() => setRenderedPokemonId(renderedPokemonId + step));
     }
   }, [renderedPokemonId]);
@@ -72,6 +78,7 @@ export const PokemonDataProvider = ({ children }) => {
   // reset currentPokemon to prevent in detail view loading previously chosen pokemon
   const resetCurrentPokemon = () => setCurrentPokemonId(null);
 
+  // update list of favourite pokemons
   const updateFavouritePokemons = (pokemons) =>
     setFavouritePokemons(pokemons.filter((item) => item.isFavourite));
 
@@ -83,22 +90,18 @@ export const PokemonDataProvider = ({ children }) => {
       let isFavourite = newPokemons[index].isFavourite;
       newPokemons[index] = newPokemonObject;
       newPokemons[index].isFavourite = isFavourite;
-      setPokemons(newPokemons);
+      setAllPokemons(newPokemons);
     }
   };
 
+  // update sorting value to sort the lists
   const updateSortingValue = (value) => setSortingValue(value);
 
+  // update current pokemon_id to trigger use effect with setting current pokemon
   const updateCurrentPokemonId = (id) => setCurrentPokemonId(id);
 
-  const updatePokemonFilters = (generations, types) => {
-    // if we pass empty arrays we want to set filters to null
-    if (generations.length === 0 && types.length === 0) {
-      setFilters(null);
-    } else {
-      setFilters({ generations, types });
-    }
-  };
+  // update filters to show only specific pokemons
+  const updatePokemonFilters = (generations, types) => setFilters({ generations, types });
 
   // change pokemon with given id to favourite one and also update favourites array on local storage
   const toggleFavourite = (id) => {
@@ -134,33 +137,6 @@ export const PokemonDataProvider = ({ children }) => {
     setRenderedPokemonId(1);
   };
 
-  // AsyncStorage functionality to load favourite pokemons from local storage
-  const loadFavouritesIds = async () => {
-    try {
-      const json = await AsyncStorage.getItem('favouritesIds');
-      if (json === null) {
-        return null;
-      }
-      const ids = JSON.parse(json);
-      return ids;
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
-  };
-
-  // AsyncStorage functionality to save favourite pokemons from local storage
-  const saveFavouritesIds = async (pokemons) => {
-    try {
-      const json = JSON.stringify(
-        pokemons.filter((pokemon) => pokemon.isFavourite).map((pokemon) => pokemon.id)
-      );
-      await AsyncStorage.setItem('favouritesIds', json);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   // sorting pokemons (used in useEffect)
   const sortPokemons = () => {
     let sortedPokemons = allPokemons;
@@ -184,8 +160,9 @@ export const PokemonDataProvider = ({ children }) => {
     setRefresh((item) => !item); // after everything is set we refresh data to indicate change to flatList
   };
 
+  // filtering pokemons
   const filterPokemons = (sortedPokemons) => {
-    if (!filters) {
+    if (filters.generations.length == 0 && filters.types == 0) {
       // if there are no filters we just want to set pokemons
       setPokemons(sortedPokemons);
       updateFavouritePokemons(sortedPokemons);
