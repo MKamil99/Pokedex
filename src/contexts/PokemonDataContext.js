@@ -1,3 +1,8 @@
+// TO DO:
+// 1. ALLPOKEMONS IS AN OLD LIST, NOT NEW ONE, SO IT SHOULDN'T BE USED IN RE-RENDER LOOP
+// 2. SORTING BEFORE RE-RENDER LOOP ENDS CAUSES IN INTERRUPTING THE LOOP
+// 3. PLACEHOLDER-CARDS ARE PROBABLY NOT NECESSARY
+
 import React, { createContext, useEffect, useRef, useState } from 'react';
 
 import { allPokemonsFromAPI, morePokemons } from './PokeApiData';
@@ -29,7 +34,7 @@ export const PokemonDataProvider = ({ children }) => {
   }, []);
 
   // re-render pokemons batch by batch
-  const step = 50;
+  const step = 200;
   useEffect(() => {
     if (
       allPokemons.length > 0 &&

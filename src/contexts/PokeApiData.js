@@ -5,7 +5,7 @@ import { prepareBasicPokemonObject, preparePokemonObject } from './PokeJSON';
 const mainURL = 'https://pokeapi.co/api/v2/';
 const pokemonURL = mainURL + 'pokemon/';
 const speciesURL = mainURL + 'pokemon-species/';
-const allPokemonsURL = pokemonURL + '?limit=1118';
+const allPokemonsURL = pokemonURL + '?limit=10000';
 
 // List of all pokemons:
 export const allPokemonsFromAPI = () => {
