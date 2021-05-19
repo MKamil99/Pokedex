@@ -13,11 +13,11 @@ export const preparePokemonObject = (jsons) => {
     sprite: { uri: jsons[0].sprites.other['official-artwork'].front_default },
     types: jsons[0].types.map((i) => i.type).map((i) => i.name),
     stats: jsons[0].stats.map((i) => [i.stat.name, i.base_stat]),
-    //moves: jsons[0].moves, // This one needs a lot of reshaping, maybe it should be in another function?
+    moves: jsons[0].moves, // This one needs a lot of reshaping
     color: jsons[1].color.name,
     generation: jsons[1].generation.name.split('-')[1].toUpperCase(),
     evolution_chain: jsons[1].evolution_chain.url,
-    loaded: true,
+    isLoaded: true,
   };
 };
 
@@ -30,6 +30,6 @@ export const prepareBasicPokemonObject = (pokemon, pokemonURL) => {
     sprite: require('../../assets/placeholder.png'), // pokeball
     types: [],
     color: 'white',
-    loaded: false,
+    isLoaded: false,
   };
 };

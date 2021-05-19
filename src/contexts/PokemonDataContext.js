@@ -1,8 +1,3 @@
-// TO DO:
-// 1. ALLPOKEMONS IS AN OLD LIST, NOT NEW ONE, SO IT SHOULDN'T BE USED IN RE-RENDER LOOP
-// 2. SORTING BEFORE RE-RENDER LOOP ENDS CAUSES IN INTERRUPTING THE LOOP
-// 3. PLACEHOLDER-CARDS ARE PROBABLY NOT NECESSARY
-
 import React, { createContext, useEffect, useRef, useState } from 'react';
 
 import { allPokemonsFromAPI, morePokemons } from './PokeApiData';
@@ -28,13 +23,24 @@ export const PokemonDataProvider = ({ children }) => {
 
   // load pokemons on init app
   useEffect(() => {
-    allPokemonsFromAPI().then((pokemons) => {
+    // old variant:
+    morePokemons(1, 898).then((pokemons) => {
       loadPokemons(pokemons);
     });
+
+    // new variant:
+    // allPokemonsFromAPI().then((pokemons) => {
+    //  loadPokemons(pokemons, true);
+    // });
+
+    // mixed variant:
+    //allPokemonsFromAPI()
+    //.then((pokemons) => morePokemons(1, pokemons.length))
+    //.then((pokemons) => loadPokemons(pokemons));
   }, []);
 
-  // re-render pokemons batch by batch
-  const step = 200;
+  // re-render pokemons batch by batch (new variant, uses allPokemonsFromAPI)
+  const step = 300;
   useEffect(() => {
     if (
       allPokemons.length > 0 &&
@@ -45,10 +51,6 @@ export const PokemonDataProvider = ({ children }) => {
       morePokemons(renderedPokemonId, renderedPokemonId + step - 1)
         // re-render main list:
         .then((pokemons) => pokemons.map((pokemon) => updatePokemonObject(pokemon)))
-        // re-render favourite list:
-        .then(() => updateFavouritePokemons(allPokemons))
-        // add new tiles (if is filtered):
-        .then(() => filterPokemons(allPokemons))
         // go to next batch:
         .then(() => setRenderedPokemonId(renderedPokemonId + step));
     }
@@ -123,7 +125,7 @@ export const PokemonDataProvider = ({ children }) => {
   };
 
   // load favourite pokemons from local storage and init them (used in useEffect)
-  const loadPokemons = async (pokemons) => {
+  const loadPokemons = async (pokemons, startRerendering = false) => {
     const ids = await loadFavouritesIds(pokemons);
     let pokemonsToLoad = null;
     if (ids) {
@@ -139,7 +141,7 @@ export const PokemonDataProvider = ({ children }) => {
     setPokemons(pokemonsToLoad);
     setAllPokemons(pokemonsToLoad);
     updateFavouritePokemons(pokemons);
-    setRenderedPokemonId(1);
+    if (startRerendering) setRenderedPokemonId(1);
   };
 
   // sorting pokemons (used in useEffect)

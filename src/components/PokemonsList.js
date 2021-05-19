@@ -10,10 +10,10 @@ export default function PokemonsList({ pokemons, refresh }) {
   const navigation = useNavigation();
 
   const renderPokemonCard = useCallback(
-    ({ item: { id, isFavourite, name, height, weight, sprite, types, color, loaded } }) => (
+    ({ item: { id, isFavourite, name, height, weight, sprite, types, color, isLoaded } }) => (
       <PokemonCard
         onPress={() => {
-          if (loaded) {
+          if (isLoaded) {
             navigation.navigate('Details');
             updateCurrentPokemonId(id);
           }
