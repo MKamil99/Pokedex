@@ -16,10 +16,9 @@ export default function PokemonCard({
   types,
 }) {
   const colors = useTheme().colors;
-  const cardColor = colors.pokemon.background[color];
 
   return (
-    <Surface style={[styles.container, { backgroundColor: cardColor }]}>
+    <Surface style={[styles.container, { backgroundColor: colors.pokemon.background[color] }]}>
       <TouchableRipple borderless={true} style={styles.touch} onPress={() => onPress()}>
         <>
           <Text style={[styles.id, { color: 'black' }]}>
@@ -33,7 +32,7 @@ export default function PokemonCard({
             onPress={() => onPressFavourite()}
           />
           <View style={styles.innerContainer}>
-            <Image style={styles.image} source={{ uri: sprite }} />
+            <Image style={styles.image} source={sprite} />
             <Text style={[styles.name, { color: 'black' }]}>{name}</Text>
             <View style={styles.typesContainer}>
               {types.map((type, i) => (

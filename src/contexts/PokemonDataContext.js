@@ -1,31 +1,60 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { morePokemons } from '../Data';
+import { allPokemonsFromAPI, morePokemons } from './PokeApiData';
+import { loadFavouritesIds, saveFavouritesIds } from './StorageActions';
 
 export const PokemonDataContext = createContext();
 
 export const PokemonDataProvider = ({ children }) => {
-  const [allPokemons, setAllPokemons] = useState();
-  const [pokemons, setPokemons] = useState();
-  const [favouritePokemons, setFavouritePokemons] = useState();
+  const [allPokemons, setAllPokemons] = useState([]);
+  const [pokemons, setPokemons] = useState([]);
+  const [favouritePokemons, setFavouritePokemons] = useState([]);
 
-  const [currentPokemonId, setCurrentPokemonId] = useState();
-  const [currentPokemon, setCurrentPokemon] = useState();
+  const [currentPokemonId, setCurrentPokemonId] = useState(null);
+  const [currentPokemon, setCurrentPokemon] = useState(null);
   const [refresh, setRefresh] = useState(false);
 
-  const [filters, setFilters] = useState(null);
+  const [filters, setFilters] = useState({ generations: [], types: [] });
   const [sortingValue, setSortingValue] = useState('ascending-id');
+  const [renderedPokemonId, setRenderedPokemonId] = useState(0);
 
   const isPokemonsInit = useRef(true);
   const isSortingInit = useRef(true);
 
   // load pokemons on init app
   useEffect(() => {
-    morePokemons(1, 100).then((pokemons) => {
+    // old variant:
+    morePokemons(1, 898).then((pokemons) => {
       loadPokemons(pokemons);
     });
+
+    // new variant:
+    // allPokemonsFromAPI().then((pokemons) => {
+    //  loadPokemons(pokemons, true);
+    // });
+
+    // mixed variant:
+    //allPokemonsFromAPI()
+    //.then((pokemons) => morePokemons(1, pokemons.length))
+    //.then((pokemons) => loadPokemons(pokemons));
   }, []);
+
+  // re-render pokemons batch by batch (new variant, uses allPokemonsFromAPI)
+  const step = 300;
+  useEffect(() => {
+    if (
+      allPokemons.length > 0 &&
+      renderedPokemonId > 0 &&
+      renderedPokemonId <= allPokemons[allPokemons.length - 1].id
+    ) {
+      // download pokemons from API:
+      morePokemons(renderedPokemonId, renderedPokemonId + step - 1)
+        // re-render main list:
+        .then((pokemons) => pokemons.map((pokemon) => updatePokemonObject(pokemon)))
+        // go to next batch:
+        .then(() => setRenderedPokemonId(renderedPokemonId + step));
+    }
+  }, [renderedPokemonId]);
 
   // sort pokemons whenever sortingValue changes
   useEffect(() => {
@@ -56,21 +85,30 @@ export const PokemonDataProvider = ({ children }) => {
   // reset currentPokemon to prevent in detail view loading previously chosen pokemon
   const resetCurrentPokemon = () => setCurrentPokemonId(null);
 
+  // update list of favourite pokemons
   const updateFavouritePokemons = (pokemons) =>
     setFavouritePokemons(pokemons.filter((item) => item.isFavourite));
 
-  const updateSortingValue = (value) => setSortingValue(value);
-
-  const updateCurrentPokemonId = (id) => setCurrentPokemonId(id);
-
-  const updatePokemonFilters = (generations, types) => {
-    // if we pass empty arrays we want to set filters to null
-    if (generations.length === 0 && types.length === 0) {
-      setFilters(null);
-    } else {
-      setFilters({ generations, types });
+  // update pokemon's basic JSON with full JSON
+  const updatePokemonObject = (newPokemonObject) => {
+    let index = allPokemons.findIndex((pokemon) => pokemon.id == newPokemonObject.id);
+    if (index >= 0) {
+      let newPokemons = allPokemons;
+      let isFavourite = newPokemons[index].isFavourite;
+      newPokemons[index] = newPokemonObject;
+      newPokemons[index].isFavourite = isFavourite;
+      setAllPokemons(newPokemons);
     }
   };
+
+  // update sorting value to sort the lists
+  const updateSortingValue = (value) => setSortingValue(value);
+
+  // update current pokemon_id to trigger use effect with setting current pokemon
+  const updateCurrentPokemonId = (id) => setCurrentPokemonId(id);
+
+  // update filters to show only specific pokemons
+  const updatePokemonFilters = (generations, types) => setFilters({ generations, types });
 
   // change pokemon with given id to favourite one and also update favourites array on local storage
   const toggleFavourite = (id) => {
@@ -87,7 +125,7 @@ export const PokemonDataProvider = ({ children }) => {
   };
 
   // load favourite pokemons from local storage and init them (used in useEffect)
-  const loadPokemons = async (pokemons) => {
+  const loadPokemons = async (pokemons, startRerendering = false) => {
     const ids = await loadFavouritesIds(pokemons);
     let pokemonsToLoad = null;
     if (ids) {
@@ -103,33 +141,7 @@ export const PokemonDataProvider = ({ children }) => {
     setPokemons(pokemonsToLoad);
     setAllPokemons(pokemonsToLoad);
     updateFavouritePokemons(pokemons);
-  };
-
-  // AsyncStorage functionality to load favourite pokemons from local storage
-  const loadFavouritesIds = async () => {
-    try {
-      const json = await AsyncStorage.getItem('favouritesIds');
-      if (json === null) {
-        return null;
-      }
-      const ids = JSON.parse(json);
-      return ids;
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
-  };
-
-  // AsyncStorage functionality to save favourite pokemons from local storage
-  const saveFavouritesIds = async (pokemons) => {
-    try {
-      const json = JSON.stringify(
-        pokemons.filter((pokemon) => pokemon.isFavourite).map((pokemon) => pokemon.id)
-      );
-      await AsyncStorage.setItem('favouritesIds', json);
-    } catch (e) {
-      console.log(e);
-    }
+    if (startRerendering) setRenderedPokemonId(1);
   };
 
   // sorting pokemons (used in useEffect)
@@ -155,8 +167,9 @@ export const PokemonDataProvider = ({ children }) => {
     setRefresh((item) => !item); // after everything is set we refresh data to indicate change to flatList
   };
 
+  // filtering pokemons
   const filterPokemons = (sortedPokemons) => {
-    if (!filters) {
+    if (filters.generations.length == 0 && filters.types == 0) {
       // if there are no filters we just want to set pokemons
       setPokemons(sortedPokemons);
       updateFavouritePokemons(sortedPokemons);
@@ -176,7 +189,7 @@ export const PokemonDataProvider = ({ children }) => {
           } else if (filters.types.length > 0) {
             return item.types.some((type) => filters.types.includes(type));
           } else {
-            throw 'Arrays cannot be empty';
+            return sortedPokemons;
           }
         })
       );
@@ -196,7 +209,7 @@ export const PokemonDataProvider = ({ children }) => {
             } else if (filters.types.length > 0) {
               return item.types.some((type) => filters.types.includes(type));
             } else {
-              throw 'Arrays cannot be empty';
+              return sortedPokemons;
             }
           })
       );
@@ -215,6 +228,7 @@ export const PokemonDataProvider = ({ children }) => {
         toggleFavourite,
         updatePokemonFilters,
         updateCurrentPokemonId,
+        updatePokemonObject,
         updateSortingValue,
       }}
     >
