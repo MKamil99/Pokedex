@@ -13,9 +13,11 @@ export default function PokemonGeneralInfo() {
     <>
       {currentPokemon ? (
         <View style={[styles.container, { backgroundColor: colors.card }]}>
-          <Text style={styles.name}>{currentPokemon.name}</Text>
+          <Text style={[styles.name, { color: colors.cardCaption }]}>{currentPokemon.name}</Text>
 
-          <Text style={styles.id}>{'#' + currentPokemon.id.toString().padStart(3, '0')}</Text>
+          <Text style={[styles.id, { color: colors.cardCaption }]}>
+            {'#' + currentPokemon.id.toString().padStart(3, '0')}
+          </Text>
 
           <View style={styles.typesContainer}>
             {currentPokemon.types.map((type, index) => (
@@ -30,12 +32,12 @@ export default function PokemonGeneralInfo() {
 
           <View style={styles.infoContainer}>
             <View style={styles.info}>
-              <Text style={styles.infoText}>Weight</Text>
+              <Text style={[styles.infoText, { color: colors.cardCaption }]}>Weight</Text>
               <Text style={styles.infoData}>{currentPokemon.weight + ' KG'}</Text>
             </View>
 
             <View style={styles.info}>
-              <Text style={styles.infoText}>Height</Text>
+              <Text style={[styles.infoText, { color: colors.cardCaption }]}>Height</Text>
               <Text style={styles.infoData}>{currentPokemon.height + ' M'}</Text>
             </View>
           </View>
@@ -49,11 +51,13 @@ export default function PokemonGeneralInfo() {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '95%',
     height: 'auto',
     borderRadius: 20,
     padding: 8,
     elevation: 8,
+    marginVertical: 10,
+    marginLeft: '2.5%',
   },
   name: {
     fontSize: 30,

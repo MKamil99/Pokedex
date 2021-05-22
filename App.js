@@ -1,18 +1,17 @@
 import React from 'react';
-import { Provider as PaperProvider } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { DetailsTabs, Filter, HomeTabs } from './src/screens';
-import { CustomTheme } from './src/theme';
 import { PokemonDataProvider } from './src/contexts';
+import { ThemeDataProvider } from './src/contexts/ThemeDataContext';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <PokemonDataProvider>
-      <PaperProvider theme={CustomTheme}>
+      <ThemeDataProvider>
         <NavigationContainer>
           <Stack.Navigator headerMode='none' initialRouteName='Home'>
             <Stack.Screen name='Home' component={HomeTabs} />
@@ -20,7 +19,7 @@ export default function App() {
             <Stack.Screen name='Filter' component={Filter} />
           </Stack.Navigator>
         </NavigationContainer>
-      </PaperProvider>
+      </ThemeDataProvider>
     </PokemonDataProvider>
   );
 }

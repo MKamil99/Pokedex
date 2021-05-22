@@ -13,9 +13,9 @@ export default function DetailsTabs() {
 
   return (
     <Tab.Navigator
-      activeColor={colors.primary}
-      barStyle={{ backgroundColor: colors.white }}
-      inactiveColor='#808080'
+      activeColor={colors.activeTab}
+      barStyle={{ backgroundColor: colors.bottomBar }}
+      inactiveColor={colors.inactiveTab}
       shifting={true}
     >
       <Tab.Screen name='General' component={General} options={{ tabBarIcon: 'information' }} />

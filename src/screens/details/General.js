@@ -1,22 +1,23 @@
 import React, { useContext } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { ActivityIndicator, useTheme } from 'react-native-paper';
 
 import { DetailsAppBar, PokemonGeneralInfo, PokemonStats } from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
 export default function General() {
   const { currentPokemon } = useContext(PokemonDataContext);
+  const colors = useTheme().colors;
 
   return (
     <>
       {currentPokemon ? (
         <>
-          <DetailsAppBar color={currentPokemon.color} sprite={currentPokemon.sprite} />
-          <SafeAreaView style={styles.container}>
+          <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+            <DetailsAppBar color={currentPokemon.color} sprite={currentPokemon.sprite} />
             <ScrollView>
-              <PokemonGeneralInfo style={styles.singleComponent} />
-              <PokemonStats style={styles.singleComponent} />
+              <PokemonGeneralInfo />
+              <PokemonStats />
             </ScrollView>
           </SafeAreaView>
         </>
@@ -29,9 +30,7 @@ export default function General() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: 10,
+    height: '100%',
+    width: '100%',
   },
 });
