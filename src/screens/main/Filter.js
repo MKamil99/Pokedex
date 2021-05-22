@@ -50,10 +50,11 @@ const initTypes = [
 ];
 
 export default function Filter() {
+  const { updatePokemonFilters } = useContext(PokemonDataContext);
   const navigation = useNavigation();
   const colors = useTheme().colors;
   setStatusBarBackgroundColor(colors.primaryDark);
-  const { updatePokemonFilters } = useContext(PokemonDataContext);
+
   const [generations, setGenerations] = useState(initGenerations);
   const [types, setTypes] = useState(initTypes);
 
@@ -72,13 +73,9 @@ export default function Filter() {
   return (
     <>
       <FilterAppbar />
-      <SafeAreaView style={styles.container}>
-        <Text style={styles.title}>Generations</Text>
-        <ScrollView
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={styles.generationsContainer}
-        >
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+        <Text style={[styles.title, { color: colors.cardCaption }]}>Generations</Text>
+        <View style={styles.chipsContainer}>
           {generations.map((generation, index) => (
             <Chip
               style={styles.chip}
@@ -99,10 +96,10 @@ export default function Filter() {
               {generation.value}
             </Chip>
           ))}
-        </ScrollView>
-        <Divider style={styles.divider} />
-        <Text style={styles.title}>Types</Text>
-        <View style={styles.typesContainer}>
+        </View>
+        <Divider style={[styles.divider, { backgroundColor: colors.filterDivider }]} />
+        <Text style={[styles.title, { color: colors.cardCaption }]}>Types</Text>
+        <View style={styles.chipsContainer}>
           {types.map((type, index) => (
             <Chip
               style={styles.chip}
@@ -120,7 +117,7 @@ export default function Filter() {
                 )
               }
             >
-              {type.value}
+              {type.value.charAt(0).toUpperCase() + type.value.slice(1)}
             </Chip>
           ))}
         </View>
@@ -132,12 +129,13 @@ export default function Filter() {
 const styles = StyleSheet.create({
   container: {
     padding: 8,
+    height: '100%',
   },
   generationsContainer: {
     marginHorizontal: -6,
     marginVertical: -8,
   },
-  typesContainer: {
+  chipsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'flex-start',

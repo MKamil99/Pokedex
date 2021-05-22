@@ -69,6 +69,8 @@ export const CustomTheme = {
     card: '#FFFFFF',
     cardCaption: '#000000',
     statBarBackground: '#C4C4C4',
+    filterDivider: '#ABABAB',
+    activeRadioButton: '#0070B8',
     pokemon: pokemonColors,
   },
 };
@@ -87,6 +89,8 @@ export const CustomDarkTheme = {
     card: '#1E1E1E',
     cardCaption: '#FFFFFF',
     statBarBackground: '#2D2D2D',
+    filterDivider: '#A2A2A2',
+    activeRadioButton: '#F2F2F2',
     pokemon: pokemonColors,
   },
 };

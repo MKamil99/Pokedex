@@ -14,7 +14,7 @@ const SortingParam = ({ name, value }) => {
       {sortingValues.map((item, index) => (
         <RadioButton.Item
           key={index}
-          color={colors.primary}
+          color={colors.activeRadioButton}
           labelStyle={styles.radioButtonValue}
           style={styles.radioButtonContainer}
           label={item}
@@ -44,7 +44,7 @@ export default function SortingMenu({ anchor, visible, onDismiss }) {
       onDismiss={() => onDismiss()}
       visible={visible}
     >
-      <Text style={styles.mainTitle}>sort by</Text>
+      <Text style={styles.mainTitle}>Sort by</Text>
       <RadioButton.Group
         onValueChange={(value) => {
           updateSortingValue(value);
@@ -90,7 +90,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     textAlign: 'center',
     paddingVertical: 4,
-    textTransform: 'capitalize',
   },
   paramTitle: {
     fontSize: 16,
