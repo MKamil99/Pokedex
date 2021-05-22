@@ -26,3 +26,26 @@ export const saveFavouritesIds = async (pokemons) => {
     console.log(e);
   }
 };
+
+// AsyncStorage functionality to load theme settings ("dark" or "light" string) from local storage
+export const loadThemeSettings = async () => {
+  try {
+    const theme = await AsyncStorage.getItem('themeSettings');
+    if (theme === null) {
+      return null;
+    }
+    return theme;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+
+// AsyncStorage functionality to save theme settings ("dark" or "light" string) to local storage
+export const saveThemeSettings = async (theme) => {
+  try {
+    await AsyncStorage.setItem('themeSettings', theme);
+  } catch (e) {
+    console.log(e);
+  }
+};
