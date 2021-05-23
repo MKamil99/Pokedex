@@ -31,9 +31,6 @@ export const saveFavouritesIds = async (pokemons) => {
 export const loadThemeSettings = async () => {
   try {
     const theme = await AsyncStorage.getItem('themeSettings');
-    if (theme === null) {
-      return null;
-    }
     return theme;
   } catch (e) {
     console.log(e);

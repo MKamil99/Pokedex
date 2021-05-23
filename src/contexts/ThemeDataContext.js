@@ -25,7 +25,7 @@ export const ThemeDataProvider = ({ children }) => {
   };
 
   return (
-    <ThemeDataContext.Provider value={{ currentTheme, switchTheme }}>
+    <ThemeDataContext.Provider value={{ switchTheme }}>
       <PaperProvider theme={currentTheme}>{children}</PaperProvider>
     </ThemeDataContext.Provider>
   );

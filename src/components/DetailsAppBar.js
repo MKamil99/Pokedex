@@ -1,25 +1,22 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { useTheme, Surface, Button } from 'react-native-paper';
 import { Image, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { ThemeDataContext } from '../contexts/ThemeDataContext';
-
 export default function DetailsAppBar({ color, sprite }) {
-  const { currentTheme } = useContext(ThemeDataContext);
   const colors = useTheme().colors;
   const navigation = useNavigation();
 
   setStatusBarBackgroundColor(
-    currentTheme.dark ? colors.primaryDark : colors.pokemon.backgroundDark[color]
+    useTheme().dark ? colors.primaryDark : colors.pokemon.backgroundDark[color]
   );
 
   return (
     <Surface
       style={[
         styles.container,
-        { backgroundColor: currentTheme.dark ? colors.primary : colors.pokemon.background[color] },
+        { backgroundColor: useTheme().dark ? colors.primary : colors.pokemon.background[color] },
       ]}
     >
       <View style={styles.leftCorner}>
