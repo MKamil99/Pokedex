@@ -1,20 +1,21 @@
 import React, { useContext } from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
-import { ActivityIndicator } from 'react-native-paper';
+import { ActivityIndicator, useTheme } from 'react-native-paper';
 
 import { DetailsAppBar } from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
 export default function Moves() {
   const { currentPokemon } = useContext(PokemonDataContext);
+  const colors = useTheme().colors;
 
   return (
     <>
       {currentPokemon ? (
         <>
-          <DetailsAppBar color={currentPokemon.color} sprite={currentPokemon.sprite} />
-          <SafeAreaView style={styles.ListContainer}>
-            <Text>[Moves]</Text>
+          <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+            <DetailsAppBar color={currentPokemon.color} sprite={currentPokemon.sprite} />
+            <Text style={{ color: colors.cardCaption }}>[Moves]</Text>
           </SafeAreaView>
         </>
       ) : (
@@ -25,9 +26,8 @@ export default function Moves() {
 }
 
 const styles = StyleSheet.create({
-  ListContainer: {
-    flex: 1,
+  container: {
+    height: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 });

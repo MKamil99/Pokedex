@@ -8,15 +8,21 @@ export default function DetailsAppBar({ color, sprite }) {
   const colors = useTheme().colors;
   const navigation = useNavigation();
 
-  // For now it is the same color as whole component, but later it will be a little bit darker:
-  setStatusBarBackgroundColor(colors.pokemon.background[color]);
+  setStatusBarBackgroundColor(
+    useTheme().dark ? colors.primaryDark : colors.pokemon.backgroundDark[color]
+  );
 
   return (
-    <Surface style={[styles.container, { backgroundColor: colors.pokemon.background[color] }]}>
+    <Surface
+      style={[
+        styles.container,
+        { backgroundColor: useTheme().dark ? colors.primary : colors.pokemon.background[color] },
+      ]}
+    >
       <View style={styles.leftCorner}>
         <Button
           icon='arrow-left'
-          color={colors.arrowAndTitle}
+          color={colors.caption}
           labelStyle={styles.buttonContent}
           onPress={() => navigation.navigate('Home')}
         >

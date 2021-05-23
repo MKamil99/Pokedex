@@ -7,7 +7,6 @@ import StatBar from '../components/StatBar';
 
 export default function PokemonStats() {
   const { currentPokemon } = useContext(PokemonDataContext);
-  //const statsNames = currentPokemon.stats.map(i => i[0]);
   const statsValues = currentPokemon.stats.map((i) => i[1]);
   const colors = useTheme().colors;
   const stats = colors.pokemon.stats;
@@ -16,7 +15,7 @@ export default function PokemonStats() {
     <>
       {currentPokemon ? (
         <View style={[styles.container, { backgroundColor: colors.card }]}>
-          <Text style={styles.header}>Base stats</Text>
+          <Text style={[styles.header, { color: colors.cardCaption }]}>Base stats</Text>
           <StatBar name='HP' value={statsValues[0]} color={stats.hp} />
           <StatBar name='ATK' value={statsValues[1]} color={stats.attack} />
           <StatBar name='DEF' value={statsValues[2]} color={stats.defense} />
@@ -24,7 +23,7 @@ export default function PokemonStats() {
           <StatBar name='SP DEF' value={statsValues[4]} color={stats.specialDefence} />
           <StatBar name='SPD' value={statsValues[5]} color={stats.speed} />
 
-          <Text style={styles.total}>{`TOTAL ${statsValues.reduce(
+          <Text style={[styles.total, { color: colors.cardCaption }]}>{`TOTAL ${statsValues.reduce(
             (result, number) => result + number
           )}`}</Text>
         </View>
@@ -37,11 +36,13 @@ export default function PokemonStats() {
 
 const styles = StyleSheet.create({
   container: {
-    width: '100%',
+    width: '95%',
     height: 'auto',
     padding: 8,
     borderRadius: 20,
     elevation: 8,
+    marginVertical: 10,
+    marginLeft: '2.5%',
   },
   header: {
     fontSize: 20,
