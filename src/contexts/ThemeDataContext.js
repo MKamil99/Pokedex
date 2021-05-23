@@ -20,7 +20,7 @@ export const ThemeDataProvider = ({ children }) => {
 
   // Button action: switching theme and saving in Async Storage:
   const switchTheme = () => {
-    setCurrentTheme(currentTheme == CustomTheme ? CustomDarkTheme : CustomTheme);
+    setCurrentTheme((theme) => (theme == CustomTheme ? CustomDarkTheme : CustomTheme));
     saveThemeSettings(currentTheme == CustomTheme ? 'dark' : 'light');
   };
 
