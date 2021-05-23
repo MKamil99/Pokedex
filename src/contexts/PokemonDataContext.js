@@ -1,8 +1,7 @@
 import React, { createContext, useEffect, useRef, useState } from 'react';
 
-import { allPokemonsFromAPI, morePokemons } from './PokeApiData';
 import { loadFavouritesIds, saveFavouritesIds } from './StorageActions';
-
+import { fetchAllPokemons } from './PokeApiData';
 export const PokemonDataContext = createContext();
 
 export const PokemonDataProvider = ({ children }) => {
@@ -10,51 +9,18 @@ export const PokemonDataProvider = ({ children }) => {
   const [pokemons, setPokemons] = useState([]);
   const [favouritePokemons, setFavouritePokemons] = useState([]);
 
-  const [currentPokemonId, setCurrentPokemonId] = useState(null);
-  const [currentPokemon, setCurrentPokemon] = useState(null);
-  const [refresh, setRefresh] = useState(false);
-
   const [filters, setFilters] = useState({ generations: [], types: [] });
   const [sortingValue, setSortingValue] = useState('ascending-id');
-  const [renderedPokemonId, setRenderedPokemonId] = useState(0);
 
   const isPokemonsInit = useRef(true);
   const isSortingInit = useRef(true);
 
+  const [refresh, setRefresh] = useState(false);
+
   // load pokemons on init app
   useEffect(() => {
-    // old variant:
-    morePokemons(1, 898).then((pokemons) => {
-      loadPokemons(pokemons);
-    });
-
-    // new variant:
-    // allPokemonsFromAPI().then((pokemons) => {
-    //  loadPokemons(pokemons, true);
-    // });
-
-    // mixed variant:
-    //allPokemonsFromAPI()
-    //.then((pokemons) => morePokemons(1, pokemons.length))
-    //.then((pokemons) => loadPokemons(pokemons));
+    fetchAllPokemons().then((pokemons) => loadPokemons(pokemons));
   }, []);
-
-  // re-render pokemons batch by batch (new variant, uses allPokemonsFromAPI)
-  const step = 300;
-  useEffect(() => {
-    if (
-      allPokemons.length > 0 &&
-      renderedPokemonId > 0 &&
-      renderedPokemonId <= allPokemons[allPokemons.length - 1].id
-    ) {
-      // download pokemons from API:
-      morePokemons(renderedPokemonId, renderedPokemonId + step - 1)
-        // re-render main list:
-        .then((pokemons) => pokemons.map((pokemon) => updatePokemonObject(pokemon)))
-        // go to next batch:
-        .then(() => setRenderedPokemonId(renderedPokemonId + step));
-    }
-  }, [renderedPokemonId]);
 
   // sort pokemons whenever sortingValue changes
   useEffect(() => {
@@ -64,13 +30,6 @@ export const PokemonDataProvider = ({ children }) => {
       sortPokemons();
     }
   }, [sortingValue]);
-
-  // set current pokemon for detail view whenever currentPokemonId changes
-  useEffect(() => {
-    if (pokemons) {
-      setCurrentPokemon(pokemons.find((element) => element.id == currentPokemonId));
-    }
-  }, [currentPokemonId]);
 
   // filter pokemons whenever filter or allPokemons array change
   useEffect(() => {
@@ -82,30 +41,12 @@ export const PokemonDataProvider = ({ children }) => {
     }
   }, [filters, allPokemons]);
 
-  // reset currentPokemon to prevent in detail view loading previously chosen pokemon
-  const resetCurrentPokemon = () => setCurrentPokemonId(null);
-
   // update list of favourite pokemons
   const updateFavouritePokemons = (pokemons) =>
     setFavouritePokemons(pokemons.filter((item) => item.isFavourite));
 
-  // update pokemon's basic JSON with full JSON
-  const updatePokemonObject = (newPokemonObject) => {
-    let index = allPokemons.findIndex((pokemon) => pokemon.id == newPokemonObject.id);
-    if (index >= 0) {
-      let newPokemons = allPokemons;
-      let isFavourite = newPokemons[index].isFavourite;
-      newPokemons[index] = newPokemonObject;
-      newPokemons[index].isFavourite = isFavourite;
-      setAllPokemons(newPokemons);
-    }
-  };
-
   // update sorting value to sort the lists
   const updateSortingValue = (value) => setSortingValue(value);
-
-  // update current pokemon_id to trigger use effect with setting current pokemon
-  const updateCurrentPokemonId = (id) => setCurrentPokemonId(id);
 
   // update filters to show only specific pokemons
   const updatePokemonFilters = (generations, types) => setFilters({ generations, types });
@@ -141,7 +82,6 @@ export const PokemonDataProvider = ({ children }) => {
     setPokemons(pokemonsToLoad);
     setAllPokemons(pokemonsToLoad);
     updateFavouritePokemons(pokemons);
-    if (startRerendering) setRenderedPokemonId(1);
   };
 
   // sorting pokemons (used in useEffect)
@@ -149,19 +89,18 @@ export const PokemonDataProvider = ({ children }) => {
     let sortedPokemons = allPokemons;
     switch (sortingValue) {
       case 'ascending-id':
-        sortedPokemons.sort((a, b) => a.id > b.id);
+        sortedPokemons.sort((a, b) => a.id - b.id);
         break;
       case 'descending-id':
-        sortedPokemons.sort((a, b) => b.id > a.id);
+        sortedPokemons.sort((a, b) => b.id - a.id);
         break;
       case 'ascending-alphabet':
-        sortedPokemons.sort((a, b) => a.name > b.name);
+        sortedPokemons.sort((a, b) => a.name.localeCompare(b.name));
         break;
       case 'descending-alphabet':
-        sortedPokemons.sort((a, b) => b.name > a.name);
+        sortedPokemons.sort((a, b) => b.name.localeCompare(a.name));
         break;
     }
-
     setAllPokemons(sortedPokemons);
     filterPokemons(sortedPokemons); // we need to filter pokemons again when we sort pokemons
     setRefresh((item) => !item); // after everything is set we refresh data to indicate change to flatList
@@ -182,12 +121,12 @@ export const PokemonDataProvider = ({ children }) => {
           if (filters.generations.length > 0 && filters.types.length > 0) {
             return (
               filters.generations.includes(item.generation) &&
-              item.types.some((type) => filters.types.includes(type))
+              item.types.some((type) => filters.types.includes(type.name))
             );
           } else if (filters.generations.length > 0) {
             return filters.generations.includes(item.generation);
           } else if (filters.types.length > 0) {
-            return item.types.some((type) => filters.types.includes(type));
+            return item.types.some((type) => filters.types.includes(type.name));
           } else {
             return sortedPokemons;
           }
@@ -202,7 +141,7 @@ export const PokemonDataProvider = ({ children }) => {
             if (filters.generations.length > 0 && filters.types.length > 0) {
               return (
                 filters.generations.includes(item.generation) &&
-                item.types.some((type) => filters.types.includes(type))
+                item.types.some((type) => filters.types.includes(type.name))
               );
             } else if (filters.generations.length > 0) {
               return filters.generations.includes(item.generation);
@@ -219,16 +158,12 @@ export const PokemonDataProvider = ({ children }) => {
   return (
     <PokemonDataContext.Provider
       value={{
-        currentPokemon,
         favouritePokemons,
         pokemons,
         refresh,
         sortingValue,
-        resetCurrentPokemon,
         toggleFavourite,
         updatePokemonFilters,
-        updateCurrentPokemonId,
-        updatePokemonObject,
         updateSortingValue,
       }}
     >

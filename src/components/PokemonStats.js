@@ -1,36 +1,33 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { PokemonDataContext } from '../contexts';
 
 import StatBar from '../components/StatBar';
 
-export default function PokemonStats() {
-  const { currentPokemon } = useContext(PokemonDataContext);
-  const statsValues = currentPokemon.stats.map((i) => i[1]);
+export default function PokemonStats({ stats }) {
   const colors = useTheme().colors;
-  const stats = colors.pokemon.stats;
+  const statsColors = colors.pokemon.stats;
+  const statsValues = stats.map((stat) => stat[1]);
+
+  const statBarsValues = [
+    { name: 'HP', value: statsValues[0], color: statsColors.hp },
+    { name: 'ATK', value: statsValues[1], color: statsColors.attack },
+    { name: 'DEF', value: statsValues[2], color: statsColors.defense },
+    { name: 'SP ATK', value: statsValues[3], color: statsColors.specialAttack },
+    { name: 'SP DEF', value: statsValues[4], color: statsColors.specialDefence },
+    { name: 'SPD', value: statsValues[5], color: statsColors.speed },
+  ];
 
   return (
-    <>
-      {currentPokemon ? (
-        <View style={[styles.container, { backgroundColor: colors.card }]}>
-          <Text style={[styles.header, { color: colors.cardCaption }]}>Base stats</Text>
-          <StatBar name='HP' value={statsValues[0]} color={stats.hp} />
-          <StatBar name='ATK' value={statsValues[1]} color={stats.attack} />
-          <StatBar name='DEF' value={statsValues[2]} color={stats.defense} />
-          <StatBar name='SP ATK' value={statsValues[3]} color={stats.specialAttack} />
-          <StatBar name='SP DEF' value={statsValues[4]} color={stats.specialDefence} />
-          <StatBar name='SPD' value={statsValues[5]} color={stats.speed} />
-
-          <Text style={[styles.total, { color: colors.cardCaption }]}>{`TOTAL ${statsValues.reduce(
-            (result, number) => result + number
-          )}`}</Text>
-        </View>
-      ) : (
-        <ActivityIndicator animating={true} />
-      )}
-    </>
+    <View style={[styles.container, { backgroundColor: colors.card }]}>
+      <Text style={[styles.header, { color: colors.cardCaption }]}>Base stats</Text>
+      {statBarsValues.map((barValues, index) => (
+        <StatBar key={index} {...barValues} />
+      ))}
+      <Text style={[styles.total, { color: colors.cardCaption }]}>{`TOTAL ${statsValues.reduce(
+        (result, number) => result + number
+      )}`}</Text>
+    </View>
   );
 }
 

@@ -1,21 +1,13 @@
-import React, { useContext, useEffect } from 'react';
+import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { useTheme } from 'react-native-paper';
 
 import { Favourites, Home } from './Main';
-import { PokemonDataContext } from '../../contexts';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default function HomeTabs({ navigation }) {
+function HomeTabs() {
   const colors = useTheme().colors;
-  const { resetCurrentPokemon } = useContext(PokemonDataContext);
-
-  useEffect(() => {
-    navigation.addListener('focus', () => {
-      resetCurrentPokemon();
-    });
-  }, []);
 
   return (
     <Tab.Navigator
@@ -29,3 +21,6 @@ export default function HomeTabs({ navigation }) {
     </Tab.Navigator>
   );
 }
+
+HomeTabs.whyDidYouRender = true;
+export default HomeTabs;

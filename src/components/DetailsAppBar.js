@@ -1,5 +1,4 @@
 import React from 'react';
-import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { useTheme, Surface, Button } from 'react-native-paper';
 import { Image, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -7,10 +6,6 @@ import { useNavigation } from '@react-navigation/native';
 export default function DetailsAppBar({ color, sprite }) {
   const colors = useTheme().colors;
   const navigation = useNavigation();
-
-  setStatusBarBackgroundColor(
-    useTheme().dark ? colors.primaryDark : colors.pokemon.backgroundDark[color]
-  );
 
   return (
     <Surface

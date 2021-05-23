@@ -1,35 +1,32 @@
-import React, { useCallback, useContext } from 'react';
+import React, { memo, useCallback, useContext } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import PokemonCard from './PokemonCard';
 import { PokemonDataContext } from '../contexts/PokemonDataContext';
 
-export default function PokemonsList({ pokemons, refresh }) {
-  const { toggleFavourite, updateCurrentPokemonId } = useContext(PokemonDataContext);
+const PokemonsList = memo(({ pokemons, refresh }) => {
+  const { toggleFavourite } = useContext(PokemonDataContext);
   const navigation = useNavigation();
+  const onPokemonPress = useCallback((id) => {
+    navigation.navigate('Details', { id });
+  }, []);
 
-  const renderPokemonCard = useCallback(
-    ({ item: { id, isFavourite, name, height, weight, sprite, types, color, isLoaded } }) => (
-      <PokemonCard
-        onPress={() => {
-          if (isLoaded) {
-            navigation.navigate('Details');
-            updateCurrentPokemonId(id);
-          }
-        }}
-        id={id}
-        name={name}
-        height={height}
-        weight={weight}
-        sprite={sprite}
-        types={types}
-        color={color}
-        isFavourite={isFavourite}
-        onPressFavourite={() => toggleFavourite(id)}
-      />
-    ),
-    []
+  const renderPokemonCard = ({
+    item: { id, isFavourite, name, height, weight, sprite, types, color },
+  }) => (
+    <PokemonCard
+      onPress={() => onPokemonPress(id)}
+      id={id}
+      name={name}
+      height={height}
+      weight={weight}
+      sprite={sprite}
+      types={types}
+      color={color}
+      isFavourite={isFavourite}
+      onPressFavourite={() => toggleFavourite(id)}
+    />
   );
 
   const keyExtractor = useCallback((item) => item.id.toString());
@@ -43,4 +40,7 @@ export default function PokemonsList({ pokemons, refresh }) {
       numColumns={2}
     />
   );
-}
+});
+
+PokemonsList.whyDidYouRender = true;
+export default PokemonsList;
