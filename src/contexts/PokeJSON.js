@@ -1,9 +1,5 @@
 // Filtering specific pokemon's JSON response and creating custom object - main version:
 export const preparePokemonObject = (jsons) => {
-  // Pokemon hasn't been found:
-  if (jsons.includes('Not found')) return;
-
-  // Pokemon has been found:
   return {
     id: jsons[0].id,
     isFavourite: false,
@@ -18,18 +14,5 @@ export const preparePokemonObject = (jsons) => {
     generation: jsons[1].generation.name.split('-')[1].toUpperCase(),
     evolution_chain: jsons[1].evolution_chain.url,
     isLoaded: true,
-  };
-};
-
-// Filtering specific pokemon's JSON response and creating custom object - basic version:
-export const prepareBasicPokemonObject = (pokemon, pokemonURL) => {
-  return {
-    id: Number(pokemon.url.replace(pokemonURL, '').replace('/', '')),
-    isFavourite: false,
-    name: pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1),
-    sprite: require('../../assets/placeholder.png'), // pokeball
-    types: [],
-    color: 'white',
-    isLoaded: false,
   };
 };

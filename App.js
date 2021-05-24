@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import './wdyr';
 
 import { DetailsTabs, Filter, HomeTabs } from './src/screens';
 import { PokemonDataProvider } from './src/contexts';

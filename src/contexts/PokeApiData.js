@@ -1,32 +1,26 @@
 // This file contains all methods responsible for communicating with PokeApi.
 
-import { prepareBasicPokemonObject, preparePokemonObject } from './PokeJSON';
+import { preparePokemonObject } from './PokeJSON';
 
 const mainURL = 'https://pokeapi.co/api/v2/';
 const pokemonURL = mainURL + 'pokemon/';
 const speciesURL = mainURL + 'pokemon-species/';
-const allPokemonsURL = pokemonURL + '?limit=10000';
+const allPokemonsURL = 'https://mim-pokedex-api.herokuapp.com/pokemons?limit=1000';
 
-// List of all pokemons:
-export const allPokemonsFromAPI = () => {
-  return fetch(allPokemonsURL)
-    .then((response) => response.json())
-    .then((json) => json.results.map((pokemon) => prepareBasicPokemonObject(pokemon, pokemonURL)))
-    .then((pokemons) => pokemons.filter((value) => value.id < 10000)) // removing mega-evolutions
-    .catch((error) => console.log(error));
-};
+export const fetchAllPokemons = async () => {
+  const response = await fetch(allPokemonsURL);
+  if (!response.ok) {
+    console.log(response.status);
+    return [];
+  }
+  const data = await response.json();
+  // add isFavourite field to every pokemon by default false
+  const pokemons = data.results.map((pok) => {
+    pok.isFavourite = false;
+    return pok;
+  });
 
-// List of some pokemon objects (with their details):
-export const morePokemons = (start, end) => {
-  const promises = [];
-
-  // Search for pokemons only if the interval is correct (0 < start <= end):
-  if (!isNaN(start) && !isNaN(end) && start > 0 && end >= start)
-    for (let i = Math.round(start); i <= Math.round(end); i++)
-      promises.push(pokemonByNameOrNumber(i));
-
-  // Return the output asynchronously and get rid of undefined pokemons (response with 404 status):
-  return Promise.all(promises).then((pokemons) => pokemons.filter((value) => value != undefined));
+  return pokemons;
 };
 
 // Pokemon details:

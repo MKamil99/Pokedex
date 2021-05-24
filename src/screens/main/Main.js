@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React, { useContext, memo } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 import { MainAppBar, PokemonsList } from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
-const Template = ({ pokemons, refresh }) => {
+const Template = memo(({ pokemons, refresh }) => {
   const colors = useTheme().colors;
   return (
     <>
@@ -15,7 +15,7 @@ const Template = ({ pokemons, refresh }) => {
       </SafeAreaView>
     </>
   );
-};
+});
 
 const styles = StyleSheet.create({
   ListContainer: {
@@ -24,11 +24,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export const Home = () => {
+const Home = () => {
   const { pokemons, refresh } = useContext(PokemonDataContext);
   return <Template pokemons={pokemons} refresh={refresh} />;
 };
-export const Favourites = () => {
+const Favourites = () => {
   const { favouritePokemons, refresh } = useContext(PokemonDataContext);
   return <Template pokemons={favouritePokemons} refresh={refresh} />;
 };
+
+Home.whyDidYouRender = true;
+Favourites.whyDidYouRender = true;
+export { Favourites, Home };

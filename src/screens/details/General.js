@@ -1,30 +1,45 @@
-import React, { useContext } from 'react';
+import React, { useEffect } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
-import { ActivityIndicator, useTheme } from 'react-native-paper';
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
+import { useTheme } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
 
 import { DetailsAppBar, PokemonGeneralInfo, PokemonStats } from '../../components';
-import { PokemonDataContext } from '../../contexts';
 
-export default function General() {
-  const { currentPokemon } = useContext(PokemonDataContext);
+export default function General({ id, name, weight, height, stats, types, color, sprite }) {
   const colors = useTheme().colors;
+  const isDarkTheme = useTheme().dark;
+  const navigation = useNavigation();
+
+  const generalInfoProps = { id, name, types, weight, height };
+
+  useEffect(() => {
+    setStatusBarBackgroundColor(
+      isDarkTheme ? colors.primaryDark : colors.pokemon.backgroundDark[color],
+      true
+    );
+  }, []);
+
+  useEffect(() => {
+    navigation.addListener('focus', () => {
+      setStatusBarBackgroundColor(
+        isDarkTheme ? colors.primaryDark : colors.pokemon.backgroundDark[color],
+        true
+      );
+    });
+    navigation.addListener('blur', () => {
+      setStatusBarBackgroundColor(colors.primaryDark, true);
+    });
+  }, []);
 
   return (
-    <>
-      {currentPokemon ? (
-        <>
-          <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-            <DetailsAppBar color={currentPokemon.color} sprite={currentPokemon.sprite} />
-            <ScrollView>
-              <PokemonGeneralInfo />
-              <PokemonStats />
-            </ScrollView>
-          </SafeAreaView>
-        </>
-      ) : (
-        <ActivityIndicator animating={true} />
-      )}
-    </>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <DetailsAppBar color={color} sprite={sprite} />
+      <ScrollView>
+        <PokemonGeneralInfo {...generalInfoProps} />
+        <PokemonStats stats={stats} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 

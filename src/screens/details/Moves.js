@@ -1,26 +1,18 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
-import { ActivityIndicator, useTheme } from 'react-native-paper';
+import { useTheme } from 'react-native-paper';
 
 import { DetailsAppBar } from '../../components';
-import { PokemonDataContext } from '../../contexts';
 
-export default function Moves() {
-  const { currentPokemon } = useContext(PokemonDataContext);
+export default function Moves({ color, sprite }) {
   const colors = useTheme().colors;
 
   return (
     <>
-      {currentPokemon ? (
-        <>
-          <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-            <DetailsAppBar color={currentPokemon.color} sprite={currentPokemon.sprite} />
-            <Text style={{ color: colors.cardCaption }}>[Moves]</Text>
-          </SafeAreaView>
-        </>
-      ) : (
-        <ActivityIndicator animating={true} />
-      )}
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+        <DetailsAppBar color={color} sprite={sprite} />
+        <Text style={{ color: colors.cardCaption }}>[Moves]</Text>
+      </SafeAreaView>
     </>
   );
 }

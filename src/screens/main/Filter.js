@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { Appbar, Chip, Divider, Text, useTheme } from 'react-native-paper';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/core';
