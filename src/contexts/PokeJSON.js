@@ -41,3 +41,21 @@ export const prepareMoveDetailsJSON = (response, versions) => {
     versions: versions,
   };
 };
+
+// Filtering specific evolution chain's JSON to retrieve only IDs of pokemons and ways of evolving:
+export const prepareEvolutionJSON = (response, speciesURL) => {
+  const getID = (species) => species.url.replace(speciesURL, '').replace('/', '');
+  const getForms = (content) => {
+    return {
+      pokemonID: getID(content.species),
+      evolvedBecause: content.evolution_details.map((reason) => ({
+        trigger: reason.trigger ? reason.trigger.name : null,
+        item: reason.item ? reason.item.name : null,
+        level: reason.min_level,
+        happiness: reason.min_happiness,
+      })),
+      evolvesTo: content.evolves_to.map((form) => getForms(form)),
+    };
+  };
+  return getForms(response.chain);
+};

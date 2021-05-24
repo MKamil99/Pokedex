@@ -7,7 +7,11 @@ import { useTheme } from 'react-native-paper';
 import Evolution from './Evolution';
 import General from './General';
 import Moves from './Moves';
-import { fetchAllMoves, pokemonByNameOrNumber } from '../../contexts/PokeApiData';
+import {
+  fetchAllMoves,
+  fetchEvolutionChain,
+  pokemonByNameOrNumber,
+} from '../../contexts/PokeApiData';
 import { CustomActivityIndicator } from '../../components';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -35,6 +39,8 @@ export default function DetailsTabs({ route }) {
   // Displaying details:
   useEffect(() => {
     if (pokemon) {
+      // Status Bar:
+      setStatusBarBackgroundColor(pickColor(colors.primaryDark), true);
       // General:
       setGeneralProps({
         id: pokemon.id,
@@ -54,8 +60,14 @@ export default function DetailsTabs({ route }) {
           sprite: pokemon.sprite,
         })
       );
-      // Status Bar:
-      setStatusBarBackgroundColor(pickColor(colors.primaryDark), true);
+      // Evolution Chain:
+      fetchEvolutionChain(pokemon.evolution_chain).then((chain) => {
+        setEvolutionProps({
+          chain: chain,
+          color: pokemon.color,
+          sprite: pokemon.sprite,
+        });
+      });
     }
   }, [pokemon]);
 

@@ -4,7 +4,7 @@ import { useTheme } from 'react-native-paper';
 
 import { DetailsAppBar } from '../../components';
 
-export default function Evolution({ color, sprite }) {
+export default function Evolution({ color, sprite, chain }) {
   const colors = useTheme().colors;
 
   return (

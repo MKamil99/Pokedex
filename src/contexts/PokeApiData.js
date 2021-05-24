@@ -1,6 +1,6 @@
 // This file contains all methods responsible for communicating with PokeApi.
 
-import { preparePokemonObject, prepareMoveDetailsJSON } from './PokeJSON';
+import { preparePokemonObject, prepareMoveDetailsJSON, prepareEvolutionJSON } from './PokeJSON';
 
 const mainURL = 'https://pokeapi.co/api/v2/';
 const pokemonURL = mainURL + 'pokemon/';
@@ -63,4 +63,15 @@ const moveByURL = async (url, versions) => {
   }
   const move = await response.json();
   return prepareMoveDetailsJSON(move, versions);
+};
+
+// Evolution Chain details:
+export const fetchEvolutionChain = async (url) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.log(response.status);
+    return null;
+  }
+  const chain = await response.json();
+  return prepareEvolutionJSON(chain, speciesURL);
 };
