@@ -5,13 +5,14 @@ import { useNavigation } from '@react-navigation/native';
 
 export default function DetailsAppBar({ color, sprite }) {
   const colors = useTheme().colors;
+  const isDarkTheme = useTheme().dark;
   const navigation = useNavigation();
 
   return (
     <Surface
       style={[
         styles.container,
-        { backgroundColor: useTheme().dark ? colors.primary : colors.pokemon.background[color] },
+        { backgroundColor: isDarkTheme ? colors.primary : colors.pokemon.background[color] },
       ]}
     >
       <View style={styles.leftCorner}>

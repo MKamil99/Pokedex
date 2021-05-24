@@ -15,10 +15,47 @@ export const preparePokemonObject = (jsons) => {
   };
 };
 
-// Filtering specific move's JSON to retrieve only URL and names of versions:
+// Filtering specific move's short JSON to retrieve only URL and names of versions:
 const prepareMoveJSON = (json) => {
   return {
     url: json.move.url,
-    versions: json.version_group_details.map((version) => version.version_group.name),
+    versions: json.version_group_details.map((version) => ({
+      name: version.version_group.name,
+      learned_at: version.level_learned_at,
+      learn_method: version.move_learn_method.name,
+    })),
   };
+};
+
+// Filtering specific move's full JSON to retrieve only name, type, PP, power and accuracy:
+export const prepareMoveDetailsJSON = (response, versions) => {
+  return {
+    name: response.name
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' '),
+    type: response.type.name,
+    pp: response.pp ? response.pp : '-',
+    pwr: response.power ? response.power : '-',
+    acc: response.accuracy ? response.accuracy : '-',
+    versions: versions,
+  };
+};
+
+// Filtering specific evolution chain's JSON to retrieve only IDs of pokemons and ways of evolving:
+export const prepareEvolutionJSON = (response, speciesURL) => {
+  const getID = (species) => species.url.replace(speciesURL, '').replace('/', '');
+  const getForms = (content) => {
+    return {
+      pokemonID: getID(content.species),
+      evolvedBecause: content.evolution_details.map((reason) => ({
+        trigger: reason.trigger ? reason.trigger.name : null,
+        item: reason.item ? reason.item.name : null,
+        level: reason.min_level,
+        happiness: reason.min_happiness,
+      })),
+      evolvesTo: content.evolves_to.map((form) => getForms(form)),
+    };
+  };
+  return getForms(response.chain);
 };
