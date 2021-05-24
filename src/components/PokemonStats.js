@@ -47,28 +47,6 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     textAlign: 'center',
   },
-  stat: {
-    flexDirection: 'row',
-    marginTop: 12,
-  },
-  statName: {
-    fontSize: 15,
-    includeFontPadding: false,
-    textAlign: 'right',
-    width: '15%',
-  },
-  bar: {
-    width: '100%',
-    height: 18,
-    backgroundColor: '#C4C4C4',
-    borderRadius: 9,
-  },
-  barStat: {
-    width: '30%',
-    backgroundColor: 'red',
-    height: 18,
-    borderRadius: 9,
-  },
   total: {
     fontSize: 15,
     marginTop: 12,

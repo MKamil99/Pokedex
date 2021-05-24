@@ -5,7 +5,7 @@ import { preparePokemonObject } from './PokeJSON';
 const mainURL = 'https://pokeapi.co/api/v2/';
 const pokemonURL = mainURL + 'pokemon/';
 const speciesURL = mainURL + 'pokemon-species/';
-const allPokemonsURL = 'https://mim-pokedex-api.herokuapp.com/pokemons?limit=1000';
+const allPokemonsURL = 'https://mim-pokedex-api.herokuapp.com/pokemons?limit=10000';
 
 export const fetchAllPokemons = async () => {
   const response = await fetch(allPokemonsURL);
@@ -24,20 +24,23 @@ export const fetchAllPokemons = async () => {
 };
 
 // Pokemon details:
-export const pokemonByNameOrNumber = (input) => {
+export const pokemonByNameOrNumber = async (input) => {
   if (isNaN(input) || input.length == 0) return;
 
-  return Promise.all([
-    // name, number, height, weight, types, stats, sprite and moves:
-    fetch(pokemonURL + input).then((response) =>
-      response.status == '404' ? 'Not found' : response.json()
-    ),
+  try {
+    const jsons = await Promise.all([
+      // name, number, height, weight, types, stats, sprite and moves:
+      fetch(pokemonURL + input).then((response) =>
+        response.status == '404' ? 'Not found' : response.json()
+      ),
 
-    // color, generation and url to evolution chain:
-    fetch(speciesURL + input).then((response) =>
-      response.status == '404' ? 'Not found' : response.json()
-    ),
-  ])
-    .then((jsons) => preparePokemonObject(jsons))
-    .catch((error) => console.error(error));
+      // color, generation and url to evolution chain:
+      fetch(speciesURL + input).then((response) =>
+        response.status == '404' ? 'Not found' : response.json()
+      ),
+    ]);
+    return preparePokemonObject(jsons);
+  } catch (error) {
+    return console.error(error);
+  }
 };

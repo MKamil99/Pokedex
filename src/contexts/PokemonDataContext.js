@@ -66,7 +66,7 @@ export const PokemonDataProvider = ({ children }) => {
   };
 
   // load favourite pokemons from local storage and init them (used in useEffect)
-  const loadPokemons = async (pokemons, startRerendering = false) => {
+  const loadPokemons = async (pokemons) => {
     const ids = await loadFavouritesIds(pokemons);
     let pokemonsToLoad = null;
     if (ids) {

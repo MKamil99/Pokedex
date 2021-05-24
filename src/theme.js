@@ -71,6 +71,7 @@ export const CustomTheme = {
     statBarBackground: '#C4C4C4',
     filterDivider: '#ABABAB',
     activeRadioButton: '#0070B8',
+    activityIndicator: '#0070B8',
     pokemon: pokemonColors,
   },
 };
@@ -91,6 +92,7 @@ export const CustomDarkTheme = {
     statBarBackground: '#2D2D2D',
     filterDivider: '#A2A2A2',
     activeRadioButton: '#F2F2F2',
+    activityIndicator: '#F2F2F2',
     pokemon: pokemonColors,
   },
 };
