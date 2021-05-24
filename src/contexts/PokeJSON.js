@@ -15,10 +15,29 @@ export const preparePokemonObject = (jsons) => {
   };
 };
 
-// Filtering specific move's JSON to retrieve only URL and names of versions:
+// Filtering specific move's short JSON to retrieve only URL and names of versions:
 const prepareMoveJSON = (json) => {
   return {
     url: json.move.url,
-    versions: json.version_group_details.map((version) => version.version_group.name),
+    versions: json.version_group_details.map((version) => ({
+      name: version.version_group.name,
+      learned_at: version.level_learned_at,
+      learn_method: version.move_learn_method.name,
+    })),
+  };
+};
+
+// Filtering specific move's full JSON to retrieve only name, type, PP, power and accuracy:
+export const prepareMoveDetailsJSON = (response, versions) => {
+  return {
+    name: response.name
+      .split('-')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' '),
+    type: response.type.name,
+    pp: response.pp ? response.pp : '-',
+    pwr: response.power ? response.power : '-',
+    acc: response.accuracy ? response.accuracy : '-',
+    versions: versions,
   };
 };

@@ -1,6 +1,6 @@
 // This file contains all methods responsible for communicating with PokeApi.
 
-import { preparePokemonObject } from './PokeJSON';
+import { preparePokemonObject, prepareMoveDetailsJSON } from './PokeJSON';
 
 const mainURL = 'https://pokeapi.co/api/v2/';
 const pokemonURL = mainURL + 'pokemon/';
@@ -43,4 +43,24 @@ export const pokemonByNameOrNumber = async (input) => {
   } catch (error) {
     return console.error(error);
   }
+};
+
+// Retrieve all specific pokemon moves' details:
+export const fetchAllMoves = async (moves) => {
+  const promises = [];
+
+  for (let i = 0; i < moves.length; i++) promises.push(moveByURL(moves[i].url, moves[i].versions));
+
+  return Promise.all(promises);
+};
+
+// Move details:
+const moveByURL = async (url, versions) => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    console.log(response.status);
+    return null;
+  }
+  const move = await response.json();
+  return prepareMoveDetailsJSON(move, versions);
 };

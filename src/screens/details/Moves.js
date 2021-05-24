@@ -4,7 +4,7 @@ import { useTheme } from 'react-native-paper';
 
 import { DetailsAppBar } from '../../components';
 
-export default function Moves({ color, sprite }) {
+export default function Moves({ color, sprite, moves }) {
   const colors = useTheme().colors;
 
   return (
