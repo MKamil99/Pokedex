@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { Text, useTheme } from 'react-native-paper';
+import { Text, TouchableRipple, useTheme } from 'react-native-paper';
 
-export default VersionSelector = ({ version }) => {
+export default VersionSelector = ({ version, onPress }) => {
   const colors = useTheme().colors;
   var text = [];
   var color = [];
@@ -61,7 +61,7 @@ export default VersionSelector = ({ version }) => {
       color = [colors.gameVersion.xd];
       break;
     case 'black-2-white-2':
-      text = ['Black', 'White'];
+      text = ['Black 2', 'White 2'];
       color = [colors.gameVersion.black, colors.gameVersion.white];
       break;
     case 'x-y':
@@ -88,55 +88,50 @@ export default VersionSelector = ({ version }) => {
       text = ['Sword', 'Shield'];
       color = [colors.gameVersion.sword, colors.gameVersion.shield];
       break;
-    default:
-      text = ['NULL', 'NULL'];
-      color = ['red', 'blue'];
-      break;
   }
 
   return (
-    <View styles={styles.container}>
-      {text.length > 1 && (
-        <View style={styles.textContainer}>
-          <View style={[styles.textContainer1, { backgroundColor: color[0] }]}>
-            <Text style={styles.text} textShadowColor>
-              {text[0]}
-            </Text>
+    <TouchableRipple
+      onPress={() => onPress()}
+      borderless={true}
+      style={{ width: '100%', borderRadius: 100 }}
+    >
+      <View style={styles.container}>
+        {text.length > 1 && (
+          <View style={styles.textContainer}>
+            <View style={[styles.textContainer1, { backgroundColor: color[0] }]}>
+              <Text style={styles.text} textShadowColor>
+                {text[0]}
+              </Text>
+            </View>
+            <View style={[styles.textContainer2, { backgroundColor: color[1] }]}>
+              <Text style={styles.text}>{text[1]}</Text>
+            </View>
           </View>
-          <View style={[styles.textContainer2, { backgroundColor: color[1] }]}>
-            <Text style={styles.text}>{text[1]}</Text>
+        )}
+        {text.length == 1 && (
+          <View style={styles.textContainer}>
+            <View
+              style={[
+                styles.textContainer1,
+                {
+                  borderTopRightRadius: 100,
+                  borderBottomRightRadius: 100,
+                  backgroundColor: color[0],
+                },
+              ]}
+            >
+              <Text style={styles.text}>{text[0]}</Text>
+            </View>
           </View>
-        </View>
-      )}
-      {text.length == 1 && (
-        <View style={styles.textContainer}>
-          <View
-            style={[
-              styles.textContainer1,
-              {
-                borderTopRightRadius: 100,
-                borderBottomRightRadius: 100,
-                backgroundColor: color[0],
-              },
-            ]}
-          >
-            <Text style={styles.text}>{text[0]}</Text>
-          </View>
-        </View>
-      )}
-    </View>
+        )}
+      </View>
+    </TouchableRipple>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    height: 'auto',
-    padding: 8,
-    borderRadius: 20,
-    elevation: 8,
-    flexDirection: 'column',
-  },
+  container: {},
   textContainer: {
     flexDirection: 'row',
   },

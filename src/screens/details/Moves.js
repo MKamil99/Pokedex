@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView } from 'react-native';
-import { useTheme } from 'react-native-paper';
+import { SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';
+import { useTheme, Text } from 'react-native-paper';
 
 import DetailsAppBar from '../../components/DetailsAppBar';
 import PokemonMovesList from '../../components/PokemonMovesList';
@@ -9,17 +9,10 @@ import VersionPanel from '../../components/VersionPanel';
 
 export default function Moves({ color, sprite, moves }) {
   const colors = useTheme().colors;
-  const [version, setVersion] = useState('red-blue');
-  var moveList = [];
+  const [version, setVersion] = useState(moves.length > 0 ? moves[0].versions[0].name : null);
   var versionList = new Set();
 
-  moves.forEach((move) => {
-    move.versions.forEach((ver) => {
-      if (ver.name == version) {
-        moveList.push(move);
-      }
-    });
-  });
+  const moveList = moves.filter((move) => move.versions.some((item) => item.name === version));
 
   moves.forEach((move) => {
     move.versions.forEach((ver) => {
@@ -31,14 +24,22 @@ export default function Moves({ color, sprite, moves }) {
     <>
       <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <DetailsAppBar color={color} sprite={sprite} />
-        <ScrollView style={styles.contentArea}>
-          <VersionPanel
-            version={version}
-            versionList={Array.from(versionList)}
-            setVersion={setVersion}
-          />
-          <PokemonMovesList moves={moveList} />
-        </ScrollView>
+        {version ? (
+          <ScrollView style={styles.contentArea}>
+            <View style={{ paddingHorizontal: 8 }}>
+              <VersionPanel
+                version={version}
+                versionList={Array.from(versionList)}
+                setVersion={setVersion}
+              />
+              <PokemonMovesList moves={moveList} />
+            </View>
+          </ScrollView>
+        ) : (
+          <View style={styles.clear}>
+            <Text>NO MOVES</Text>
+          </View>
+        )}
       </SafeAreaView>
     </>
   );
@@ -51,6 +52,10 @@ const styles = StyleSheet.create({
   },
   contentArea: {
     width: '100%',
-    paddingHorizontal: 8,
+  },
+  clear: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
   },
 });
