@@ -22,5 +22,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     textAlign: 'center',
     textTransform: 'uppercase',
+    textShadowColor: 'black',
+    textShadowRadius: 10,
   },
 });

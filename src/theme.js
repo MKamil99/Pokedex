@@ -55,6 +55,41 @@ const pokemonColors = {
   },
 };
 
+const gameVersion = {
+  red: '#F44236',
+  blue: '#1D89E4',
+  yellow: '#FFBE00',
+  gold: '#D3AF37',
+  silver: '#B0BFC6',
+  crystal: '#4DD0E2',
+  ruby: '#CF0304',
+  sapphire: '#3C3696',
+  emerald: '#078347',
+  fireRed: '#F44236',
+  leafGreen: '#4CB050',
+  diamond: '#00BCD5',
+  pearl: '#AA47BC',
+  platinum: '#C9C1B6',
+  heartGold: '#D3AF37',
+  soulSilver: '#B0BFC6',
+  black: '#424242',
+  white: '#EEEEEE',
+  colosseum: '#B18B87',
+  xd: '#6E70AA',
+  X: '#325CA6',
+  Y: '#D41235',
+  omegaRuby: '#CF0304',
+  alphaSapphire: '#3C3696',
+  sun: '#F89A1E',
+  moon: '#1AA2DC',
+  ultraSun: '#EB622B',
+  ultraMoon: '#1AA2DC',
+  letsGoPikachu: '#EFB516',
+  letsGoEevee: '#C87225',
+  sword: '#00A0E8',
+  shield: '#E5005B',
+};
+
 export const CustomTheme = {
   ...DefaultTheme,
   colors: {
@@ -73,6 +108,7 @@ export const CustomTheme = {
     activeRadioButton: '#0070B8',
     activityIndicator: '#0070B8',
     pokemon: pokemonColors,
+    gameVersion: gameVersion,
   },
 };
 
@@ -94,5 +130,6 @@ export const CustomDarkTheme = {
     activeRadioButton: '#F2F2F2',
     activityIndicator: '#F2F2F2',
     pokemon: pokemonColors,
+    gameVersion: gameVersion,
   },
 };
