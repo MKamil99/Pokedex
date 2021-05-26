@@ -9,15 +9,18 @@ import PokemonType from '../components/PokemonType';
 export default EvolutionCard = ({ color, id }) => {
   const colors = useTheme().colors;
   const isDarkTheme = useTheme().dark;
-  const pokemonColor = isDarkTheme ? colors.statBarBackground : colors.pokemon.background[color];
   const activityIndicator = isDarkTheme
     ? colors.activityIndicator
     : colors.pokemon.background[color];
 
+  const [pokemonColor, setPokemonColor] = useState(null);
   const [pokemon, setPokemon] = useState(null);
   useEffect(() => {
     pokemonByNameOrNumber(id).then((data) => {
       setPokemon(data);
+      setPokemonColor(
+        isDarkTheme ? colors.statBarBackground : colors.pokemon.background[data.color]
+      );
     });
   }, []);
 

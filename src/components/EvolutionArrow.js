@@ -4,8 +4,9 @@ import { useTheme, Text } from 'react-native-paper';
 
 export default EvolutionArrow = ({ data, color }) => {
   const colors = useTheme().colors;
+  const isDarkTheme = useTheme().dark;
   const arrow = require('../../assets/next.png');
-  const pokemonColor = colors.pokemon.background[color];
+  const pokemonColor = isDarkTheme ? colors.statBarBackground : colors.pokemon.background[color];
 
   return (
     <View style={styles.container}>
