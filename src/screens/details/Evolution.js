@@ -44,9 +44,11 @@ export default function Evolution({ color, sprite, chain }) {
                     color={color}
                   />
                 )}
-                {!tier2[0].evolvedBecause[0] &&
+                {!tier2[0].evolvedBecause[0].level &&
                   !tier2[0].evolvedBecause[0].item &&
-                  !tier2[0].evolvedBecause[0].happiness(<EvolutionArrow data={''} color={color} />)}
+                  !tier2[0].evolvedBecause[0].happiness && (
+                    <EvolutionArrow data={''} color={color} />
+                  )}
                 <EvolutionCard color={color} id={tier2[0].pokemonID} />
               </>
             )}
