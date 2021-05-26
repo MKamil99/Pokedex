@@ -3,6 +3,7 @@ import { SafeAreaView, StyleSheet, Dimensions, View, ScrollView } from 'react-na
 import { useTheme } from 'react-native-paper';
 
 import { DetailsAppBar } from '../../components';
+import EvolutionArrow from '../../components/EvolutionArrow';
 import EvolutionCard from '../../components/EvolutionCard';
 
 export default function Evolution({ color, sprite, chain }) {
@@ -26,7 +27,29 @@ export default function Evolution({ color, sprite, chain }) {
           <View style={{ paddingBottom: 16 }}>
             <EvolutionCard color={color} id={tier1.pokemonID} />
 
-            {tier2.length == 1 && <EvolutionCard color={color} id={tier2[0].pokemonID} />}
+            {tier2.length == 1 && (
+              <>
+                {tier2[0].evolvedBecause[0].level && (
+                  <EvolutionArrow data={tier2[0].evolvedBecause[0].level + ' lvl'} color={color} />
+                )}
+                {tier2[0].evolvedBecause[0].item != null && (
+                  <EvolutionArrow
+                    data={tier2[0].evolvedBecause[0].item.replace('-', ' ')}
+                    color={color}
+                  />
+                )}
+                {tier2[0].evolvedBecause[0].happiness && (
+                  <EvolutionArrow
+                    data={tier2[0].evolvedBecause[0].happiness + ' happieness'}
+                    color={color}
+                  />
+                )}
+                {!tier2[0].evolvedBecause[0] &&
+                  !tier2[0].evolvedBecause[0].item &&
+                  !tier2[0].evolvedBecause[0].happiness(<EvolutionArrow data={''} color={color} />)}
+                <EvolutionCard color={color} id={tier2[0].pokemonID} />
+              </>
+            )}
             {tier2.length > 1 && (
               <ScrollView horizontal={true} pagingEnabled={true} persistentScrollbar={true}>
                 {tier2.map((it, i) => (
@@ -34,13 +57,55 @@ export default function Evolution({ color, sprite, chain }) {
                     key={i}
                     style={{ width: Dimensions.get('window').width, paddingBottom: 16 }}
                   >
+                    {it.evolvedBecause[0].level && (
+                      <EvolutionArrow data={it.evolvedBecause[0].level + ' lvl'} color={color} />
+                    )}
+                    {it.evolvedBecause[0].item != null && (
+                      <EvolutionArrow
+                        data={it.evolvedBecause[0].item.replace('-', ' ')}
+                        color={color}
+                      />
+                    )}
+                    {it.evolvedBecause[0].happiness && (
+                      <EvolutionArrow
+                        data={it.evolvedBecause[0].happiness + ' happieness'}
+                        color={color}
+                      />
+                    )}
+                    {!it.evolvedBecause[0].level &&
+                      !it.evolvedBecause[0].item &&
+                      !it.evolvedBecause[0].happiness && <EvolutionArrow data={''} color={color} />}
                     <EvolutionCard color={color} id={it.pokemonID} />
                   </View>
                 ))}
               </ScrollView>
             )}
 
-            {tier3.length == 1 && <EvolutionCard color={color} id={tier3[0].pokemonID} />}
+            {tier3.length == 1 && (
+              <>
+                {tier3[0].evolvedBecause[0].level && (
+                  <EvolutionArrow data={tier3[0].evolvedBecause[0].level + ' lvl'} color={color} />
+                )}
+                {tier3[0].evolvedBecause[0].item != null && (
+                  <EvolutionArrow
+                    data={tier3[0].evolvedBecause[0].item.replace('-', ' ')}
+                    color={color}
+                  />
+                )}
+                {tier3[0].evolvedBecause[0].happiness && (
+                  <EvolutionArrow
+                    data={tier3[0].evolvedBecause[0].happiness + ' happieness'}
+                    color={color}
+                  />
+                )}
+                {!tier3[0].evolvedBecause[0].level &&
+                  !tier3[0].evolvedBecause[0].item &&
+                  !tier3[0].evolvedBecause[0].happiness && (
+                    <EvolutionArrow data={''} color={color} />
+                  )}
+                <EvolutionCard color={color} id={tier3[0].pokemonID} />
+              </>
+            )}
             {tier3.length > 1 && (
               <ScrollView horizontal={true} pagingEnabled={true} persistentScrollbar={true}>
                 {tier3.map((it, i) => (
@@ -48,6 +113,24 @@ export default function Evolution({ color, sprite, chain }) {
                     key={i}
                     style={{ width: Dimensions.get('window').width, paddingBottom: 16 }}
                   >
+                    {it.evolvedBecause[0].level && (
+                      <EvolutionArrow data={it.evolvedBecause[0].level + ' lvl'} color={color} />
+                    )}
+                    {it.evolvedBecause[0].item != null && (
+                      <EvolutionArrow
+                        data={it.evolvedBecause[0].item.replace('-', ' ')}
+                        color={color}
+                      />
+                    )}
+                    {it.evolvedBecause[0].happiness && (
+                      <EvolutionArrow
+                        data={it.evolvedBecause[0].happiness + ' happieness'}
+                        color={color}
+                      />
+                    )}
+                    {!it.evolvedBecause[0].level &&
+                      !it.evolvedBecause[0].item &&
+                      !it.evolvedBecause[0].happiness && <EvolutionArrow data={''} color={color} />}
                     <EvolutionCard color={color} id={it.pokemonID} />
                   </View>
                 ))}
