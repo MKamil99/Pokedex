@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
   },
   header: {
     flexDirection: 'row',
+    paddingVertical: 5,
   },
   headerText: {
     fontSize: 15,

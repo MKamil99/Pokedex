@@ -10,7 +10,7 @@ import VersionPanel from '../../components/VersionPanel';
 export default function Moves({ color, sprite, moves }) {
   const colors = useTheme().colors;
   const [version, setVersion] = useState(moves.length > 0 ? moves[0].versions[0].name : null);
-  var versionList = new Set();
+  const versionList = new Set();
 
   const moveList = moves.filter((move) => move.versions.some((item) => item.name === version));
 
