@@ -40,7 +40,7 @@ export default function Evolution({ color, sprite, chain }) {
                 )}
                 {tier2[0].evolvedBecause[0].happiness && (
                   <EvolutionArrow
-                    data={tier2[0].evolvedBecause[0].happiness + ' happieness'}
+                    data={tier2[0].evolvedBecause[0].happiness + ' happiness'}
                     color={color}
                   />
                 )}
@@ -68,7 +68,7 @@ export default function Evolution({ color, sprite, chain }) {
                     )}
                     {it.evolvedBecause[0].happiness && (
                       <EvolutionArrow
-                        data={it.evolvedBecause[0].happiness + ' happieness'}
+                        data={it.evolvedBecause[0].happiness + ' happiness'}
                         color={color}
                       />
                     )}
@@ -94,7 +94,7 @@ export default function Evolution({ color, sprite, chain }) {
                 )}
                 {tier3[0].evolvedBecause[0].happiness && (
                   <EvolutionArrow
-                    data={tier3[0].evolvedBecause[0].happiness + ' happieness'}
+                    data={tier3[0].evolvedBecause[0].happiness + ' happiness'}
                     color={color}
                   />
                 )}
@@ -124,7 +124,7 @@ export default function Evolution({ color, sprite, chain }) {
                     )}
                     {it.evolvedBecause[0].happiness && (
                       <EvolutionArrow
-                        data={it.evolvedBecause[0].happiness + ' happieness'}
+                        data={it.evolvedBecause[0].happiness + ' happiness'}
                         color={color}
                       />
                     )}
