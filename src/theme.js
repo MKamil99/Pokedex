@@ -129,6 +129,7 @@ export const CustomDarkTheme = {
     filterDivider: '#A2A2A2',
     activeRadioButton: '#F2F2F2',
     activityIndicator: '#F2F2F2',
+    evolutionCardBackground: '#2D2D2D',
     pokemon: pokemonColors,
     gameVersion: gameVersion,
   },

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { SafeAreaView, StyleSheet, ScrollView, View, Image } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import { pokemonByNameOrNumber } from '../contexts/PokeApiData';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
@@ -19,7 +19,7 @@ export default EvolutionCard = ({ color, id }) => {
     pokemonByNameOrNumber(id).then((data) => {
       setPokemon(data);
       setPokemonColor(
-        isDarkTheme ? colors.statBarBackground : colors.pokemon.background[data.color]
+        isDarkTheme ? colors.evolutionCardBackground : colors.pokemon.background[data.color]
       );
     });
   }, []);

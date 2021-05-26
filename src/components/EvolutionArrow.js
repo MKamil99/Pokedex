@@ -1,12 +1,14 @@
 import React from 'react';
-import { SafeAreaView, StyleSheet, Dimensions, View, Image } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 
 export default EvolutionArrow = ({ data, color }) => {
   const colors = useTheme().colors;
   const isDarkTheme = useTheme().dark;
   const arrow = require('../../assets/next.png');
-  const pokemonColor = isDarkTheme ? colors.statBarBackground : colors.pokemon.background[color];
+  const pokemonColor = isDarkTheme
+    ? colors.evolutionCardBackground
+    : colors.pokemon.background[color];
 
   return (
     <View style={styles.container}>
@@ -27,7 +29,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 18,
     marginRight: 5,
-    textTransform: 'capitalize',
   },
   image: {
     height: 32,
