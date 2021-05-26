@@ -11,13 +11,7 @@ export default function Evolution({ color, sprite, chain }) {
 
   var tier1 = chain;
   var tier2 = chain.evolvesTo;
-  var tier3;
-
-  if (tier2.length == 1) {
-    tier3 = tier2[0].evolvesTo;
-  } else {
-    tier3 = [];
-  }
+  var tier3 = tier2.length == 1 ? tier2[0].evolvesTo : [];
 
   const addEvolutionArrow = (nextForm) => {
     if (nextForm.evolvedBecause[0].level)
