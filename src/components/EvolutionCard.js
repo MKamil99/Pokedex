@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 
-import { pokemonByNameOrNumber } from '../contexts/PokeApiData';
-import CustomActivityIndicator from '../components/CustomActivityIndicator';
-import PokemonType from '../components/PokemonType';
+import { pokemonByNameOrNumber } from '../contexts';
+import CustomActivityIndicator from './CustomActivityIndicator';
+import PokemonType from './PokemonType';
 
-export default EvolutionCard = ({ color, id }) => {
+export default function EvolutionCard({ color, id }) {
   const colors = useTheme().colors;
   const isDarkTheme = useTheme().dark;
   const activityIndicator = isDarkTheme
@@ -55,7 +55,7 @@ export default EvolutionCard = ({ color, id }) => {
       )}
     </>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

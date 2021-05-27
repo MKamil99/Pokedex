@@ -25,9 +25,7 @@ export default function Evolution({ color, sprite, chain }) {
         />
       );
     else if (nextForm.evolvedBecause[0].happiness)
-      return (
-        <EvolutionArrow data={nextForm.evolvedBecause[0].happiness + ' happiness'} color={color} />
-      );
+      return <EvolutionArrow data={'Happiness'} color={color} />;
     else return <EvolutionArrow data={''} color={color} />;
   };
 

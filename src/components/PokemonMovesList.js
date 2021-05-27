@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
-import PokemonType from '../components/PokemonType';
+
+import PokemonType from './PokemonType';
 
 export default function PokemonMovesList({ moves }) {
   const colors = useTheme().colors;

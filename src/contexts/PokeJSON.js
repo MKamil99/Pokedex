@@ -49,7 +49,6 @@ export const prepareEvolutionJSON = (response, speciesURL) => {
     return {
       pokemonID: getID(content.species),
       evolvedBecause: content.evolution_details.map((reason) => ({
-        trigger: reason.trigger ? reason.trigger.name : null,
         item: reason.item ? reason.item.name : null,
         level: reason.min_level,
         happiness: reason.min_happiness,

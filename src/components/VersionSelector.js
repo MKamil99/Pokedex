@@ -91,7 +91,7 @@ const getTextWithColor = (version, colors) => {
   return { text, color };
 };
 
-export default VersionSelector = ({ version, onPress }) => {
+export default function VersionSelector({ version, onPress }) {
   const colors = useTheme().colors;
   const { text, color } = getTextWithColor(version, colors);
 
@@ -133,7 +133,7 @@ export default VersionSelector = ({ version, onPress }) => {
       </View>
     </TouchableRipple>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {},

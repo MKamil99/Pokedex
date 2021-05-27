@@ -4,7 +4,7 @@ import { setStatusBarBackgroundColor, setStatusBarStyle } from 'expo-status-bar'
 import { useNavigation } from '@react-navigation/core';
 
 import SortingMenu from './SortingMenu';
-import { ThemeDataContext } from '../contexts/ThemeDataContext';
+import { ThemeDataContext } from '../contexts';
 
 export default function MainAppBar() {
   const colors = useTheme().colors;

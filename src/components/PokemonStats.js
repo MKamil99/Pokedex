@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-import StatBar from '../components/StatBar';
+import StatBar from './StatBar';
 
 export default function PokemonStats({ stats }) {
   const colors = useTheme().colors;
