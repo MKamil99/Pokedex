@@ -1,9 +1,10 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { useTheme, Dialog, Portal, Text } from 'react-native-paper';
+
 import VersionSelector from './VersionSelector';
 
-export default VersionPanel = ({ version, versionList, setVersion }) => {
+export default function VersionPanel({ version, versionList, setVersion }) {
   const colors = useTheme().colors;
   const [visible, setVisible] = React.useState(false);
 
@@ -36,7 +37,7 @@ export default VersionPanel = ({ version, versionList, setVersion }) => {
       </Portal>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {

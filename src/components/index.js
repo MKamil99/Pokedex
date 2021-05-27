@@ -1,5 +1,3 @@
-import { format } from 'prettier';
-
 export { default as MainAppBar } from './MainAppBar';
 export { default as DetailsAppBar } from './DetailsAppBar';
 export { default as PokemonCard } from './PokemonCard';
@@ -7,3 +5,7 @@ export { default as PokemonGeneralInfo } from './PokemonGeneralInfo';
 export { default as PokemonStats } from './PokemonStats';
 export { default as PokemonsList } from './PokemonsList';
 export { default as CustomActivityIndicator } from './CustomActivityIndicator';
+export { default as EvolutionArrow } from './EvolutionArrow';
+export { default as EvolutionCard } from './EvolutionCard';
+export { default as PokemonMovesList } from './PokemonMovesList';
+export { default as VersionPanel } from './VersionPanel';

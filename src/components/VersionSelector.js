@@ -2,10 +2,10 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, TouchableRipple, useTheme } from 'react-native-paper';
 
-export default VersionSelector = ({ version, onPress }) => {
+export default function VersionSelector({ version, onPress }) {
   const colors = useTheme().colors;
-  var text = [];
-  var color = [];
+  let text = [];
+  let color = [];
 
   switch (version) {
     case 'red-blue':
@@ -128,7 +128,7 @@ export default VersionSelector = ({ version, onPress }) => {
       </View>
     </TouchableRipple>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {},

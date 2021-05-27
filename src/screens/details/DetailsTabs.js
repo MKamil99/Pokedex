@@ -7,11 +7,7 @@ import { useTheme } from 'react-native-paper';
 import Evolution from './Evolution';
 import General from './General';
 import Moves from './Moves';
-import {
-  fetchAllMoves,
-  fetchEvolutionChain,
-  pokemonByNameOrNumber,
-} from '../../contexts/PokeApiData';
+import { fetchAllMoves, fetchEvolutionChain, pokemonByNameOrNumber } from '../../contexts';
 import { CustomActivityIndicator } from '../../components';
 
 const Tab = createMaterialBottomTabNavigator();

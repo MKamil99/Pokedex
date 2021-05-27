@@ -4,7 +4,7 @@ import { Appbar, Chip, Divider, Text, useTheme } from 'react-native-paper';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/core';
 
-import { PokemonDataContext } from '../../contexts/PokemonDataContext';
+import { PokemonDataContext } from '../../contexts';
 
 const FilterAppbar = () => {
   const navigation = useNavigation();

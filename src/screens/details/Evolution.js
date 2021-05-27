@@ -2,16 +2,13 @@ import React from 'react';
 import { SafeAreaView, StyleSheet, Dimensions, View, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-import { DetailsAppBar } from '../../components';
-import EvolutionArrow from '../../components/EvolutionArrow';
-import EvolutionCard from '../../components/EvolutionCard';
+import { DetailsAppBar, EvolutionArrow, EvolutionCard } from '../../components';
 
 export default function Evolution({ color, sprite, chain }) {
   const colors = useTheme().colors;
-
-  var tier1 = chain;
-  var tier2 = chain.evolvesTo;
-  var tier3 = tier2.length == 1 ? tier2[0].evolvesTo : [];
+  const tier1 = chain;
+  const tier2 = chain.evolvesTo;
+  const tier3 = tier2.length == 1 ? tier2[0].evolvesTo : [];
 
   const addEvolutionArrow = (nextForm) => {
     if (nextForm.evolvedBecause[0].level)
@@ -27,9 +24,7 @@ export default function Evolution({ color, sprite, chain }) {
         />
       );
     else if (nextForm.evolvedBecause[0].happiness)
-      return (
-        <EvolutionArrow data={nextForm.evolvedBecause[0].happiness + ' happiness'} color={color} />
-      );
+      return <EvolutionArrow data={'Happiness'} color={color} />;
     else return <EvolutionArrow data={''} color={color} />;
   };
 

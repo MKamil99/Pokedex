@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import PokemonCard from './PokemonCard';
-import { PokemonDataContext } from '../contexts/PokemonDataContext';
+import { PokemonDataContext } from '../contexts';
 
 const PokemonsList = memo(({ pokemons, refresh }) => {
   const { toggleFavourite } = useContext(PokemonDataContext);
