@@ -2,10 +2,9 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, TouchableRipple, useTheme } from 'react-native-paper';
 
-export default VersionSelector = ({ version, onPress }) => {
-  const colors = useTheme().colors;
-  var text = [];
-  var color = [];
+const getTextWithColor = (version, colors) => {
+  let text = [];
+  let color = [];
 
   switch (version) {
     case 'red-blue':
@@ -89,6 +88,12 @@ export default VersionSelector = ({ version, onPress }) => {
       color = [colors.gameVersion.sword, colors.gameVersion.shield];
       break;
   }
+  return { text, color };
+};
+
+export default VersionSelector = ({ version, onPress }) => {
+  const colors = useTheme().colors;
+  const { text, color } = getTextWithColor(version, colors);
 
   return (
     <TouchableRipple

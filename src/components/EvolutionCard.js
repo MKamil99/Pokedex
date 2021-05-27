@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
+
 import { pokemonByNameOrNumber } from '../contexts/PokeApiData';
 import CustomActivityIndicator from '../components/CustomActivityIndicator';
 import PokemonType from '../components/PokemonType';

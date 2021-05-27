@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { useTheme, Dialog, Portal, Text } from 'react-native-paper';
+
 import VersionSelector from './VersionSelector';
 
 export default VersionPanel = ({ version, versionList, setVersion }) => {

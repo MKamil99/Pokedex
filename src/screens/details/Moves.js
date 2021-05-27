@@ -3,9 +3,7 @@ import { useState } from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 
-import DetailsAppBar from '../../components/DetailsAppBar';
-import PokemonMovesList from '../../components/PokemonMovesList';
-import VersionPanel from '../../components/VersionPanel';
+import { DetailsAppBar, PokemonMovesList, VersionPanel } from '../../components';
 
 export default function Moves({ color, sprite, moves }) {
   const colors = useTheme().colors;
