@@ -6,6 +6,7 @@ import { DetailsAppBar, EvolutionArrow, EvolutionCard } from '../../components';
 
 export default function Evolution({ color, sprite, chain }) {
   const colors = useTheme().colors;
+
   const tier1 = chain;
   const tier2 = chain.evolvesTo;
   const tier3 = tier2.length == 1 ? tier2[0].evolvesTo : [];
