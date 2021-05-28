@@ -19,6 +19,7 @@ export default function CustomSearchBar({ onClose, onSubmit, searchQuery, setSea
         inputStyle={{ color: colors.searchBarInput }}
         placeholderTextColor={colors.searchBarPlaceholder}
         onSubmitEditing={() => onSubmit(searchQuery)}
+        autoFocus={true}
       />
     </Appbar.Header>
   );
