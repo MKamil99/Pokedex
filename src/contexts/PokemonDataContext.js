@@ -2,8 +2,8 @@ import React, { createContext, useEffect, useRef, useState } from 'react';
 
 import { loadFavouritesIds, saveFavouritesIds } from './StorageActions';
 import { fetchAllPokemons } from './PokeApiData';
-export const PokemonDataContext = createContext();
 
+export const PokemonDataContext = createContext();
 export const PokemonDataProvider = ({ children }) => {
   const [allPokemons, setAllPokemons] = useState([]);
   const [pokemons, setPokemons] = useState([]);
@@ -11,6 +11,9 @@ export const PokemonDataProvider = ({ children }) => {
 
   const [filters, setFilters] = useState({ generations: [], types: [] });
   const [sortingValue, setSortingValue] = useState('ascending-id');
+  const [matchingNameOrID, setMatchingNameOrID] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const isPokemonsInit = useRef(true);
   const isSortingInit = useRef(true);
@@ -39,7 +42,7 @@ export const PokemonDataProvider = ({ children }) => {
       filterPokemons(allPokemons);
       setRefresh((item) => !item);
     }
-  }, [filters, allPokemons]);
+  }, [filters, allPokemons, matchingNameOrID]);
 
   // update list of favourite pokemons
   const updateFavouritePokemons = (pokemons) =>
@@ -50,6 +53,16 @@ export const PokemonDataProvider = ({ children }) => {
 
   // update filters to show only specific pokemons
   const updatePokemonFilters = (generations, types) => setFilters({ generations, types });
+
+  // update matching name value to display only pokemons with matching name or id
+  const updateMatchingOrIDValue = (nameOrID) =>
+    setMatchingNameOrID(nameOrID.toString().toLowerCase());
+
+  // update state of isSearching to hide/show searchbar
+  const updateIsSearching = (value) => setIsSearching(value);
+
+  // update searchQuery so on both pages there will be the same value in searchbar
+  const updateSearchQuery = (value) => setSearchQuery(value);
 
   // change pokemon with given id to favourite one and also update favourites array on local storage
   const toggleFavourite = (id) => {
@@ -108,8 +121,8 @@ export const PokemonDataProvider = ({ children }) => {
 
   // filtering pokemons
   const filterPokemons = (sortedPokemons) => {
-    if (filters.generations.length == 0 && filters.types == 0) {
-      // if there are no filters we just want to set pokemons
+    if (filters.generations.length == 0 && filters.types == 0 && matchingNameOrID == '') {
+      // if there are no filters and no given name/ID we just want to set pokemons
       setPokemons(sortedPokemons);
       updateFavouritePokemons(sortedPokemons);
     } else {
@@ -117,20 +130,31 @@ export const PokemonDataProvider = ({ children }) => {
 
       // first we filter pokemons on home view
       setPokemons(
-        sortedPokemons.filter((item) => {
-          if (filters.generations.length > 0 && filters.types.length > 0) {
-            return (
-              filters.generations.includes(item.generation) &&
-              item.types.some((type) => filters.types.includes(type.name))
-            );
-          } else if (filters.generations.length > 0) {
-            return filters.generations.includes(item.generation);
-          } else if (filters.types.length > 0) {
-            return item.types.some((type) => filters.types.includes(type.name));
-          } else {
-            return sortedPokemons;
-          }
-        })
+        sortedPokemons
+          .filter((item) => {
+            if (filters.generations.length > 0 && filters.types.length > 0) {
+              return (
+                filters.generations.includes(item.generation) &&
+                item.types.some((type) => filters.types.includes(type.name))
+              );
+            } else if (filters.generations.length > 0) {
+              return filters.generations.includes(item.generation);
+            } else if (filters.types.length > 0) {
+              return item.types.some((type) => filters.types.includes(type.name));
+            } else {
+              return item;
+            }
+          })
+          .filter((item) => {
+            if (matchingNameOrID != '') {
+              return (
+                item.name.toLowerCase().includes(matchingNameOrID) ||
+                item.id.toString().includes(matchingNameOrID)
+              );
+            } else {
+              return item;
+            }
+          })
       );
 
       // we also filter pokemon on favourites view
@@ -148,7 +172,17 @@ export const PokemonDataProvider = ({ children }) => {
             } else if (filters.types.length > 0) {
               return item.types.some((type) => filters.types.includes(type));
             } else {
-              return sortedPokemons;
+              return item;
+            }
+          })
+          .filter((item) => {
+            if (matchingNameOrID != '') {
+              return (
+                item.name.toLowerCase().includes(matchingNameOrID) ||
+                item.id.toString().includes(matchingNameOrID)
+              );
+            } else {
+              return item;
             }
           })
       );
@@ -162,9 +196,14 @@ export const PokemonDataProvider = ({ children }) => {
         pokemons,
         refresh,
         sortingValue,
+        isSearching,
+        searchQuery,
         toggleFavourite,
         updatePokemonFilters,
         updateSortingValue,
+        updateMatchingOrIDValue,
+        updateIsSearching,
+        updateSearchQuery,
       }}
     >
       {children}
