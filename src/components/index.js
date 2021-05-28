@@ -9,3 +9,5 @@ export { default as EvolutionArrow } from './EvolutionArrow';
 export { default as EvolutionCard } from './EvolutionCard';
 export { default as VersionPanel } from './VersionPanel';
 export { default as PokemonMovesList } from './PokemonMovesList';
+export { default as CustomFAB } from './CustomFAB';
+export { default as CustomSearchBar } from './CustomSearchBar';

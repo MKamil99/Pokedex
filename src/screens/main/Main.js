@@ -2,17 +2,38 @@ import React, { useContext, memo } from 'react';
 import { SafeAreaView, StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-import { MainAppBar, PokemonsList } from '../../components';
+import { MainAppBar, PokemonsList, CustomFAB, CustomSearchBar } from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
-const Template = memo(({ pokemons, refresh }) => {
+const SearchBar = () => {
+  const { updateMatchingOrIDValue, updateIsSearching, searchQuery, updateSearchQuery } = useContext(
+    PokemonDataContext
+  );
+  return (
+    <CustomSearchBar
+      onClose={() => {
+        updateIsSearching(false);
+        updateMatchingOrIDValue('');
+        updateSearchQuery('');
+      }}
+      onSubmit={(query) => updateMatchingOrIDValue(query)}
+      searchQuery={searchQuery}
+      setSearchQuery={updateSearchQuery}
+    />
+  );
+};
+
+const Template = memo(({ pokemons }) => {
+  const { refresh, isSearching, updateIsSearching } = useContext(PokemonDataContext);
   const colors = useTheme().colors;
+
   return (
     <>
-      <MainAppBar />
+      {isSearching ? <SearchBar /> : <MainAppBar />}
       <SafeAreaView style={[styles.ListContainer, { backgroundColor: colors.backgroundColor }]}>
         <PokemonsList pokemons={pokemons} refresh={refresh} />
       </SafeAreaView>
+      <CustomFAB isVisible={!isSearching} onPress={() => updateIsSearching(true)} />
     </>
   );
 });
@@ -25,12 +46,12 @@ const styles = StyleSheet.create({
 });
 
 const Home = () => {
-  const { pokemons, refresh } = useContext(PokemonDataContext);
-  return <Template pokemons={pokemons} refresh={refresh} />;
+  const { pokemons } = useContext(PokemonDataContext);
+  return <Template pokemons={pokemons} />;
 };
 const Favourites = () => {
-  const { favouritePokemons, refresh } = useContext(PokemonDataContext);
-  return <Template pokemons={favouritePokemons} refresh={refresh} />;
+  const { favouritePokemons } = useContext(PokemonDataContext);
+  return <Template pokemons={favouritePokemons} />;
 };
 
 Home.whyDidYouRender = true;
