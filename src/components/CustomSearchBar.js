@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Appbar, Searchbar, useTheme } from 'react-native-paper';
 
@@ -19,7 +19,7 @@ export default function CustomSearchBar({ onClose, onSubmit, searchQuery, setSea
         inputStyle={{ color: colors.searchBarInput }}
         placeholderTextColor={colors.searchBarPlaceholder}
         onSubmitEditing={() => onSubmit(searchQuery)}
-        autoFocus={true}
+        autoFocus={searchQuery == ''}
       />
     </Appbar.Header>
   );
