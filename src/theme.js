@@ -1,4 +1,17 @@
-import { DefaultTheme, DarkTheme } from 'react-native-paper';
+import { configureFonts, DefaultTheme, DarkTheme } from 'react-native-paper';
+
+const baseFontConfig = {
+  bold: { fontFamily: 'RobotoSlab_700Bold' },
+  medium: { fontFamily: 'RobotoSlab_500Medium' },
+  regular: { fontFamily: 'RobotoSlab_400Regular' },
+};
+
+const fontConfig = {
+  default: baseFontConfig,
+  android: baseFontConfig,
+  ios: baseFontConfig,
+  web: baseFontConfig,
+};
 
 const pokemonColors = {
   background: {
@@ -114,6 +127,7 @@ export const CustomTheme = {
     pokemon: pokemonColors,
     gameVersion: gameVersion,
   },
+  fonts: configureFonts(fontConfig),
 };
 
 export const CustomDarkTheme = {
@@ -141,4 +155,5 @@ export const CustomDarkTheme = {
     pokemon: pokemonColors,
     gameVersion: gameVersion,
   },
+  fonts: configureFonts(fontConfig),
 };
