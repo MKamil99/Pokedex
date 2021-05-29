@@ -12,7 +12,7 @@ const FilterAppbar = () => {
   return (
     <Appbar.Header>
       <Appbar.BackAction onPress={() => navigation.goBack()} />
-      <Appbar.Content title='Filter by' />
+      <Appbar.Content title='Filter by' titleStyle={{ fontFamily: 'RobotoSlab_400Regular' }} />
     </Appbar.Header>
   );
 };

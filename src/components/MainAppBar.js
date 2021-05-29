@@ -18,7 +18,7 @@ export default function MainAppBar() {
 
   return (
     <Appbar.Header>
-      <Appbar.Content title='Pokedex' />
+      <Appbar.Content title='Pokedex' titleStyle={{ fontFamily: 'RobotoSlab_400Regular' }} />
       <Appbar.Action icon='filter-menu' onPress={() => navigation.navigate('Filter')} />
       <SortingMenu
         anchor={

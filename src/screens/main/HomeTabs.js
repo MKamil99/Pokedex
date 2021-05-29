@@ -1,6 +1,6 @@
 import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { useTheme } from 'react-native-paper';
+import { Text, useTheme } from 'react-native-paper';
 
 import { Favourites, Home } from './Main';
 
@@ -16,8 +16,30 @@ function HomeTabs() {
       inactiveColor={colors.inactiveTab}
       shifting={true}
     >
-      <Tab.Screen name='Home' component={Home} options={{ tabBarIcon: 'home' }} />
-      <Tab.Screen name='Favourites' component={Favourites} options={{ tabBarIcon: 'heart' }} />
+      <Tab.Screen
+        name='Home'
+        component={Home}
+        options={{
+          tabBarIcon: 'home',
+          tabBarLabel: (
+            <Text style={{ color: colors.activeTab, fontFamily: 'RobotoSlab_500Medium' }}>
+              Home
+            </Text>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name='Favourites'
+        component={Favourites}
+        options={{
+          tabBarIcon: 'heart',
+          tabBarLabel: (
+            <Text style={{ color: colors.activeTab, fontFamily: 'RobotoSlab_500Medium' }}>
+              Favourites
+            </Text>
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }

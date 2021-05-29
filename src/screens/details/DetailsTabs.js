@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
-import { useTheme } from 'react-native-paper';
+import { useTheme, Text } from 'react-native-paper';
 
 import Evolution from './Evolution';
 import General from './General';
@@ -84,7 +84,19 @@ export default function DetailsTabs({ route }) {
       inactiveColor={colors.inactiveTab}
       shifting={true}
     >
-      <Tab.Screen name='General' options={{ tabBarIcon: 'information' }}>
+      <Tab.Screen
+        name='General'
+        options={{
+          tabBarIcon: 'information',
+          tabBarLabel: (
+            <Text
+              style={{ color: pickColor(colors.activeTab), fontFamily: 'RobotoSlab_500Medium' }}
+            >
+              General
+            </Text>
+          ),
+        }}
+      >
         {() =>
           generalProps ? (
             <General {...generalProps} />
@@ -93,7 +105,19 @@ export default function DetailsTabs({ route }) {
           )
         }
       </Tab.Screen>
-      <Tab.Screen name='Moves' options={{ tabBarIcon: 'paw' }}>
+      <Tab.Screen
+        name='Moves'
+        options={{
+          tabBarIcon: 'paw',
+          tabBarLabel: (
+            <Text
+              style={{ color: pickColor(colors.activeTab), fontFamily: 'RobotoSlab_500Medium' }}
+            >
+              Moves
+            </Text>
+          ),
+        }}
+      >
         {() =>
           movesProps ? (
             <Moves {...movesProps} />
@@ -102,7 +126,19 @@ export default function DetailsTabs({ route }) {
           )
         }
       </Tab.Screen>
-      <Tab.Screen name='Evolution' options={{ tabBarIcon: 'atom' }}>
+      <Tab.Screen
+        name='Evolution'
+        options={{
+          tabBarIcon: 'atom',
+          tabBarLabel: (
+            <Text
+              style={{ color: pickColor(colors.activeTab), fontFamily: 'RobotoSlab_500Medium' }}
+            >
+              Evolution
+            </Text>
+          ),
+        }}
+      >
         {() =>
           evolutionProps ? (
             <Evolution {...evolutionProps} />
