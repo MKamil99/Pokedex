@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     lineHeight: 18,
     marginRight: 5,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   image: {
     height: 32,

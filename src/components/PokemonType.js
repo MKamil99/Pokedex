@@ -24,5 +24,6 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     textShadowColor: 'black',
     textShadowRadius: 10,
+    fontFamily: 'RobotoSlab_400Regular',
   },
 });

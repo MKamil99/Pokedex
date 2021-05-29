@@ -16,7 +16,7 @@ export default function CustomSearchBar({ onClose, onSubmit, searchQuery, setSea
         icon='arrow-left'
         onIconPress={() => onClose()}
         iconColor={colors.searchBarIcon}
-        inputStyle={{ color: colors.searchBarInput }}
+        inputStyle={{ color: colors.searchBarInput, fontFamily: 'RobotoSlab_400Regular' }}
         placeholderTextColor={colors.searchBarPlaceholder}
         onSubmitEditing={() => onSubmit(searchQuery)}
         autoFocus={searchQuery == ''}
@@ -31,5 +31,6 @@ const styles = StyleSheet.create({
     height: '75%',
     width: '98%',
     marginLeft: '1%',
+    fontFamily: 'RobotoSlab_400Regular',
   },
 });

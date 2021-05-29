@@ -49,8 +49,8 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 15,
-    fontWeight: 'bold',
     textAlign: 'center',
+    fontFamily: 'RobotoSlab_500Medium',
   },
   row: {
     flexDirection: 'row',
@@ -59,5 +59,6 @@ const styles = StyleSheet.create({
   textRow: {
     fontSize: 15,
     textAlign: 'center',
+    fontFamily: 'RobotoSlab_400Regular',
   },
 });

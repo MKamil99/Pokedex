@@ -98,11 +98,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
     paddingTop: 8,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   pokemonId: {
     fontSize: 20,
     textAlign: 'center',
     lineHeight: 20,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   typeBox: {
     flex: 1,

@@ -53,11 +53,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 18,
     marginBottom: 5,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   dialogHeader: {
     textAlign: 'center',
     fontSize: 24,
     paddingBottom: 16,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   dialog: {
     paddingHorizontal: 16,

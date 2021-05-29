@@ -87,15 +87,15 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 20,
-    fontWeight: '700',
     textAlign: 'center',
     paddingVertical: 4,
+    fontFamily: 'RobotoSlab_700Bold',
   },
   paramTitle: {
     fontSize: 16,
-    fontWeight: '700',
     textTransform: 'capitalize',
     marginVertical: 8,
+    fontFamily: 'RobotoSlab_700Bold',
   },
   radioButtonContainer: {
     paddingHorizontal: 0,
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
   radioButtonValue: {
     fontSize: 16,
     textTransform: 'capitalize',
+    fontFamily: 'RobotoSlab_400Regular',
   },
   divider: {
     marginVertical: 12,

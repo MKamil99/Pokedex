@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginBottom: 15,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   divider: {
     marginVertical: 30,
@@ -156,5 +157,6 @@ const styles = StyleSheet.create({
   },
   chipText: {
     fontSize: 16,
+    fontFamily: 'RobotoSlab_400Regular',
   },
 });

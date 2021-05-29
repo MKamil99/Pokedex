@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     left: 10,
     top: 10,
     fontSize: 18,
+    fontFamily: 'RobotoSlab_500Medium',
   },
   favourite: {
     position: 'absolute',
@@ -78,6 +79,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 16,
     marginBottom: 5,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   typesContainer: {
     flexDirection: 'row',

@@ -46,10 +46,12 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     lineHeight: 20,
     textAlign: 'center',
+    fontFamily: 'RobotoSlab_400Regular',
   },
   total: {
     fontSize: 15,
     marginTop: 12,
     textAlign: 'center',
+    fontFamily: 'RobotoSlab_400Regular',
   },
 });

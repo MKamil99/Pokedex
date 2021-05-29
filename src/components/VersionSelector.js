@@ -157,5 +157,6 @@ const styles = StyleSheet.create({
     color: 'white',
     textShadowColor: 'black',
     textShadowRadius: 10,
+    fontFamily: 'RobotoSlab_400Regular',
   },
 });

@@ -55,11 +55,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: 'center',
     lineHeight: 30,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   id: {
     fontSize: 20,
     textAlign: 'center',
     lineHeight: 20,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   typesContainer: {
     flexDirection: 'row',
@@ -84,9 +86,11 @@ const styles = StyleSheet.create({
   infoText: {
     textAlign: 'center',
     fontSize: 15,
+    fontFamily: 'RobotoSlab_400Regular',
   },
   infoData: {
     textAlign: 'center',
     fontSize: 20,
+    fontFamily: 'RobotoSlab_400Regular',
   },
 });

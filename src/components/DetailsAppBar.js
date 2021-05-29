@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTheme, Surface, Button } from 'react-native-paper';
+import { useTheme, Surface, Button, Text } from 'react-native-paper';
 import { Image, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -22,7 +22,7 @@ export default function DetailsAppBar({ color, sprite }) {
           labelStyle={styles.buttonContent}
           onPress={() => navigation.navigate('Home')}
         >
-          Pokedex
+          <Text style={[styles.buttonContent, { color: colors.caption }]}>Pokedex</Text>
         </Button>
       </View>
       <Image style={styles.image} source={sprite} />
@@ -37,6 +37,8 @@ const styles = StyleSheet.create({
   },
   buttonContent: {
     fontSize: 20,
+    fontFamily: 'RobotoSlab_400Regular',
+    textTransform: 'capitalize',
   },
   container: {
     width: '100%',
