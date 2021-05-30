@@ -45,9 +45,11 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   image: {
-    width: 200,
-    height: 200,
+    width: 180,
+    height: 180,
     marginLeft: 'auto',
     marginRight: 'auto',
+    marginTop: 15,
+    marginBottom: 5,
   },
 });
