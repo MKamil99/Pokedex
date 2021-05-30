@@ -29,12 +29,12 @@ export default function PokemonGeneralInfo({ id, name, types, weight, height }) 
       <View style={styles.infoContainer}>
         <View style={styles.info}>
           <Text style={[styles.infoText, { color: colors.cardCaption }]}>Weight</Text>
-          <Text style={styles.infoData}>{weight + ' KG'}</Text>
+          <Text style={styles.infoData}>{weight.toFixed(1) + ' KG'}</Text>
         </View>
 
         <View style={styles.info}>
           <Text style={[styles.infoText, { color: colors.cardCaption }]}>Height</Text>
-          <Text style={styles.infoData}>{height + ' M'}</Text>
+          <Text style={styles.infoData}>{height.toFixed(2) + ' M'}</Text>
         </View>
       </View>
     </View>
