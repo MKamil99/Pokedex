@@ -43,13 +43,12 @@ export default function PokemonGeneralInfo({ id, name, types, weight, height }) 
 
 const styles = StyleSheet.create({
   container: {
-    width: '95%',
+    width: 'auto',
     height: 'auto',
     borderRadius: 20,
     padding: 8,
     elevation: 8,
-    marginVertical: 10,
-    marginLeft: '2.5%',
+    marginTop: 16,
   },
   name: {
     fontSize: 30,

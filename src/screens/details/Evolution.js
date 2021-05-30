@@ -30,7 +30,14 @@ export default function Evolution({ color, sprite, chain }) {
   };
 
   const addEvolutionTier = (tier) => {
-    if (tier.length >= 1)
+    if (tier.length == 1)
+      return (
+        <View style={{ width: Dimensions.get('window').width }}>
+          {addEvolutionArrow(tier[0])}
+          <EvolutionCard color={color} id={tier[0].pokemonID} />
+        </View>
+      );
+    else if (tier.length > 1)
       return (
         <ScrollView horizontal={true} pagingEnabled={true} persistentScrollbar={true}>
           {tier.map((it, i) => (

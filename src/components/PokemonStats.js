@@ -33,13 +33,13 @@ export default function PokemonStats({ stats }) {
 
 const styles = StyleSheet.create({
   container: {
-    width: '95%',
+    width: 'auto',
     height: 'auto',
     padding: 8,
     borderRadius: 20,
     elevation: 8,
-    marginVertical: 10,
-    marginLeft: '2.5%',
+    marginTop: 16,
+    marginBottom: 16,
   },
   header: {
     fontSize: 20,

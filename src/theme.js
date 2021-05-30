@@ -2,7 +2,7 @@ import { DefaultTheme, DarkTheme } from 'react-native-paper';
 
 const pokemonColors = {
   background: {
-    black: '#1B1B1B',
+    black: '#303030',
     blue: '#0070B8',
     brown: '#6F4E37',
     gray: '#808080',
@@ -10,11 +10,11 @@ const pokemonColors = {
     pink: '#D98695',
     purple: '#8E4585',
     red: '#CC474B',
-    white: '#EAEAEA',
+    white: '#D0D0D0',
     yellow: '#F5E050',
   },
   backgroundDark: {
-    black: '#000000',
+    black: '#101010',
     blue: '#004588',
     brown: '#422611',
     gray: '#545454',
@@ -22,7 +22,7 @@ const pokemonColors = {
     pink: '#A65867',
     purple: '#5F1758',
     red: '#950B23',
-    white: '#B8B8B8',
+    white: '#9D9D9D',
     yellow: '#BFAE15',
   },
   types: {

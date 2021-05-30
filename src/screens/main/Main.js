@@ -1,5 +1,5 @@
 import React, { useContext, memo } from 'react';
-import { SafeAreaView, StyleSheet } from 'react-native';
+import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 import { MainAppBar, PokemonsList, CustomFAB, CustomSearchBar } from '../../components';
@@ -31,7 +31,9 @@ const Template = memo(({ pokemons }) => {
     <>
       {isSearching ? <SearchBar /> : <MainAppBar />}
       <SafeAreaView style={[styles.ListContainer, { backgroundColor: colors.backgroundColor }]}>
-        <PokemonsList pokemons={pokemons} refresh={refresh} />
+        <View style={{ paddingHorizontal: 4 }}>
+          <PokemonsList pokemons={pokemons} refresh={refresh} />
+        </View>
       </SafeAreaView>
       <CustomFAB isVisible={!isSearching} onPress={() => updateIsSearching(true)} />
     </>
@@ -41,7 +43,7 @@ const Template = memo(({ pokemons }) => {
 const styles = StyleSheet.create({
   ListContainer: {
     flex: 1,
-    alignItems: 'center',
+    width: '100%',
   },
 });
 

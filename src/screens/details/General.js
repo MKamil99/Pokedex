@@ -1,5 +1,5 @@
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
 import { DetailsAppBar, PokemonGeneralInfo, PokemonStats } from '../../components';
@@ -13,8 +13,10 @@ export default function General({ id, name, weight, height, stats, types, color,
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <DetailsAppBar color={color} sprite={sprite} />
       <ScrollView>
-        <PokemonGeneralInfo {...generalInfoProps} />
-        <PokemonStats stats={stats} />
+        <View style={{ paddingHorizontal: 8 }}>
+          <PokemonGeneralInfo {...generalInfoProps} />
+          <PokemonStats stats={stats} />
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
