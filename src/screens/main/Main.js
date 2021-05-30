@@ -2,7 +2,13 @@ import React, { useContext, memo } from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 
-import { MainAppBar, PokemonsList, CustomFAB, CustomSearchBar } from '../../components';
+import {
+  MainAppBar,
+  PokemonsList,
+  CustomFAB,
+  CustomSearchBar,
+  CustomActivityIndicator,
+} from '../../components';
 import { PokemonDataContext } from '../../contexts';
 
 const SearchBar = () => {
@@ -24,17 +30,21 @@ const SearchBar = () => {
 };
 
 const Template = memo(({ pokemons }) => {
-  const { refresh, isSearching, updateIsSearching } = useContext(PokemonDataContext);
+  const { allPokemons, refresh, isSearching, updateIsSearching } = useContext(PokemonDataContext);
   const colors = useTheme().colors;
 
   return (
     <>
       {isSearching ? <SearchBar /> : <MainAppBar />}
-      <SafeAreaView style={[styles.ListContainer, { backgroundColor: colors.backgroundColor }]}>
-        <View style={{ paddingHorizontal: 4 }}>
-          <PokemonsList pokemons={pokemons} refresh={refresh} />
-        </View>
-      </SafeAreaView>
+      {allPokemons.length > 0 ? (
+        <SafeAreaView style={[styles.ListContainer, { backgroundColor: colors.backgroundColor }]}>
+          <View style={{ paddingHorizontal: 4 }}>
+            <PokemonsList pokemons={pokemons} refresh={refresh} />
+          </View>
+        </SafeAreaView>
+      ) : (
+        <CustomActivityIndicator color={colors.activityIndicator} />
+      )}
       <CustomFAB isVisible={!isSearching} onPress={() => updateIsSearching(true)} />
     </>
   );

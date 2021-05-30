@@ -193,6 +193,7 @@ export const PokemonDataProvider = ({ children }) => {
     <PokemonDataContext.Provider
       value={{
         favouritePokemons,
+        allPokemons,
         pokemons,
         refresh,
         sortingValue,
