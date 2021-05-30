@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import PokemonCard from './PokemonCard';
 import { PokemonDataContext } from '../contexts';
+import CalculateColumns from '../utilities/CalculateColumns';
 
 const PokemonsList = memo(({ pokemons, refresh }) => {
   const { toggleFavourite } = useContext(PokemonDataContext);
@@ -11,6 +12,8 @@ const PokemonsList = memo(({ pokemons, refresh }) => {
   const onPokemonPress = useCallback((id) => {
     navigation.navigate('Details', { id });
   }, []);
+
+  const columns = CalculateColumns();
 
   const renderPokemonCard = ({
     item: { id, isFavourite, name, height, weight, sprite, types, color },
@@ -26,6 +29,7 @@ const PokemonsList = memo(({ pokemons, refresh }) => {
       color={color}
       isFavourite={isFavourite}
       onPressFavourite={() => toggleFavourite(id)}
+      columns={columns}
     />
   );
 
