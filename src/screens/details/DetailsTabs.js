@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
+import { BackHandler } from 'react-native';
 
 import Evolution from './Evolution';
 import General from './General';
@@ -67,13 +68,21 @@ export default function DetailsTabs({ route }) {
     }
   }, [pokemon]);
 
-  // Changing Status Bar color after changing screen:
+  // Method responsible for going back to the main screen:
+  const onBackPress = () => {
+    navigation.navigate('Home');
+    return true;
+  };
+
+  // Changing Status Bar color after changing screen and using onBackPress in all three tabs:
   useEffect(() => {
     navigation.addListener('focus', () => {
       setStatusBarBackgroundColor(pickColor(colors.primaryDark), true);
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
     });
     navigation.addListener('blur', () => {
       setStatusBarBackgroundColor(colors.primaryDark, true);
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     });
   }, []);
 
