@@ -43,8 +43,8 @@ const CARD_BORDER_RADIUS = 12;
 
 const styles = StyleSheet.create({
   container: {
-    height: 170,
-    width: 170,
+    height: 180,
+    width: 180,
     alignItems: 'center',
     justifyContent: 'center',
     margin: 8,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   innerContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: 30,
   },
   id: {
     position: 'absolute',
