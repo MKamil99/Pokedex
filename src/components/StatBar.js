@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     textAlign: 'right',
     width: '15%',
+    fontFamily: 'RobotoSlab_400Regular',
   },
   barContainer: {
     width: '85%',
@@ -47,5 +48,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     textAlign: 'center',
+    fontFamily: 'RobotoSlab_400Regular',
   },
 });
