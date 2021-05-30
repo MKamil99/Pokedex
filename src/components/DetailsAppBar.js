@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   buttonContent: {
     fontSize: 20,
+    textTransform: 'capitalize',
   },
   container: {
     width: '100%',

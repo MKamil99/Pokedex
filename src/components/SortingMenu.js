@@ -87,13 +87,13 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontFamily: 'RobotoSlab_700Bold',
     textAlign: 'center',
     paddingVertical: 4,
   },
   paramTitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: 'RobotoSlab_700Bold',
     textTransform: 'capitalize',
     marginVertical: 8,
   },
