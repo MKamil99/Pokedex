@@ -6,6 +6,7 @@ import StatBar from './StatBar';
 
 export default function PokemonStats({ stats }) {
   const colors = useTheme().colors;
+  const fontRegular = useTheme().fonts.regular;
   const statsColors = colors.pokemon.stats;
   const statsValues = stats.map((stat) => stat[1]);
 
@@ -20,13 +21,13 @@ export default function PokemonStats({ stats }) {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
-      <Text style={[styles.header, { color: colors.cardCaption }]}>Base stats</Text>
+      <Text style={[styles.header, { ...fontRegular, color: colors.cardCaption }]}>Base stats</Text>
       {statBarsValues.map((barValues, index) => (
         <StatBar key={index} {...barValues} />
       ))}
-      <Text style={[styles.total, { color: colors.cardCaption }]}>{`TOTAL ${statsValues.reduce(
-        (result, number) => result + number
-      )}`}</Text>
+      <Text
+        style={[styles.total, { ...fontRegular, color: colors.cardCaption }]}
+      >{`TOTAL ${statsValues.reduce((result, number) => result + number)}`}</Text>
     </View>
   );
 }
@@ -46,12 +47,10 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     lineHeight: 20,
     textAlign: 'center',
-    fontFamily: 'RobotoSlab_400Regular',
   },
   total: {
     fontSize: 15,
     marginTop: 12,
     textAlign: 'center',
-    fontFamily: 'RobotoSlab_400Regular',
   },
 });

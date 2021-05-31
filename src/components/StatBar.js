@@ -4,14 +4,15 @@ import { useTheme } from 'react-native-paper';
 
 export default function StatBar({ name, value, color }) {
   const colors = useTheme().colors;
+  const fontRegular = useTheme().fonts.regular;
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.name, { color: colors.cardCaption }]}>{name}</Text>
+      <Text style={[styles.name, { ...fontRegular, color: colors.cardCaption }]}>{name}</Text>
       <View style={styles.barContainer}>
         <View style={[styles.backgroundBar, { backgroundColor: colors.statBarBackground }]}>
           <View style={[styles.bar, { backgroundColor: color, width: `${(value / 255) * 100}%` }]}>
-            <Text style={styles.value}>{value}</Text>
+            <Text style={[styles.value, { ...fontRegular }]}>{value}</Text>
           </View>
         </View>
       </View>
@@ -29,7 +30,6 @@ const styles = StyleSheet.create({
     includeFontPadding: false,
     textAlign: 'right',
     width: '15%',
-    fontFamily: 'RobotoSlab_400Regular',
   },
   barContainer: {
     width: '85%',
@@ -48,6 +48,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 12,
     textAlign: 'center',
-    fontFamily: 'RobotoSlab_400Regular',
   },
 });

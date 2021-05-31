@@ -6,15 +6,15 @@ import PokemonType from './PokemonType';
 
 export default function PokemonMovesList({ moves }) {
   const colors = useTheme().colors;
-
+  const fontMedium = useTheme().fonts.medium;
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
       <View style={styles.header}>
-        <Text style={[styles.headerText, { flex: 5 }]}>Name</Text>
-        <Text style={[styles.headerText, { flex: 2 }]}>Type</Text>
-        <Text style={[styles.headerText, { flex: 1 }]}>PP</Text>
-        <Text style={[styles.headerText, { flex: 1 }]}>Pwr</Text>
-        <Text style={[styles.headerText, { flex: 1 }]}>Acc</Text>
+        <Text style={[styles.headerText, { ...fontMedium, flex: 5 }]}>Name</Text>
+        <Text style={[styles.headerText, { ...fontMedium, flex: 2 }]}>Type</Text>
+        <Text style={[styles.headerText, { ...fontMedium, flex: 1 }]}>PP</Text>
+        <Text style={[styles.headerText, { ...fontMedium, flex: 1 }]}>Pwr</Text>
+        <Text style={[styles.headerText, { ...fontMedium, flex: 1 }]}>Acc</Text>
       </View>
       <ScrollView>
         {moves.map((move, i) => (
@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 15,
     textAlign: 'center',
-    fontFamily: 'RobotoSlab_500Medium',
   },
   row: {
     flexDirection: 'row',

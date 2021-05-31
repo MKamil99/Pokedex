@@ -8,9 +8,10 @@ const sortingValues = ['ascending', 'descending'];
 
 const SortingParam = ({ name, value }) => {
   const colors = useTheme().colors;
+  const fontBold = useTheme().fonts.bold;
   return (
     <View>
-      <Text style={styles.paramTitle}>{name}</Text>
+      <Text style={[styles.paramTitle, { ...fontBold }]}>{name}</Text>
       {sortingValues.map((item, index) => (
         <RadioButton.Item
           key={index}
@@ -32,6 +33,7 @@ const sortingParams = [
 
 export default function SortingMenu({ anchor, visible, onDismiss }) {
   const { sortingValue, updateSortingValue } = useContext(PokemonDataContext);
+  const fontBold = useTheme().fonts.bold;
 
   const { width } = Dimensions.get('window');
   const menuWidth = 200;
@@ -44,7 +46,7 @@ export default function SortingMenu({ anchor, visible, onDismiss }) {
       onDismiss={() => onDismiss()}
       visible={visible}
     >
-      <Text style={styles.mainTitle}>Sort by</Text>
+      <Text style={[styles.mainTitle, { ...fontBold }]}>Sort by</Text>
       <RadioButton.Group
         onValueChange={(value) => {
           updateSortingValue(value);
@@ -87,13 +89,11 @@ const styles = StyleSheet.create({
   },
   mainTitle: {
     fontSize: 20,
-    fontFamily: 'RobotoSlab_700Bold',
     textAlign: 'center',
     paddingVertical: 4,
   },
   paramTitle: {
     fontSize: 16,
-    fontFamily: 'RobotoSlab_700Bold',
     textTransform: 'capitalize',
     marginVertical: 8,
   },
