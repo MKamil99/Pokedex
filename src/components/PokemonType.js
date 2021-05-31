@@ -15,7 +15,7 @@ export default function PokemonType({ containerStyle, textStyle, type }) {
 const styles = StyleSheet.create({
   container: {
     paddingVertical: 2,
-    width: 60,
+    width: 70,
     borderRadius: 10,
   },
   content: {
