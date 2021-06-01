@@ -15,6 +15,7 @@ import NetInfo from '@react-native-community/netinfo';
 
 import { DetailsTabs, Filter, HomeTabs } from './src/screens';
 import { PokemonDataProvider, ThemeDataProvider } from './src/contexts';
+import { View, StatusBar } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -37,17 +38,19 @@ export default function App() {
       {isConnection ? (
         <>
           {fontsLoaded ? (
-            <PokemonDataProvider>
-              <ThemeDataProvider>
-                <NavigationContainer>
-                  <Stack.Navigator headerMode='none' initialRouteName='Home'>
-                    <Stack.Screen name='Home' component={HomeTabs} />
-                    <Stack.Screen name='Details' component={DetailsTabs} />
-                    <Stack.Screen name='Filter' component={Filter} />
-                  </Stack.Navigator>
-                </NavigationContainer>
-              </ThemeDataProvider>
-            </PokemonDataProvider>
+            <View style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
+              <PokemonDataProvider>
+                <ThemeDataProvider>
+                  <NavigationContainer>
+                    <Stack.Navigator headerMode='none' initialRouteName='Home'>
+                      <Stack.Screen name='Home' component={HomeTabs} />
+                      <Stack.Screen name='Details' component={DetailsTabs} />
+                      <Stack.Screen name='Filter' component={Filter} />
+                    </Stack.Navigator>
+                  </NavigationContainer>
+                </ThemeDataProvider>
+              </PokemonDataProvider>
+            </View>
           ) : (
             <AppLoading />
           )}

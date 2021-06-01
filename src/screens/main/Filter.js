@@ -10,10 +10,10 @@ const FilterAppbar = () => {
   const navigation = useNavigation();
 
   return (
-    <Appbar.Header>
+    <Appbar>
       <Appbar.BackAction onPress={() => navigation.goBack()} />
       <Appbar.Content title='Filter by' />
-    </Appbar.Header>
+    </Appbar>
   );
 };
 

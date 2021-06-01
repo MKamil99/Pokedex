@@ -17,7 +17,7 @@ export default function MainAppBar() {
   setStatusBarStyle('light');
 
   return (
-    <Appbar.Header>
+    <Appbar>
       <Appbar.Content title='Pokedex' />
       <Appbar.Action icon='filter-menu' onPress={() => navigation.navigate('Filter')} />
       <SortingMenu
@@ -33,6 +33,6 @@ export default function MainAppBar() {
       />
 
       <Appbar.Action icon='theme-light-dark' onPress={() => switchTheme()} />
-    </Appbar.Header>
+    </Appbar>
   );
 }
