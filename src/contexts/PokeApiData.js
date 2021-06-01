@@ -15,9 +15,10 @@ export const fetchAllPokemons = async () => {
   }
   const data = await response.json();
   // add isFavourite field to every pokemon by default false
-  const pokemons = data.results.map((pok) => {
-    pok.isFavourite = false;
-    return pok;
+  const pokemons = data.results.map((pokemon) => {
+    pokemon.isFavourite = false;
+    pokemon.sprite = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`;
+    return pokemon;
   });
 
   return pokemons;
