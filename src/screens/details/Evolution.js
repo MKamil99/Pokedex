@@ -21,12 +21,12 @@ export default function Evolution({ color, sprite, chain }) {
 
   useEffect(() => {
     ScreenOrientation.addOrientationChangeListener(() => {
-      ScreenOrientation.getOrientationAsync().then((it) => {
-        setWidth(
-          IsPortrait(it) ? Dimensions.get('window').width : Dimensions.get('window').width - 180
-        );
-        setCurrentStyle(IsPortrait(it) ? stylesPortrait : stylesLandscape);
-      });
+      setWidth(
+        IsPortrait(GetOrientation())
+          ? Dimensions.get('window').width
+          : Dimensions.get('window').width - 180
+      );
+      setCurrentStyle(IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape);
     });
   }, []);
 

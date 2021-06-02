@@ -26,9 +26,7 @@ export default function Moves({ color, sprite, moves }) {
 
   useEffect(() => {
     ScreenOrientation.addOrientationChangeListener(() => {
-      ScreenOrientation.getOrientationAsync().then((it) => {
-        setCurrentStyle(IsPortrait(it) ? stylesPortrait : stylesLandscape);
-      });
+      setCurrentStyle(IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape);
     });
   }, []);
 
