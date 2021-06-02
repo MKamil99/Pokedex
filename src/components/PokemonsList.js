@@ -42,6 +42,7 @@ const PokemonsList = memo(({ pokemons, refresh }) => {
 
   return (
     <FlatList
+      key={columns}
       data={pokemons}
       renderItem={renderPokemonCard}
       keyExtractor={keyExtractor}
