@@ -11,66 +11,44 @@ export default function DetailsAppBar({ color, sprite }) {
   const colors = useTheme().colors;
   const isDarkTheme = useTheme().dark;
   const navigation = useNavigation();
-  const [orientation, setOrientation] = useState(GetOrientation());
+  const [currentStyle, setCurrentStyle] = useState(
+    IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape
+  );
 
   useEffect(() => {
+    let isMounted = true;
     ScreenOrientation.addOrientationChangeListener(() => {
-      ScreenOrientation.getOrientationAsync().then((it) => {
-        setOrientation(it);
-      });
+      if (isMounted)
+        setCurrentStyle(IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape);
     });
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  const view = (orientation) => {
-    if (IsPortrait(orientation)) {
-      return (
-        <Surface
-          style={[
-            styles.container,
-            { backgroundColor: isDarkTheme ? colors.primary : colors.pokemon.background[color] },
-          ]}
+  return (
+    <Surface
+      style={[
+        currentStyle.container,
+        { backgroundColor: isDarkTheme ? colors.primary : colors.pokemon.background[color] },
+      ]}
+    >
+      <View style={currentStyle.leftCorner}>
+        <Button
+          icon='arrow-left'
+          color={colors.caption}
+          labelStyle={currentStyle.buttonContent}
+          onPress={() => navigation.navigate('Home')}
         >
-          <View style={styles.leftCorner}>
-            <Button
-              icon='arrow-left'
-              color={colors.caption}
-              labelStyle={styles.buttonContent}
-              onPress={() => navigation.navigate('Home')}
-            >
-              Pokedex
-            </Button>
-          </View>
-          <Image style={styles.image} source={sprite} />
-        </Surface>
-      );
-    } else {
-      return (
-        <Surface
-          style={[
-            stylesLandscape.container,
-            { backgroundColor: isDarkTheme ? colors.primary : colors.pokemon.background[color] },
-          ]}
-        >
-          <View style={stylesLandscape.leftCorner}>
-            <Button
-              icon='arrow-left'
-              color={colors.caption}
-              labelStyle={stylesLandscape.buttonContent}
-              onPress={() => navigation.navigate('Home')}
-            >
-              Pokedex
-            </Button>
-          </View>
-          <Image style={stylesLandscape.image} source={sprite} resizeMode='contain' />
-        </Surface>
-      );
-    }
-  };
-
-  return view(orientation);
+          Pokedex
+        </Button>
+      </View>
+      <Image style={currentStyle.image} source={sprite} resizeMode='contain' />
+    </Surface>
+  );
 }
 
-const styles = StyleSheet.create({
+const stylesPortrait = StyleSheet.create({
   leftCorner: {
     flexDirection: 'row',
   },

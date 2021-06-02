@@ -1,5 +1,5 @@
-//TODO: retrun value based on screen width
+import { Dimensions } from 'react-native';
 
 export default function CalculateColumns() {
-  return 2;
+  return Math.floor((Dimensions.get('window').width - 8) / 170);
 }

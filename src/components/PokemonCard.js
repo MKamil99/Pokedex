@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useState, useEffect } from 'react';
 import { Image, StyleSheet, View, Dimensions } from 'react-native';
 import { Text, Surface, useTheme, TouchableRipple } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import PokemonType from './PokemonType';
 import CalculateColumns from '../utilities/CalculateColumns';
@@ -9,11 +10,25 @@ import CalculateColumns from '../utilities/CalculateColumns';
 export default memo(
   ({ onPress, onPressFavourite, isFavourite, id, color, name, sprite, types }) => {
     const colors = useTheme().colors;
+    const [cardSize, setCardSize] = useState(
+      (Dimensions.get('window').width - VIEW_MARGIN) / CalculateColumns() - CARD_MARGIN * 2
+    );
+
+    useEffect(() => {
+      ScreenOrientation.addOrientationChangeListener(() => {
+        setCardSize(
+          (Dimensions.get('window').width - VIEW_MARGIN) / CalculateColumns() - CARD_MARGIN * 2
+        );
+      });
+    }, []);
 
     return (
       <TouchableRipple
         borderless={true}
-        style={[styles.card, { backgroundColor: colors.pokemon.background[color] }]}
+        style={[
+          styles.card,
+          { backgroundColor: colors.pokemon.background[color], width: cardSize, height: cardSize },
+        ]}
         onPress={() => onPress()}
       >
         <View style={styles.container}>
@@ -50,13 +65,9 @@ export default memo(
 const CARD_BORDER_RADIUS = 12;
 const CARD_MARGIN = 4;
 const VIEW_MARGIN = 8;
-const CARD_SIZE =
-  (Dimensions.get('window').width - VIEW_MARGIN) / CalculateColumns() - CARD_MARGIN * 2;
 
 const styles = StyleSheet.create({
   card: {
-    height: CARD_SIZE,
-    width: CARD_SIZE,
     margin: CARD_MARGIN,
     padding: 8,
     paddingBottom: 16,
