@@ -10,18 +10,22 @@ import IsPortrait from '../../utilities/IsPortrait';
 
 export default function Evolution({ color, sprite, chain }) {
   const colors = useTheme().colors;
-  const [orientation, setOrientation] = useState(GetOrientation());
   const [width, setWidth] = useState(
-    IsPortrait(orientation) ? Dimensions.get('window').width : Dimensions.get('window').width - 180
+    IsPortrait(GetOrientation())
+      ? Dimensions.get('window').width
+      : Dimensions.get('window').width - 180
+  );
+  const [currentStyle, setCurrentStyle] = useState(
+    IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape
   );
 
   useEffect(() => {
     ScreenOrientation.addOrientationChangeListener(() => {
       ScreenOrientation.getOrientationAsync().then((it) => {
-        setOrientation(it);
         setWidth(
           IsPortrait(it) ? Dimensions.get('window').width : Dimensions.get('window').width - 180
         );
+        setCurrentStyle(IsPortrait(it) ? stylesPortrait : stylesLandscape);
       });
     });
   }, []);
@@ -69,40 +73,21 @@ export default function Evolution({ color, sprite, chain }) {
       );
   };
 
-  const view = (orientation) => {
-    if (IsPortrait(orientation)) {
-      return (
-        <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-          <DetailsAppBar color={color} sprite={sprite} />
-          <ScrollView style={styles.contentArea}>
-            <View style={{ paddingBottom: 16 }}>
-              <EvolutionCard color={color} id={tier1.pokemonID} />
-              {addEvolutionTier(tier2)}
-              {addEvolutionTier(tier3)}
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      );
-    } else {
-      return (
-        <SafeAreaView style={[stylesLandscape.container, { backgroundColor: colors.background }]}>
-          <DetailsAppBar color={color} sprite={sprite} />
-          <ScrollView style={stylesLandscape.contentArea}>
-            <View style={{ paddingBottom: 16 }}>
-              <EvolutionCard color={color} id={tier1.pokemonID} />
-              {addEvolutionTier(tier2)}
-              {addEvolutionTier(tier3)}
-            </View>
-          </ScrollView>
-        </SafeAreaView>
-      );
-    }
-  };
-
-  return view(orientation);
+  return (
+    <SafeAreaView style={[currentStyle.container, { backgroundColor: colors.background }]}>
+      <DetailsAppBar color={color} sprite={sprite} />
+      <ScrollView style={currentStyle.contentArea}>
+        <View style={{ paddingBottom: 16 }}>
+          <EvolutionCard color={color} id={tier1.pokemonID} />
+          {addEvolutionTier(tier2)}
+          {addEvolutionTier(tier3)}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
 }
 
-const styles = StyleSheet.create({
+const stylesPortrait = StyleSheet.create({
   container: {
     height: '100%',
     alignItems: 'center',
