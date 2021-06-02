@@ -1,15 +1,21 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { Provider as PaperProvider } from 'react-native-paper';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { CustomTheme, CustomDarkTheme } from '../theme';
 import { loadThemeSettings, saveThemeSettings } from './StorageActions';
+import { calculateColumns } from '../orientation';
 
 export const ThemeDataContext = createContext();
 export const ThemeDataProvider = ({ children }) => {
   const [currentTheme, setCurrentTheme] = useState(CustomTheme);
+  const [columns, setColumns] = useState(calculateColumns());
 
   useEffect(() => {
     loadSettings();
+    ScreenOrientation.addOrientationChangeListener(() => {
+      setColumns(calculateColumns());
+    });
   }, []);
 
   // Loading settings from storage:
@@ -25,7 +31,7 @@ export const ThemeDataProvider = ({ children }) => {
   };
 
   return (
-    <ThemeDataContext.Provider value={{ switchTheme }}>
+    <ThemeDataContext.Provider value={{ switchTheme, columns }}>
       <PaperProvider theme={currentTheme}>{children}</PaperProvider>
     </ThemeDataContext.Provider>
   );

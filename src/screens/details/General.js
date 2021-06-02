@@ -4,25 +4,22 @@ import { useTheme } from 'react-native-paper';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { DetailsAppBar, PokemonGeneralInfo, PokemonStats } from '../../components';
-import GetOrientation from '../../utilities/GetOrientation';
-import IsPortrait from '../../utilities/IsPortrait';
+import { isPortrait } from '../../orientation';
 
 export default function General({ id, name, weight, height, stats, types, color, sprite }) {
   const colors = useTheme().colors;
-  const [currentStyle, setCurrentStyle] = useState(
-    IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape
-  );
+  const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
 
   const generalInfoProps = { id, name, types, weight, height };
 
   useEffect(() => {
     ScreenOrientation.addOrientationChangeListener(() => {
-      setCurrentStyle(IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape);
+      setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
     });
   }, []);
 
   return (
-    <SafeAreaView style={[currentStyle.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <DetailsAppBar color={color} sprite={sprite} />
       <ScrollView>
         <View style={{ paddingHorizontal: 8 }}>

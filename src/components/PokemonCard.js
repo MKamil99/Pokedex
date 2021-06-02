@@ -1,23 +1,23 @@
 import React, { memo, useState, useEffect } from 'react';
 import { Image, StyleSheet, View, Dimensions } from 'react-native';
-import { Text, Surface, useTheme, TouchableRipple } from 'react-native-paper';
+import { Text, useTheme, TouchableRipple } from 'react-native-paper';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import PokemonType from './PokemonType';
-import CalculateColumns from '../utilities/CalculateColumns';
+import { calculateColumns } from '../orientation';
 
 export default memo(
   ({ onPress, onPressFavourite, isFavourite, id, color, name, sprite, types }) => {
     const colors = useTheme().colors;
     const [cardSize, setCardSize] = useState(
-      (Dimensions.get('window').width - VIEW_MARGIN) / CalculateColumns() - CARD_MARGIN * 2
+      (Dimensions.get('window').width - VIEW_MARGIN) / calculateColumns() - CARD_MARGIN * 2
     );
 
     useEffect(() => {
       ScreenOrientation.addOrientationChangeListener(() => {
         setCardSize(
-          (Dimensions.get('window').width - VIEW_MARGIN) / CalculateColumns() - CARD_MARGIN * 2
+          (Dimensions.get('window').width - VIEW_MARGIN) / calculateColumns() - CARD_MARGIN * 2
         );
       });
     }, []);

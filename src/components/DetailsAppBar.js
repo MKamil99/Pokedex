@@ -1,25 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme, Surface, Button } from 'react-native-paper';
 import { Image, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react/cjs/react.development';
-import GetOrientation from '../utilities/GetOrientation';
-import IsPortrait from '../utilities/IsPortrait';
 import * as ScreenOrientation from 'expo-screen-orientation';
+
+import { isPortrait } from '../orientation';
 
 export default function DetailsAppBar({ color, sprite }) {
   const colors = useTheme().colors;
   const isDarkTheme = useTheme().dark;
   const navigation = useNavigation();
-  const [currentStyle, setCurrentStyle] = useState(
-    IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape
-  );
+  const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
 
   useEffect(() => {
     let isMounted = true;
     ScreenOrientation.addOrientationChangeListener(() => {
-      if (isMounted)
-        setCurrentStyle(IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape);
+      if (isMounted) setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
     });
     return () => {
       isMounted = false;
@@ -29,21 +25,21 @@ export default function DetailsAppBar({ color, sprite }) {
   return (
     <Surface
       style={[
-        currentStyle.container,
+        styles.container,
         { backgroundColor: isDarkTheme ? colors.primary : colors.pokemon.background[color] },
       ]}
     >
-      <View style={currentStyle.leftCorner}>
+      <View style={styles.leftCorner}>
         <Button
           icon='arrow-left'
           color={colors.caption}
-          labelStyle={currentStyle.buttonContent}
+          labelStyle={styles.buttonContent}
           onPress={() => navigation.navigate('Home')}
         >
           Pokedex
         </Button>
       </View>
-      <Image style={currentStyle.image} source={sprite} resizeMode='contain' />
+      <Image style={styles.image} source={sprite} resizeMode='contain' />
     </Surface>
   );
 }

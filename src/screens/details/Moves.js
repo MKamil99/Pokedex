@@ -1,18 +1,14 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { DetailsAppBar, PokemonMovesList, VersionPanel } from '../../components';
-import GetOrientation from '../../utilities/GetOrientation';
-import IsPortrait from '../../utilities/IsPortrait';
+import { isPortrait } from '../../orientation';
 
 export default function Moves({ color, sprite, moves }) {
   const colors = useTheme().colors;
-  const [currentStyle, setCurrentStyle] = useState(
-    IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape
-  );
+  const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
   const [version, setVersion] = useState(moves.length > 0 ? moves[0].versions[0].name : null);
   const versionList = new Set();
 
@@ -26,16 +22,16 @@ export default function Moves({ color, sprite, moves }) {
 
   useEffect(() => {
     ScreenOrientation.addOrientationChangeListener(() => {
-      setCurrentStyle(IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape);
+      setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
     });
   }, []);
 
   return (
     <>
-      <SafeAreaView style={[currentStyle.container, { backgroundColor: colors.background }]}>
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
         <DetailsAppBar color={color} sprite={sprite} />
         {version ? (
-          <ScrollView style={currentStyle.contentArea}>
+          <ScrollView style={styles.contentArea}>
             <View style={{ paddingHorizontal: 8 }}>
               <VersionPanel
                 version={version}
@@ -46,7 +42,7 @@ export default function Moves({ color, sprite, moves }) {
             </View>
           </ScrollView>
         ) : (
-          <View style={currentStyle.clear}>
+          <View style={styles.clear}>
             <Text>NO MOVES</Text>
           </View>
         )}

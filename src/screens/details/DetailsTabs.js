@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
 import { BackHandler } from 'react-native';
 

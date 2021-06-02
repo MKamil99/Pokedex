@@ -1,32 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Dimensions, View, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { DetailsAppBar, EvolutionArrow, EvolutionCard } from '../../components';
-import { useEffect, useState } from 'react/cjs/react.development';
-import GetOrientation from '../../utilities/GetOrientation';
-import IsPortrait from '../../utilities/IsPortrait';
+import { isPortrait } from '../../orientation';
 
 export default function Evolution({ color, sprite, chain }) {
   const colors = useTheme().colors;
   const [width, setWidth] = useState(
-    IsPortrait(GetOrientation())
-      ? Dimensions.get('window').width
-      : Dimensions.get('window').width - 180
+    isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - 180
   );
-  const [currentStyle, setCurrentStyle] = useState(
-    IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape
-  );
+  const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
 
   useEffect(() => {
     ScreenOrientation.addOrientationChangeListener(() => {
       setWidth(
-        IsPortrait(GetOrientation())
-          ? Dimensions.get('window').width
-          : Dimensions.get('window').width - 180
+        isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - 180
       );
-      setCurrentStyle(IsPortrait(GetOrientation()) ? stylesPortrait : stylesLandscape);
+      setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
     });
   }, []);
 
@@ -74,9 +66,9 @@ export default function Evolution({ color, sprite, chain }) {
   };
 
   return (
-    <SafeAreaView style={[currentStyle.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <DetailsAppBar color={color} sprite={sprite} />
-      <ScrollView style={currentStyle.contentArea}>
+      <ScrollView style={styles.contentArea}>
         <View style={{ paddingBottom: 16 }}>
           <EvolutionCard color={color} id={tier1.pokemonID} />
           {addEvolutionTier(tier2)}
