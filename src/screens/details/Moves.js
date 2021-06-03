@@ -12,6 +12,17 @@ export default function Moves({ color, sprite, moves }) {
   const [version, setVersion] = useState(moves.length > 0 ? moves[0].versions[0].name : null);
   const versionList = new Set();
 
+  const orientationChangeHandler = () => {
+    setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
+  };
+
+  useEffect(() => {
+    let subscription = ScreenOrientation.addOrientationChangeListener(orientationChangeHandler);
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(subscription);
+    };
+  }, []);
+
   const moveList = moves.filter((move) => move.versions.some((item) => item.name === version));
 
   moves.forEach((move) => {
@@ -19,12 +30,6 @@ export default function Moves({ color, sprite, moves }) {
       versionList.add(ver.name);
     });
   });
-
-  useEffect(() => {
-    ScreenOrientation.addOrientationChangeListener(() => {
-      setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
-    });
-  }, []);
 
   return (
     <>

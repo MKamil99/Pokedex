@@ -13,13 +13,16 @@ export default function Evolution({ color, sprite, chain }) {
   );
   const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
 
+  const orientationChangeHandler = () => {
+    setWidth(isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - 180);
+    setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
+  };
+
   useEffect(() => {
-    ScreenOrientation.addOrientationChangeListener(() => {
-      setWidth(
-        isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - 180
-      );
-      setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
-    });
+    let subscription = ScreenOrientation.addOrientationChangeListener(orientationChangeHandler);
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(subscription);
+    };
   }, []);
 
   const tier1 = chain;

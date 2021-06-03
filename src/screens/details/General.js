@@ -12,10 +12,15 @@ export default function General({ id, name, weight, height, stats, types, color,
 
   const generalInfoProps = { id, name, types, weight, height };
 
+  const orientationChangeHandler = () => {
+    setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
+  };
+
   useEffect(() => {
-    ScreenOrientation.addOrientationChangeListener(() => {
-      setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
-    });
+    let subscription = ScreenOrientation.addOrientationChangeListener(orientationChangeHandler);
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(subscription);
+    };
   }, []);
 
   return (
