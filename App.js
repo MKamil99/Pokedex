@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image } from 'react-native';
-import { Text } from 'react-native-paper';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import './wdyr';
@@ -11,11 +9,11 @@ import {
   RobotoSlab_700Bold,
 } from '@expo-google-fonts/roboto-slab';
 import AppLoading from 'expo-app-loading';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import NetInfo from '@react-native-community/netinfo';
 
-import { DetailsTabs, Filter, HomeTabs } from './src/screens';
+import { DetailsTabs, Filter, HomeTabs, NoConnection } from './src/screens';
 import { PokemonDataProvider, ThemeDataProvider } from './src/contexts';
-import { View, StatusBar } from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -36,44 +34,20 @@ export default function App() {
   return (
     <>
       {fontsLoaded ? (
-        <>
-          {fontsLoaded ? (
-            <SafeAreaView style={{ flex: 1 }}>
-              <PokemonDataProvider>
-                <ThemeDataProvider>
-                  <NavigationContainer>
-                    <Stack.Navigator headerMode='none' initialRouteName='Home'>
-                      <Stack.Screen name='Home' component={HomeTabs} />
-                      <Stack.Screen name='Details' component={DetailsTabs} />
-                      <Stack.Screen name='Filter' component={Filter} />
-                    </Stack.Navigator>
-                  </NavigationContainer>
-                </ThemeDataProvider>
-              </PokemonDataProvider>
-            </SafeAreaView>
-          ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: '20%',
-              }}
-            >
-              <Image
-                style={{ maxWidth: '150%' }}
-                source={require('./assets/sadpokemon.jpg')}
-                resizeMode='contain'
-              />
-              <Text style={{ textAlign: 'center', fontFamily: 'RobotoSlab_700Bold', fontSize: 20 }}>
-                You're offline.
-              </Text>
-              <Text style={{ textAlign: 'center', fontFamily: 'RobotoSlab_400Regular' }}>
-                To use this application, you need to connect to the internet.
-              </Text>
-            </View>
-          )}
-        </>
+        <SafeAreaView style={{ flex: 1 }}>
+          <PokemonDataProvider>
+            <ThemeDataProvider>
+              <NavigationContainer>
+                <Stack.Navigator headerMode='none' initialRouteName='Home'>
+                  <Stack.Screen name='Home' component={HomeTabs} />
+                  <Stack.Screen name='Details' component={DetailsTabs} />
+                  <Stack.Screen name='Filter' component={Filter} />
+                  <Stack.Screen name='NoConnection' component={NoConnection} />
+                </Stack.Navigator>
+              </NavigationContainer>
+            </ThemeDataProvider>
+          </PokemonDataProvider>
+        </SafeAreaView>
       ) : (
         <AppLoading />
       )}
