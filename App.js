@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { View, Image } from 'react-native';
 import { Text } from 'react-native-paper';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import './wdyr';
@@ -35,7 +35,7 @@ export default function App() {
 
   return (
     <>
-      {isConnection ? (
+      {fontsLoaded ? (
         <>
           {fontsLoaded ? (
             <SafeAreaView style={{ flex: 1 }}>
@@ -52,22 +52,30 @@ export default function App() {
               </PokemonDataProvider>
             </SafeAreaView>
           ) : (
-            <AppLoading />
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'center',
+                alignItems: 'center',
+                paddingHorizontal: '20%',
+              }}
+            >
+              <Image
+                style={{ maxWidth: '150%' }}
+                source={require('./assets/sadpokemon.jpg')}
+                resizeMode='contain'
+              />
+              <Text style={{ textAlign: 'center', fontFamily: 'RobotoSlab_700Bold', fontSize: 20 }}>
+                You're offline.
+              </Text>
+              <Text style={{ textAlign: 'center', fontFamily: 'RobotoSlab_400Regular' }}>
+                To use this application, you need to connect to the internet.
+              </Text>
+            </View>
           )}
         </>
       ) : (
-        <SafeAreaView
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingHorizontal: '20%',
-          }}
-        >
-          <Text>
-            There is no internet connection. To use this app u need to connect with the internet.
-          </Text>
-        </SafeAreaView>
+        <AppLoading />
       )}
     </>
   );
