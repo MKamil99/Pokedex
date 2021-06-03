@@ -4,6 +4,7 @@ import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme } from 'react-native-paper';
 import { BackHandler } from 'react-native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import Evolution from './Evolution';
 import General from './General';
@@ -28,6 +29,10 @@ export default function DetailsTabs({ route }) {
   const pickColor = (color) =>
     pokemon && !isDarkTheme ? colors.pokemon.backgroundDark[pokemon.color] : color;
 
+  const orientationChangeHandler = () => {
+    setStatusBarBackgroundColor(pickColor(colors.primaryDark));
+  };
+
   // Fetching details:
   useEffect(() => {
     pokemonByNameOrNumber(id).then((data) => setPokemon(data));
@@ -35,9 +40,11 @@ export default function DetailsTabs({ route }) {
 
   // Displaying details:
   useEffect(() => {
+    let subscription;
     if (pokemon) {
       // Status Bar:
       setStatusBarBackgroundColor(pickColor(colors.primaryDark), true);
+      subscription = ScreenOrientation.addOrientationChangeListener(orientationChangeHandler);
       // General:
       setGeneralProps({
         id: pokemon.id,
@@ -66,6 +73,11 @@ export default function DetailsTabs({ route }) {
         });
       });
     }
+    return () => {
+      if (pokemon) {
+        ScreenOrientation.removeOrientationChangeListener(subscription);
+      }
+    };
   }, [pokemon]);
 
   // Method responsible for going back to the main screen:
