@@ -38,7 +38,7 @@ export default function App() {
       {isConnection ? (
         <>
           {fontsLoaded ? (
-            <View style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
+            <SafeAreaView style={{ flex: 1 }}>
               <PokemonDataProvider>
                 <ThemeDataProvider>
                   <NavigationContainer>
@@ -50,7 +50,7 @@ export default function App() {
                   </NavigationContainer>
                 </ThemeDataProvider>
               </PokemonDataProvider>
-            </View>
+            </SafeAreaView>
           ) : (
             <AppLoading />
           )}
