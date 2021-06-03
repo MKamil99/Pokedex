@@ -3,8 +3,7 @@ import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import PokemonCard from './PokemonCard';
-import { PokemonDataContext } from '../contexts';
-import CalculateColumns from '../utilities/CalculateColumns';
+import { PokemonDataContext, ThemeDataContext } from '../contexts';
 
 const PokemonsList = memo(({ pokemons, refresh }) => {
   const { toggleFavourite } = useContext(PokemonDataContext);
@@ -13,7 +12,7 @@ const PokemonsList = memo(({ pokemons, refresh }) => {
     navigation.navigate('Details', { id });
   }, []);
 
-  const columns = CalculateColumns();
+  const { columns } = useContext(ThemeDataContext);
 
   const renderPokemonCard = ({
     item: { id, isFavourite, name, height, weight, sprite, types, color },
@@ -29,7 +28,6 @@ const PokemonsList = memo(({ pokemons, refresh }) => {
       color={color}
       isFavourite={isFavourite}
       onPressFavourite={() => toggleFavourite(id)}
-      columns={columns}
     />
   );
 
@@ -37,11 +35,12 @@ const PokemonsList = memo(({ pokemons, refresh }) => {
 
   return (
     <FlatList
+      key={columns}
       data={pokemons}
       renderItem={renderPokemonCard}
       keyExtractor={keyExtractor}
       extraData={refresh}
-      numColumns={2}
+      numColumns={columns}
     />
   );
 });

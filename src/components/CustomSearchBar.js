@@ -7,7 +7,7 @@ export default function CustomSearchBar({ onClose, onSubmit, searchQuery, setSea
   const onChangeSearch = (query) => setSearchQuery(query);
 
   return (
-    <Appbar.Header>
+    <Appbar>
       <Searchbar
         placeholder='Search by name or ID'
         onChangeText={onChangeSearch}
@@ -21,7 +21,7 @@ export default function CustomSearchBar({ onClose, onSubmit, searchQuery, setSea
         onSubmitEditing={() => onSubmit(searchQuery)}
         autoFocus={searchQuery == ''}
       />
-    </Appbar.Header>
+    </Appbar>
   );
 }
 

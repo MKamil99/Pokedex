@@ -1,11 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Dimensions, View, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import { DetailsAppBar, EvolutionArrow, EvolutionCard } from '../../components';
+import { isPortrait } from '../../orientation';
 
 export default function Evolution({ color, sprite, chain }) {
   const colors = useTheme().colors;
+  const [width, setWidth] = useState(
+    isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - 180
+  );
+  const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
+
+  const orientationChangeHandler = () => {
+    setWidth(isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - 180);
+    setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
+  };
+
+  useEffect(() => {
+    let subscription = ScreenOrientation.addOrientationChangeListener(orientationChangeHandler);
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(subscription);
+    };
+  }, []);
 
   const tier1 = chain;
   const tier2 = chain.evolvesTo;
@@ -32,7 +50,7 @@ export default function Evolution({ color, sprite, chain }) {
   const addEvolutionTier = (tier) => {
     if (tier.length == 1)
       return (
-        <View style={{ width: Dimensions.get('window').width }}>
+        <View>
           {addEvolutionArrow(tier[0])}
           <EvolutionCard color={color} id={tier[0].pokemonID} />
         </View>
@@ -41,7 +59,7 @@ export default function Evolution({ color, sprite, chain }) {
       return (
         <ScrollView horizontal={true} pagingEnabled={true} persistentScrollbar={true}>
           {tier.map((it, i) => (
-            <View key={i} style={{ width: Dimensions.get('window').width, paddingBottom: 16 }}>
+            <View key={i} style={{ width: width, paddingBottom: 16 }}>
               {addEvolutionArrow(it)}
               <EvolutionCard color={color} id={it.pokemonID} />
             </View>
@@ -51,25 +69,33 @@ export default function Evolution({ color, sprite, chain }) {
   };
 
   return (
-    <>
-      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-        <DetailsAppBar color={color} sprite={sprite} />
-        <ScrollView style={styles.contentArea}>
-          <View style={{ paddingBottom: 16 }}>
-            <EvolutionCard color={color} id={tier1.pokemonID} />
-            {addEvolutionTier(tier2)}
-            {addEvolutionTier(tier3)}
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <DetailsAppBar color={color} sprite={sprite} />
+      <ScrollView style={styles.contentArea}>
+        <View style={{ paddingBottom: 16 }}>
+          <EvolutionCard color={color} id={tier1.pokemonID} />
+          {addEvolutionTier(tier2)}
+          {addEvolutionTier(tier3)}
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({
+const stylesPortrait = StyleSheet.create({
   container: {
     height: '100%',
     alignItems: 'center',
+  },
+  contentArea: {
+    width: 'auto',
+  },
+});
+
+const stylesLandscape = StyleSheet.create({
+  container: {
+    height: '100%',
+    flexDirection: 'row',
   },
   contentArea: {
     width: 'auto',

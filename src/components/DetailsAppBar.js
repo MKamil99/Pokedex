@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTheme, Surface, Button } from 'react-native-paper';
 import { Image, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+import { isPortrait } from '../orientation';
 
 export default function DetailsAppBar({ color, sprite }) {
   const colors = useTheme().colors;
   const isDarkTheme = useTheme().dark;
   const navigation = useNavigation();
+  let styles = isPortrait() ? stylesPortrait : stylesLandscape;
 
   return (
     <Surface
@@ -25,14 +28,13 @@ export default function DetailsAppBar({ color, sprite }) {
           Pokedex
         </Button>
       </View>
-      <Image style={styles.image} source={sprite} />
+      <Image style={styles.image} source={sprite} resizeMode='contain' />
     </Surface>
   );
 }
 
-const styles = StyleSheet.create({
+const stylesPortrait = StyleSheet.create({
   leftCorner: {
-    top: 30,
     flexDirection: 'row',
   },
   buttonContent: {
@@ -50,7 +52,29 @@ const styles = StyleSheet.create({
     height: 180,
     marginLeft: 'auto',
     marginRight: 'auto',
-    marginTop: 15,
     marginBottom: 5,
+  },
+});
+
+const stylesLandscape = StyleSheet.create({
+  leftCorner: {
+    flexDirection: 'row',
+  },
+  buttonContent: {
+    fontSize: 20,
+    textTransform: 'capitalize',
+  },
+  container: {
+    width: 180,
+    borderTopRightRadius: 30,
+    borderBottomRightRadius: 30,
+    elevation: 8,
+  },
+  image: {
+    width: 180,
+    height: 180,
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    flex: 1,
   },
 });

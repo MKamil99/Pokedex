@@ -70,35 +70,23 @@ const MENU_BORDER_RADIUS = 12;
 
 const styles = StyleSheet.create({
   menu: {
-    position: 'absolute',
-    top: APPBAR_HEIGHT + 8,
-    alignItems: 'stretch',
-    justifyContent: 'center',
     borderRadius: MENU_BORDER_RADIUS,
   },
   menuContent: {
     borderRadius: MENU_BORDER_RADIUS,
-    flex: 1,
     paddingHorizontal: 18,
-  },
-  itemContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
   },
   mainTitle: {
     fontSize: 20,
     textAlign: 'center',
-    paddingVertical: 4,
   },
   paramTitle: {
     fontSize: 16,
     textTransform: 'capitalize',
-    marginVertical: 8,
   },
   radioButtonContainer: {
     paddingHorizontal: 0,
+    paddingVertical: 0,
   },
   radioButtonValue: {
     fontSize: 16,
