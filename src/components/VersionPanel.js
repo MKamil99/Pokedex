@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import { useTheme, Dialog, Portal, Text } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import VersionSelector from './VersionSelector';
 
@@ -43,24 +44,24 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
     height: 'auto',
-    borderRadius: 20,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+    borderRadius: RFValue(20),
+    paddingHorizontal: RFValue(16),
+    paddingVertical: RFValue(12),
     elevation: 8,
-    marginTop: 16,
+    marginTop: RFValue(16),
   },
   header: {
     textAlign: 'center',
-    fontSize: 18,
-    marginBottom: 5,
+    fontSize: RFValue(18),
+    marginBottom: RFValue(5),
   },
   dialogHeader: {
     textAlign: 'center',
-    fontSize: 24,
-    paddingBottom: 16,
+    fontSize: RFValue(24),
+    paddingBottom: RFValue(16),
   },
   dialog: {
-    paddingHorizontal: 16,
-    paddingVertical: 16,
+    paddingHorizontal: RFValue(16),
+    paddingVertical: RFValue(16),
   },
 });

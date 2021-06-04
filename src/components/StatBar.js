@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default function StatBar({ name, value, color }) {
   const colors = useTheme().colors;
@@ -23,30 +24,30 @@ export default function StatBar({ name, value, color }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    marginTop: 12,
+    marginTop: RFValue(12),
   },
   name: {
-    fontSize: 15,
+    fontSize: RFValue(15),
     includeFontPadding: false,
     textAlign: 'right',
     width: '15%',
   },
   barContainer: {
     width: '85%',
-    paddingLeft: 8,
+    paddingLeft: RFValue(8),
   },
   backgroundBar: {
     width: '100%',
-    height: 18,
-    borderRadius: 9,
+    height: RFValue(18),
+    borderRadius: RFValue(9),
   },
   bar: {
-    height: 18,
-    borderRadius: 9,
+    height: RFValue(18),
+    borderRadius: RFValue(9),
   },
   value: {
     color: 'white',
-    fontSize: 12,
+    fontSize: RFValue(12),
     textAlign: 'center',
   },
 });

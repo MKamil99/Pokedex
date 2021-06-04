@@ -42,7 +42,12 @@ export default memo(
           {
             <View style={styles.typesContainer}>
               {types.map((type, i) => (
-                <PokemonType key={i} type={type.name} passedStyle={{ marginHorizontal: 5 }} />
+                <PokemonType
+                  key={i}
+                  type={type.name}
+                  containerStyle={styles.typeContainer}
+                  textStyle={styles.typeText}
+                />
               ))}
             </View>
           }
@@ -88,5 +93,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     width: '100%',
+  },
+  typeContainer: {
+    paddingVertical: 2,
+    width: 70,
+    borderRadius: 10,
+  },
+  typeText: {
+    fontSize: 12,
+    textShadowRadius: 10,
   },
 });

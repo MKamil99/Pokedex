@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import { DetailsAppBar, PokemonMovesList, VersionPanel } from '../../components';
 import { isPortrait } from '../../orientation';
@@ -37,7 +38,7 @@ export default function Moves({ color, sprite, moves }) {
         <DetailsAppBar color={color} sprite={sprite} />
         {version ? (
           <ScrollView style={styles.contentArea}>
-            <View style={{ paddingHorizontal: 8 }}>
+            <View style={{ paddingHorizontal: RFValue(8) }}>
               <VersionPanel
                 version={version}
                 versionList={Array.from(versionList)}

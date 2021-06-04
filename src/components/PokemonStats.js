@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useTheme } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import StatBar from './StatBar';
 
@@ -36,21 +37,21 @@ const styles = StyleSheet.create({
   container: {
     width: 'auto',
     height: 'auto',
-    padding: 8,
-    borderRadius: 20,
+    padding: RFValue(8),
+    borderRadius: RFValue(20),
     elevation: 8,
-    marginTop: 16,
-    marginBottom: 16,
+    marginTop: RFValue(16),
+    marginBottom: RFValue(16),
   },
   header: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     includeFontPadding: false,
-    lineHeight: 20,
+    lineHeight: RFValue(20),
     textAlign: 'center',
   },
   total: {
-    fontSize: 15,
-    marginTop: 12,
+    fontSize: RFValue(15),
+    marginTop: RFValue(12),
     textAlign: 'center',
   },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import PokemonType from './PokemonType';
 
@@ -45,47 +46,47 @@ const styles = StyleSheet.create({
   container: {
     width: 'auto',
     height: 'auto',
-    borderRadius: 20,
-    padding: 8,
-    elevation: 8,
-    marginTop: 16,
+    borderRadius: RFValue(20),
+    padding: RFValue(8),
+    elevation: RFValue(8),
+    marginTop: RFValue(16),
   },
   name: {
-    fontSize: 30,
+    fontSize: RFValue(30),
     textAlign: 'center',
-    lineHeight: 30,
+    lineHeight: RFValue(30),
   },
   id: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: RFValue(20),
   },
   typesContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingTop: 8,
+    paddingTop: RFValue(8),
   },
   typeContainer: {
-    width: 130,
-    height: 30,
-    borderRadius: 15,
+    width: RFValue(130),
+    height: RFValue(30),
+    borderRadius: RFValue(15),
   },
   typeText: {
-    fontSize: 20,
+    fontSize: RFValue(20),
   },
   infoContainer: {
     flexDirection: 'row',
-    paddingTop: 8,
+    paddingTop: RFValue(8),
   },
   info: {
     width: '50%',
   },
   infoText: {
     textAlign: 'center',
-    fontSize: 15,
+    fontSize: RFValue(15),
   },
   infoData: {
     textAlign: 'center',
-    fontSize: 20,
+    fontSize: RFValue(20),
   },
 });

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default function PokemonType({ containerStyle, textStyle, type }) {
   const colors = useTheme().colors;
@@ -14,15 +15,15 @@ export default function PokemonType({ containerStyle, textStyle, type }) {
 
 const styles = StyleSheet.create({
   container: {
-    paddingVertical: 2,
-    width: 70,
-    borderRadius: 10,
+    paddingVertical: RFValue(2),
+    width: RFValue(70),
+    borderRadius: RFValue(10),
   },
   content: {
-    fontSize: 12,
+    fontSize: RFValue(12),
     textAlign: 'center',
     textTransform: 'uppercase',
     textShadowColor: 'black',
-    textShadowRadius: 10,
+    textShadowRadius: RFValue(10),
   },
 });
