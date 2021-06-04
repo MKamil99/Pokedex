@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     marginTop: RFValue(12),
   },
   name: {
-    fontSize: RFValue(15),
+    fontSize: RFValue(12),
     includeFontPadding: false,
     textAlign: 'right',
     width: '15%',
