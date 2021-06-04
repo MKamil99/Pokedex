@@ -6,7 +6,7 @@ import { Favourites, Home } from './Main';
 
 const Tab = createMaterialBottomTabNavigator();
 
-function HomeTabs() {
+export default function HomeTabsNavigator() {
   const colors = useTheme().colors;
 
   return (
@@ -21,6 +21,3 @@ function HomeTabs() {
     </Tab.Navigator>
   );
 }
-
-HomeTabs.whyDidYouRender = true;
-export default HomeTabs;

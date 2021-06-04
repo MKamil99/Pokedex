@@ -14,7 +14,7 @@ import { CustomActivityIndicator } from '../../components';
 
 const Tab = createMaterialBottomTabNavigator();
 
-export default function DetailsTabs({ route }) {
+export default function DetailsTabsNavigator({ route }) {
   const { id } = route.params;
   const colors = useTheme().colors;
   const isDarkTheme = useTheme().dark;
