@@ -58,6 +58,7 @@ export default function EvolutionCard({ color, id }) {
   );
 }
 
+const SPRITE_SIZE = RFValue(132);
 const styles = StyleSheet.create({
   container: {
     width: 'auto',
@@ -79,15 +80,15 @@ const styles = StyleSheet.create({
   },
   pokemonContainer: {
     height: '100%',
-    width: '50%',
+    width: SPRITE_SIZE * 1.5,
     borderTopLeftRadius: RFValue(20),
     borderBottomLeftRadius: RFValue(20),
     borderTopRightRadius: RFValue(100),
     borderBottomRightRadius: RFValue(100),
   },
   image: {
-    height: RFValue(132),
-    width: RFValue(132),
+    height: SPRITE_SIZE,
+    width: SPRITE_SIZE,
     marginHorizontal: RFValue(16),
     marginVertical: RFValue(16),
   },
