@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useTheme, Surface, Button } from 'react-native-paper';
 import { Image, StyleSheet, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import { isPortrait } from '../orientation';
 
@@ -38,18 +39,18 @@ const stylesPortrait = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonContent: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     textTransform: 'capitalize',
   },
   container: {
     width: '100%',
-    borderBottomLeftRadius: 30,
-    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: RFValue(30),
+    borderBottomRightRadius: RFValue(30),
     elevation: 8,
   },
   image: {
-    width: 180,
-    height: 180,
+    width: RFValue(180),
+    height: RFValue(180),
     marginLeft: 'auto',
     marginRight: 'auto',
     marginBottom: 5,
@@ -61,18 +62,18 @@ const stylesLandscape = StyleSheet.create({
     flexDirection: 'row',
   },
   buttonContent: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     textTransform: 'capitalize',
   },
   container: {
-    width: 180,
-    borderTopRightRadius: 30,
-    borderBottomRightRadius: 30,
+    width: RFValue(180),
+    borderTopRightRadius: RFValue(30),
+    borderBottomRightRadius: RFValue(30),
     elevation: 8,
   },
   image: {
-    width: 180,
-    height: 180,
+    width: RFValue(180),
+    height: RFValue(180),
     marginLeft: 'auto',
     marginRight: 'auto',
     flex: 1,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 export default EvolutionArrow = ({ data, color }) => {
   const colors = useTheme().colors;
@@ -23,15 +24,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
-    marginTop: 16,
+    marginTop: RFValue(16),
   },
   text: {
-    fontSize: 18,
-    lineHeight: 18,
-    marginRight: 5,
+    fontSize: RFValue(18),
+    lineHeight: RFValue(18),
+    marginRight: RFValue(5),
   },
   image: {
-    height: 32,
-    width: 32,
+    height: RFValue(32),
+    width: RFValue(32),
   },
 });

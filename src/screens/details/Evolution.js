@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, StyleSheet, Dimensions, View, ScrollView } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import { DetailsAppBar, EvolutionArrow, EvolutionCard } from '../../components';
 import { isPortrait } from '../../orientation';
@@ -9,12 +10,14 @@ import { isPortrait } from '../../orientation';
 export default function Evolution({ color, sprite, chain }) {
   const colors = useTheme().colors;
   const [width, setWidth] = useState(
-    isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - 180
+    isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - RFValue(180)
   );
   const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
 
   const orientationChangeHandler = () => {
-    setWidth(isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - 180);
+    setWidth(
+      isPortrait() ? Dimensions.get('window').width : Dimensions.get('window').width - RFValue(180)
+    );
     setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
   };
 
@@ -59,7 +62,7 @@ export default function Evolution({ color, sprite, chain }) {
       return (
         <ScrollView horizontal={true} pagingEnabled={true} persistentScrollbar={true}>
           {tier.map((it, i) => (
-            <View key={i} style={{ width: width, paddingBottom: 16 }}>
+            <View key={i} style={{ width: width, paddingBottom: RFValue(16) }}>
               {addEvolutionArrow(it)}
               <EvolutionCard color={color} id={it.pokemonID} />
             </View>
@@ -72,7 +75,7 @@ export default function Evolution({ color, sprite, chain }) {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <DetailsAppBar color={color} sprite={sprite} />
       <ScrollView style={styles.contentArea}>
-        <View style={{ paddingBottom: 16 }}>
+        <View style={{ paddingBottom: RFValue(16) }}>
           <EvolutionCard color={color} id={tier1.pokemonID} />
           {addEvolutionTier(tier2)}
           {addEvolutionTier(tier3)}

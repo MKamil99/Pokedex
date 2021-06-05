@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { Text, TouchableRipple, useTheme } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const getTextWithColor = (version, colors) => {
   let text = [];
@@ -116,16 +117,7 @@ export default function VersionSelector({ version, onPress }) {
         )}
         {text.length == 1 && (
           <View style={styles.textContainer}>
-            <View
-              style={[
-                styles.textContainer1,
-                {
-                  borderTopRightRadius: 100,
-                  borderBottomRightRadius: 100,
-                  backgroundColor: color[0],
-                },
-              ]}
-            >
+            <View style={[styles.textContainer1, { backgroundColor: color[0] }]}>
               <Text style={styles.text}>{text[0]}</Text>
             </View>
           </View>
@@ -142,20 +134,21 @@ const styles = StyleSheet.create({
   },
   textContainer1: {
     flex: 1,
-    borderTopLeftRadius: 100,
-    borderBottomLeftRadius: 100,
+    borderTopLeftRadius: RFValue(100),
+    borderBottomLeftRadius: RFValue(100),
     backgroundColor: 'red',
   },
   textContainer2: {
     flex: 1,
-    borderTopRightRadius: 100,
-    borderBottomRightRadius: 100,
+    borderTopRightRadius: RFValue(100),
+    borderBottomRightRadius: RFValue(100),
   },
   text: {
     textAlign: 'center',
-    paddingVertical: 5,
+    paddingVertical: RFValue(5),
     color: 'white',
+    fontSize: RFValue(12),
     textShadowColor: 'black',
-    textShadowRadius: 10,
+    textShadowRadius: RFValue(10),
   },
 });

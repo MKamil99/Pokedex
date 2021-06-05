@@ -37,7 +37,7 @@ const Template = memo(({ pokemons }) => {
     <>
       {isSearching ? <SearchBar /> : <MainAppBar />}
       {allPokemons.length > 0 ? (
-        <SafeAreaView style={[styles.ListContainer, { backgroundColor: colors.backgroundColor }]}>
+        <SafeAreaView style={[styles.ListContainer, { backgroundColor: colors.background }]}>
           <View style={{ paddingHorizontal: 4 }}>
             <PokemonsList pokemons={pokemons} refresh={refresh} />
           </View>

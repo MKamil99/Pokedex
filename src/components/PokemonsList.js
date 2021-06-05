@@ -1,9 +1,11 @@
-import React, { memo, useCallback, useContext } from 'react';
+import React, { memo, useCallback, useContext, useState, useEffect } from 'react';
 import { FlatList } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 import PokemonCard from './PokemonCard';
-import { PokemonDataContext, ThemeDataContext } from '../contexts';
+import { PokemonDataContext } from '../contexts';
+import { calculateColumns } from '../orientation';
 
 const PokemonsList = memo(({ pokemons, refresh }) => {
   const { toggleFavourite } = useContext(PokemonDataContext);
@@ -12,7 +14,13 @@ const PokemonsList = memo(({ pokemons, refresh }) => {
     navigation.navigate('Details', { id });
   }, []);
 
-  const { columns } = useContext(ThemeDataContext);
+  // Rendering appropriate number of columns:
+  const [columns, setColumns] = useState(calculateColumns());
+  useEffect(() => {
+    ScreenOrientation.addOrientationChangeListener(() => {
+      setColumns(calculateColumns());
+    });
+  }, []);
 
   const renderPokemonCard = ({
     item: { id, isFavourite, name, height, weight, sprite, types, color },

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import * as ScreenOrientation from 'expo-screen-orientation';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import { DetailsAppBar, PokemonGeneralInfo, PokemonStats } from '../../components';
 import { isPortrait } from '../../orientation';
@@ -27,7 +28,7 @@ export default function General({ id, name, weight, height, stats, types, color,
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <DetailsAppBar color={color} sprite={sprite} />
       <ScrollView>
-        <View style={{ paddingHorizontal: 8 }}>
+        <View style={{ paddingHorizontal: RFValue(8) }}>
           <PokemonGeneralInfo {...generalInfoProps} />
           <PokemonStats stats={stats} />
         </View>

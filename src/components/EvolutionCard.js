@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import { pokemonByNameOrNumber } from '../contexts';
 import CustomActivityIndicator from './CustomActivityIndicator';
@@ -57,52 +58,54 @@ export default function EvolutionCard({ color, id }) {
   );
 }
 
+const SPRITE_SIZE = RFValue(132);
 const styles = StyleSheet.create({
   container: {
     width: 'auto',
-    height: 164,
+    height: RFValue(164),
     flexDirection: 'row',
-    borderRadius: 20,
+    borderRadius: RFValue(20),
     elevation: 8,
-    marginTop: 16,
-    marginHorizontal: 8,
+    marginTop: RFValue(16),
+    marginHorizontal: RFValue(8),
   },
   tmpContainer: {
     width: 'auto',
-    height: 164,
+    height: RFValue(164),
     flexDirection: 'row',
-    borderRadius: 20,
+    borderRadius: RFValue(20),
     elevation: 8,
-    marginTop: 16,
-    marginHorizontal: 8,
+    marginTop: RFValue(16),
+    marginHorizontal: RFValue(8),
   },
   pokemonContainer: {
     height: '100%',
     width: '50%',
-    borderTopLeftRadius: 20,
-    borderBottomLeftRadius: 20,
-    borderTopRightRadius: 100,
-    borderBottomRightRadius: 100,
+    maxWidth: SPRITE_SIZE * 1.5,
+    borderTopLeftRadius: RFValue(20),
+    borderBottomLeftRadius: RFValue(20),
+    borderTopRightRadius: RFValue(100),
+    borderBottomRightRadius: RFValue(100),
   },
   image: {
-    height: 132,
-    width: 132,
-    marginHorizontal: 16,
-    marginVertical: 16,
+    height: SPRITE_SIZE,
+    width: SPRITE_SIZE,
+    marginHorizontal: RFValue(16),
+    marginVertical: RFValue(16),
   },
   info: {
     height: '100%',
     width: '50%',
   },
   pokemonName: {
-    fontSize: 30,
+    fontSize: RFValue(30),
     textAlign: 'center',
-    paddingTop: 8,
+    paddingTop: RFValue(8),
   },
   pokemonId: {
-    fontSize: 20,
+    fontSize: RFValue(20),
     textAlign: 'center',
-    lineHeight: 20,
+    lineHeight: RFValue(20),
   },
   typeBox: {
     flex: 1,
@@ -111,9 +114,9 @@ const styles = StyleSheet.create({
   },
   typeContainer: {
     width: '50%',
-    borderRadius: 100,
+    borderRadius: RFValue(100),
   },
   typeText: {
-    fontSize: 16,
+    fontSize: RFValue(16),
   },
 });

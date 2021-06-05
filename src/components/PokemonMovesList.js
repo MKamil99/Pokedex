@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 import PokemonType from './PokemonType';
 
@@ -36,27 +37,27 @@ export default function PokemonMovesList({ moves }) {
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    borderRadius: 20,
-    padding: 8,
+    borderRadius: RFValue(20),
+    padding: RFValue(8),
     elevation: 8,
     flexDirection: 'column',
-    marginTop: 16,
-    marginBottom: 16,
+    marginTop: RFValue(16),
+    marginBottom: RFValue(16),
   },
   header: {
     flexDirection: 'row',
-    paddingVertical: 5,
+    paddingVertical: RFValue(5),
   },
   headerText: {
-    fontSize: 15,
+    fontSize: RFValue(15),
     textAlign: 'center',
   },
   row: {
     flexDirection: 'row',
-    paddingVertical: 4,
+    paddingVertical: RFValue(4),
   },
   textRow: {
-    fontSize: 15,
+    fontSize: RFValue(15),
     textAlign: 'center',
   },
 });
