@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
   pokemonContainer: {
     height: '100%',
     width: '50%',
-    maxWidth: SPRITE_SIZE * 1.5,
+    maxWidth: SPRITE_SIZE * 1.4,
     borderTopLeftRadius: RFValue(20),
     borderBottomLeftRadius: RFValue(20),
     borderTopRightRadius: RFValue(100),
@@ -98,7 +98,7 @@ const styles = StyleSheet.create({
     width: '50%',
   },
   pokemonName: {
-    fontSize: RFValue(30),
+    fontSize: RFValue(25),
     textAlign: 'center',
     paddingTop: RFValue(8),
   },
