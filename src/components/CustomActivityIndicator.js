@@ -8,7 +8,7 @@ export default function CustomActivityIndicator({ color }) {
     <ActivityIndicator
       size='large'
       color={color}
-      style={{ flex: 1, backgroundColor: colors.backgroundColor }}
+      style={{ flex: 1, backgroundColor: colors.background }}
     />
   );
 }

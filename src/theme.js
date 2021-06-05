@@ -136,7 +136,7 @@ export const CustomDarkTheme = {
     ...DarkTheme.colors,
     primary: '#1E1E1E',
     primaryDark: '#000000',
-    backgroundColor: '#121212',
+    background: '#121212',
     bottomBar: '#202020',
     activeTab: '#FFFFFF',
     inactiveTab: '#8F8F8F',
