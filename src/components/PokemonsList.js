@@ -17,9 +17,12 @@ const PokemonsList = memo(({ pokemons, refresh }) => {
   // Rendering appropriate number of columns:
   const [columns, setColumns] = useState(calculateColumns());
   useEffect(() => {
-    ScreenOrientation.addOrientationChangeListener(() => {
+    let subscription = ScreenOrientation.addOrientationChangeListener(() => {
       setColumns(calculateColumns());
     });
+    return () => {
+      ScreenOrientation.removeOrientationChangeListener(subscription);
+    };
   }, []);
 
   const renderPokemonCard = ({
