@@ -10,7 +10,7 @@ import AppLoading from 'expo-app-loading';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { PokemonDataProvider, ThemeDataProvider } from './src/contexts';
-import Navigation from './Navigation';
+import Navigation from './src/navigation';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
