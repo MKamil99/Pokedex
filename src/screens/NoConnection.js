@@ -1,10 +1,18 @@
-import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { BackHandler, View, Image, StyleSheet } from 'react-native';
 import { Text, useTheme } from 'react-native-paper';
 
 export default function NoConnection() {
   const fontBold = useTheme().fonts.bold;
   const colors = useTheme().colors;
+
+  useEffect(() => {
+    BackHandler.addEventListener('hardwareBackPress', () => {
+      BackHandler.exitApp();
+      return true;
+    });
+  }, []);
+
   return (
     <View style={[style.container, { backgroundColor: colors.background }]}>
       <Image

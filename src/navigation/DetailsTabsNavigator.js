@@ -94,6 +94,7 @@ export default function DetailsTabsNavigator({ route }) {
       inactiveColor={colors.inactiveTab}
       shifting={true}
       backBehavior='none'
+      initialRouteName='General'
     >
       <Tab.Screen name='General' options={{ tabBarIcon: 'information' }}>
         {() =>

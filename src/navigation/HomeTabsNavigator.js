@@ -16,8 +16,9 @@ export default function HomeTabsNavigator() {
       inactiveColor={colors.inactiveTab}
       shifting={true}
       backBehavior='none'
+      initialRouteName='All'
     >
-      <Tab.Screen name='Home' component={Home} options={{ tabBarIcon: 'home' }} />
+      <Tab.Screen name='All' component={Home} options={{ tabBarIcon: 'home' }} />
       <Tab.Screen name='Favourites' component={Favourites} options={{ tabBarIcon: 'heart' }} />
     </Tab.Navigator>
   );
