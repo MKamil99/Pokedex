@@ -7,10 +7,11 @@ export default function NoConnection() {
   const colors = useTheme().colors;
 
   useEffect(() => {
-    BackHandler.addEventListener('hardwareBackPress', () => {
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', () => {
       BackHandler.exitApp();
       return true;
     });
+    return () => backHandler.remove();
   }, []);
 
   return (
