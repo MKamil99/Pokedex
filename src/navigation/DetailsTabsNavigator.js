@@ -22,7 +22,7 @@ export default function DetailsTabsNavigator({ route }) {
   const [generalProps, setGeneralProps] = useState(null);
   const [movesProps, setMovesProps] = useState(null);
   const [evolutionProps, setEvolutionProps] = useState(null);
-  const [isFocus, setIsFocus] = useState(false);
+
   // Picking appropriate color for tab, indicator or status bar:
   const pickColor = (color) =>
     pokemon && !isDarkTheme ? colors.pokemon.backgroundDark[pokemon.color] : color;
@@ -34,12 +34,8 @@ export default function DetailsTabsNavigator({ route }) {
   // Fetching details:
   useEffect(() => {
     pokemonByNameOrNumber(id).then((data) => setPokemon(data));
-    console.log('pokemon');
   }, []);
 
-  useEffect(() => {
-    setStatusBarBackgroundColor(pickColor(colors.primaryDark), true);
-  }, [isFocus]);
   // Displaying details:
   useEffect(() => {
     let subscription;
@@ -85,7 +81,7 @@ export default function DetailsTabsNavigator({ route }) {
   // Changing Status Bar color after changing screen and using onBackPress in all three tabs:
   useEffect(() => {
     navigation.addListener('focus', () => {
-      setIsFocus((prev) => !prev);
+      setStatusBarBackgroundColor(pickColor(colors.primaryDark), true);
     });
     navigation.addListener('blur', () => {
       setStatusBarBackgroundColor(colors.primaryDark, true);
@@ -95,7 +91,7 @@ export default function DetailsTabsNavigator({ route }) {
       return true;
     });
     return () => backHandler.remove();
-  }, []);
+  }, [pokemon]);
 
   return (
     <Tab.Navigator
