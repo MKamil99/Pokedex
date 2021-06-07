@@ -5,16 +5,12 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 export default EvolutionArrow = ({ data, color }) => {
   const colors = useTheme().colors;
-  const isDarkTheme = useTheme().dark;
   const arrow = require('../../assets/next.png');
-  const pokemonColor = isDarkTheme
-    ? colors.evolutionCardBackground
-    : colors.pokemon.background[color];
 
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{data}</Text>
-      <Image style={styles.image} source={arrow} tintColor={pokemonColor} />
+      <Image style={styles.image} source={arrow} tintColor={colors.pokemon.background[color]} />
     </View>
   );
 };

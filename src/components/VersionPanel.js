@@ -19,7 +19,7 @@ export default function VersionPanel({ version, versionList, setVersion }) {
       <Portal>
         <Dialog visible={visible} onDismiss={hideDialog}>
           <ScrollView>
-            <View style={styles.dialog}>
+            <View style={[styles.dialog, { backgroundColor: colors.card }]}>
               <Text style={styles.dialogHeader}>Choose game version</Text>
               {versionList.map((version, i) => (
                 <View key={i} style={{ paddingBottom: 8 }}>
