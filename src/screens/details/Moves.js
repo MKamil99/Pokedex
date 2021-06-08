@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -7,11 +7,14 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { DetailsAppBar, PokemonMovesList, VersionPanel } from '../../components';
 import { isPortrait } from '../../orientation';
 
-export default function Moves({ color, sprite, moves }) {
+export default function Moves({ allMoves, color, currentVersion, sprite, versions }) {
   const colors = useTheme().colors;
   const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
-  const [version, setVersion] = useState(moves.length > 0 ? moves[0].versions[0].name : null);
-  const versionList = new Set();
+
+  const [version, setVersion] = useState(currentVersion);
+  const [moves, setMoves] = useState(allMoves);
+
+  const isInitVersion = useRef(true);
 
   const orientationChangeHandler = () => {
     setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
@@ -24,13 +27,15 @@ export default function Moves({ color, sprite, moves }) {
     };
   }, []);
 
-  const moveList = moves.filter((move) => move.versions.some((item) => item.name === version));
-
-  moves.forEach((move) => {
-    move.versions.forEach((ver) => {
-      versionList.add(ver.name);
-    });
-  });
+  useEffect(() => {
+    if (isInitVersion.current) {
+      isInitVersion.current = false;
+    } else {
+      setMoves((moves) =>
+        moves.filter((move) => move.versions.some((item) => item.name === version))
+      );
+    }
+  }, [version]);
 
   return (
     <>
@@ -39,12 +44,8 @@ export default function Moves({ color, sprite, moves }) {
         {version ? (
           <ScrollView style={styles.contentArea}>
             <View style={{ paddingHorizontal: RFValue(8) }}>
-              <VersionPanel
-                version={version}
-                versionList={Array.from(versionList)}
-                setVersion={setVersion}
-              />
-              <PokemonMovesList moves={moveList} />
+              <VersionPanel version={version} versionList={versions} setVersion={setVersion} />
+              <PokemonMovesList moves={moves} />
             </View>
           </ScrollView>
         ) : (
