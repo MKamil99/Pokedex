@@ -31,18 +31,30 @@ export const pokemonByNameOrNumber = async (input) => {
   try {
     const jsons = await Promise.all([
       // name, number, height, weight, types, stats, sprite and moves:
-      fetch(pokemonURL + input).then((response) =>
-        response.status == '404' ? 'Not found' : response.json()
-      ),
+      fetch(pokemonURL + input).then((response) => {
+        if (!response.ok) {
+          return null;
+        } else {
+          return response.json();
+        }
+      }),
 
       // color, generation and url to evolution chain:
-      fetch(speciesURL + input).then((response) =>
-        response.status == '404' ? 'Not found' : response.json()
-      ),
+      fetch(speciesURL + input).then((response) => {
+        if (!response.ok) {
+          return null;
+        } else {
+          return response.json();
+        }
+      }),
     ]);
-    return preparePokemonObject(jsons);
+    if (jsons.includes(null)) {
+      return null;
+    } else {
+      return preparePokemonObject(jsons);
+    }
   } catch (error) {
-    return console.error(error);
+    return null;
   }
 };
 
@@ -52,14 +64,14 @@ export const fetchAllMoves = async (moves) => {
 
   for (let i = 0; i < moves.length; i++) promises.push(moveByURL(moves[i].url, moves[i].versions));
 
-  return Promise.all(promises);
+  const result = await Promise.all(promises);
+  return result.filter((move) => move !== null);
 };
 
 // Move details:
 const moveByURL = async (url, versions) => {
   const response = await fetch(url);
   if (!response.ok) {
-    console.log(response.status);
     return null;
   }
   const move = await response.json();
@@ -70,7 +82,6 @@ const moveByURL = async (url, versions) => {
 export const fetchEvolutionChain = async (url) => {
   const response = await fetch(url);
   if (!response.ok) {
-    console.log(response.status);
     return null;
   }
   const chain = await response.json();

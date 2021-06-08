@@ -55,13 +55,13 @@ export default function DetailsTabsNavigator({ route }) {
         sprite: pokemon.sprite,
       });
       // Moves:
-      fetchAllMoves(pokemon.moves).then((moves) =>
+      fetchAllMoves(pokemon.moves).then((moves) => {
         setMovesProps({
           moves: moves,
           color: pokemon.color,
           sprite: pokemon.sprite,
-        })
-      );
+        });
+      });
       // Evolution Chain:
       fetchEvolutionChain(pokemon.evolution_chain).then((chain) => {
         setEvolutionProps({
