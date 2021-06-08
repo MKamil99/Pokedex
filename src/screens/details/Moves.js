@@ -41,7 +41,7 @@ export default function Moves({ color, sprite, moves }) {
             <View style={{ paddingHorizontal: RFValue(8) }}>
               <VersionPanel
                 version={version}
-                versionList={Array.from(versionList)}
+                activeVersionList={Array.from(versionList)}
                 setVersion={setVersion}
               />
               <PokemonMovesList moves={moveList} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, Image } from 'react-native';
 import { Text, TouchableRipple, useTheme } from 'react-native-paper';
 import { RFValue } from 'react-native-responsive-fontsize';
 
@@ -92,17 +92,13 @@ const getTextWithColor = (version, colors) => {
   return { text, color };
 };
 
-export default function VersionSelector({ version, onPress }) {
+export default function VersionSelector({ version, onPress, active = true, selected = false }) {
   const colors = useTheme().colors;
   const { text, color } = getTextWithColor(version, colors);
 
-  return (
-    <TouchableRipple
-      onPress={() => onPress()}
-      borderless={true}
-      style={{ width: '100%', borderRadius: 100 }}
-    >
-      <View style={styles.container}>
+  const content = () => {
+    return (
+      <View style={selected ? styles.selected : {}}>
         {text.length > 1 && (
           <View style={styles.textContainer}>
             <View style={[styles.textContainer1, { backgroundColor: color[0] }]}>
@@ -117,18 +113,54 @@ export default function VersionSelector({ version, onPress }) {
         )}
         {text.length == 1 && (
           <View style={styles.textContainer}>
-            <View style={[styles.textContainer1, { backgroundColor: color[0] }]}>
+            <View style={[styles.textContainer3, { backgroundColor: color[0] }]}>
               <Text style={styles.text}>{text[0]}</Text>
             </View>
           </View>
         )}
+        {selected && (
+          <Image style={styles.selectedImage} source={require('../../assets/selected.png')} />
+        )}
       </View>
-    </TouchableRipple>
+    );
+  };
+
+  return (
+    <>
+      {active ? (
+        <TouchableRipple onPress={() => onPress()} borderless={true} style={{ borderRadius: 100 }}>
+          {content()}
+        </TouchableRipple>
+      ) : (
+        <>
+          {content()}
+          <View style={styles.shadow} />
+        </>
+      )}
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {},
+  shadow: {
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    borderRadius: RFValue(100),
+  },
+  selected: {
+    borderColor: '#ADFF2F',
+    borderWidth: RFValue(5),
+    borderRadius: RFValue(100),
+  },
+  selectedImage: {
+    position: 'absolute',
+    right: 0,
+    height: RFValue(28),
+    width: RFValue(28),
+    tintColor: '#ADFF2F',
+  },
   textContainer: {
     flexDirection: 'row',
   },
@@ -136,12 +168,15 @@ const styles = StyleSheet.create({
     flex: 1,
     borderTopLeftRadius: RFValue(100),
     borderBottomLeftRadius: RFValue(100),
-    backgroundColor: 'red',
   },
   textContainer2: {
     flex: 1,
     borderTopRightRadius: RFValue(100),
     borderBottomRightRadius: RFValue(100),
+  },
+  textContainer3: {
+    flex: 1,
+    borderRadius: RFValue(100),
   },
   text: {
     textAlign: 'center',
