@@ -5,11 +5,85 @@ import { RFValue } from 'react-native-responsive-fontsize';
 
 import VersionSelector from './VersionSelector';
 
-export default function VersionPanel({ version, versionList, setVersion }) {
+export default function VersionPanel({ version, activeVersionList, setVersion }) {
   const colors = useTheme().colors;
   const [visible, setVisible] = React.useState(false);
 
   const hideDialog = () => setVisible(false);
+
+  const versionList = [
+    'red-blue',
+    'yellow',
+    'gold-silver',
+    'crystal',
+    'ruby-sapphire',
+    'emerald',
+    'firered-leafgreen',
+    'diamond-pearl',
+    'platinum',
+    'heartgold-soulsilver',
+    'black-white',
+    'colosseum',
+    'xd',
+    'black-2-white-2',
+    'x-y',
+    'omega-ruby-alpha-sapphire',
+    'sun-moon',
+    'ultra-sun-ultra-moon',
+    'lets-go',
+    'sword-shield',
+  ];
+  const isVersionActive = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+  const isVersionSelected = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+
+  activeVersionList.forEach((element) => {
+    idx = versionList.indexOf(element);
+    isVersionActive[idx] = true;
+  });
+
+  isVersionSelected[versionList.indexOf(version)] = true;
 
   return (
     <View style={[styles.container, { backgroundColor: colors.card }]}>
@@ -21,14 +95,16 @@ export default function VersionPanel({ version, versionList, setVersion }) {
           <ScrollView>
             <View style={[styles.dialog, { backgroundColor: colors.card }]}>
               <Text style={styles.dialogHeader}>Choose game version</Text>
-              {versionList.map((version, i) => (
+              {versionList.map((val, i) => (
                 <View key={i} style={{ paddingBottom: 8 }}>
                   <VersionSelector
-                    version={version}
+                    version={val}
                     onPress={() => {
-                      setVersion(version);
+                      setVersion(val);
                       hideDialog();
                     }}
+                    active={isVersionActive[i]}
+                    selected={isVersionSelected[i]}
                   />
                 </View>
               ))}

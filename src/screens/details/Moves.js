@@ -68,7 +68,11 @@ export default function Moves({ allMoves, color, currentVersion, sprite, version
         {version ? (
           <ScrollView style={styles.contentArea}>
             <View style={{ paddingHorizontal: RFValue(8) }}>
-              <VersionPanel version={version} versionList={versions} setVersion={setVersion} />
+              <VersionPanel
+                version={version}
+                activeVersionList={versions}
+                setVersion={setVersion}
+              />
               <PokemonMovesList moves={moves} onSortPress={setSorting} sortValue={sorting} />
             </View>
           </ScrollView>
