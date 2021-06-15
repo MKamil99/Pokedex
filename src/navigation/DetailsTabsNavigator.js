@@ -56,8 +56,12 @@ export default function DetailsTabsNavigator({ route }) {
       });
       // Moves:
       fetchAllMoves(pokemon.moves).then((moves) => {
+        const version = moves.length > 0 ? moves[0].versions[0].name : null;
+
         setMovesProps({
-          moves: moves,
+          allMoves: moves.filter((move) => move.versions.some((item) => item.name === version)),
+          currentVersion: version,
+          versions: [...new Set(moves.flatMap((move) => move.versions.map((ver) => ver.name)))],
           color: pokemon.color,
           sprite: pokemon.sprite,
         });

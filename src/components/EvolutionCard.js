@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, View, Image } from 'react-native';
-import { useTheme, Text } from 'react-native-paper';
+import { useTheme, Text, TouchableRipple } from 'react-native-paper';
 import { RFValue } from 'react-native-responsive-fontsize';
+import { useNavigation } from '@react-navigation/core';
+import { StackActions } from '@react-navigation/routers';
 
 import { pokemonByNameOrNumber } from '../contexts';
 import CustomActivityIndicator from './CustomActivityIndicator';
@@ -9,6 +11,7 @@ import PokemonType from './PokemonType';
 
 export default function EvolutionCard({ color, id }) {
   const colors = useTheme().colors;
+  const navigation = useNavigation();
   const isDarkTheme = useTheme().dark;
   const activityIndicator = isDarkTheme
     ? colors.activityIndicator
@@ -28,25 +31,31 @@ export default function EvolutionCard({ color, id }) {
   return (
     <>
       {pokemon ? (
-        <View style={[styles.container, { backgroundColor: colors.card }]}>
-          <View style={[styles.pokemonContainer, { backgroundColor: pokemonColor }]}>
-            <Image style={styles.image} source={pokemon.sprite} />
-          </View>
-          <View style={styles.info}>
-            <Text style={styles.pokemonName}>{pokemon.name}</Text>
-            <Text style={styles.pokemonId}>{'#' + pokemon.id.toString().padStart(3, '0')}</Text>
-            <View style={styles.typeBox}>
-              {pokemon.types.map((type, index) => (
-                <PokemonType
-                  key={index}
-                  type={type}
-                  containerStyle={styles.typeContainer}
-                  textStyle={styles.typeText}
-                />
-              ))}
+        <TouchableRipple
+          borderless={true}
+          onPress={() => navigation.dispatch(StackActions.push('Details', { id: pokemon.id }))}
+          style={[styles.container, { backgroundColor: colors.card }]}
+        >
+          <View style={{ flex: 1, flexDirection: 'row' }}>
+            <View style={[styles.pokemonContainer, { backgroundColor: pokemonColor }]}>
+              <Image style={styles.image} source={pokemon.sprite} />
+            </View>
+            <View style={styles.info}>
+              <Text style={styles.pokemonName}>{pokemon.name}</Text>
+              <Text style={styles.pokemonId}>{'#' + pokemon.id.toString().padStart(3, '0')}</Text>
+              <View style={styles.typeBox}>
+                {pokemon.types.map((type, index) => (
+                  <PokemonType
+                    key={index}
+                    type={type}
+                    containerStyle={styles.typeContainer}
+                    textStyle={styles.typeText}
+                  />
+                ))}
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableRipple>
       ) : (
         <View style={[styles.tmpContainer, { backgroundColor: colors.card }]}>
           <View style={{ width: '100%' }}>
@@ -63,7 +72,6 @@ const styles = StyleSheet.create({
   container: {
     width: 'auto',
     height: RFValue(164),
-    flexDirection: 'row',
     borderRadius: RFValue(20),
     elevation: 8,
     marginTop: RFValue(16),

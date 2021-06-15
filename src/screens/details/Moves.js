@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { SafeAreaView, StyleSheet, ScrollView, View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
 import * as ScreenOrientation from 'expo-screen-orientation';
@@ -7,11 +7,15 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import { DetailsAppBar, PokemonMovesList, VersionPanel } from '../../components';
 import { isPortrait } from '../../orientation';
 
-export default function Moves({ color, sprite, moves }) {
+export default function Moves({ allMoves, color, currentVersion, sprite, versions }) {
   const colors = useTheme().colors;
   const [styles, setStyles] = useState(isPortrait() ? stylesPortrait : stylesLandscape);
-  const [version, setVersion] = useState(moves.length > 0 ? moves[0].versions[0].name : null);
-  const versionList = new Set();
+
+  const [version, setVersion] = useState(currentVersion);
+  const [moves, setMoves] = useState([]);
+  const [sorting, setSorting] = useState('name-asc');
+
+  const isInitRender = useRef(true);
 
   const orientationChangeHandler = () => {
     setStyles(isPortrait() ? stylesPortrait : stylesLandscape);
@@ -19,18 +23,43 @@ export default function Moves({ color, sprite, moves }) {
 
   useEffect(() => {
     let subscription = ScreenOrientation.addOrientationChangeListener(orientationChangeHandler);
+    setMoves(sortMoves(allMoves));
     return () => {
       ScreenOrientation.removeOrientationChangeListener(subscription);
     };
   }, []);
 
-  const moveList = moves.filter((move) => move.versions.some((item) => item.name === version));
+  useEffect(() => {
+    if (!isInitRender.current) {
+      setMoves((moves) => {
+        const filteredMoves = moves.filter((move) =>
+          move.versions.some((item) => item.name === version)
+        );
+        return sortMoves(filteredMoves);
+      });
+    }
+  }, [version]);
 
-  moves.forEach((move) => {
-    move.versions.forEach((ver) => {
-      versionList.add(ver.name);
-    });
-  });
+  useEffect(() => {
+    if (!isInitRender.current) {
+      setMoves((values) => sortMoves(values));
+    }
+  }, [sorting]);
+
+  useEffect(() => {
+    isInitRender.current = false;
+  }, []);
+
+  const sortMoves = (moves) => {
+    switch (sorting) {
+      case 'name-asc':
+        return [...moves.sort((a, b) => a.name.localeCompare(b.name))];
+      case 'name-desc':
+        return [...moves.sort((a, b) => b.name.localeCompare(a.name))];
+      default:
+        return moves;
+    }
+  };
 
   return (
     <>
@@ -41,10 +70,10 @@ export default function Moves({ color, sprite, moves }) {
             <View style={{ paddingHorizontal: RFValue(8) }}>
               <VersionPanel
                 version={version}
-                activeVersionList={Array.from(versionList)}
+                activeVersionList={versions}
                 setVersion={setVersion}
               />
-              <PokemonMovesList moves={moveList} />
+              <PokemonMovesList moves={moves} onSortPress={setSorting} sortValue={sorting} />
             </View>
           </ScrollView>
         ) : (
